@@ -22,8 +22,8 @@ services:
 
 before_script:
   - cp .env.travis .env.testing
-  - psql -c 'create database laravel-admin-test;' -U postgres
-  - export PGPASSWORD=''; psql -U postgres -h localhost -d laravel-admin-test -f database/dump/2018-09-28.sql
+  - psql -c 'create database laravel_admin_test;' -U postgres
+  - export PGPASSWORD=''; psql -U postgres -h localhost -d laravel_admin_test -f database/dump/2018-09-28.sql
   - unset PGPASSWORD
   - travis_retry composer self-update
   - travis_retry composer update --no-progress
