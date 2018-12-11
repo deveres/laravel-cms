@@ -23,7 +23,7 @@ services:
 before_script:
   - phpenv config-rm xdebug.ini
   - cp .env.travis .env.testing
-  - cp .env.travis .env.testing
+  - cp .env.travis .env
   - cp phpunit.xml.dist  phpunit.xml
   - psql -c 'create database laravel_admin_test;' -U postgres
   - export PGPASSWORD=''; psql -U postgres -h localhost -d laravel_admin_test -f database/dump/2018-09-28.sql
