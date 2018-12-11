@@ -3,19 +3,16 @@
  * Created by PhpStorm.
  * User: veres
  * Date: 10/5/2018
- * Time: 8:50 PM
+ * Time: 8:50 PM.
  */
 
 namespace App\Src\Admin\Extensions\Core;
 
-
-use Encore\Admin\Form\Builder;
 use Encore\Admin\Admin;
+use Encore\Admin\Form\Builder;
 
 class CustomBuilder extends Builder
 {
-
-
     public function render()
     {
         $this->removeReservedFields();
@@ -51,14 +48,12 @@ SCRIPT;
         }
 
         $data = [
-            'form' => $this,
-            'tabObj' => $tabObj,
-            'width' => $this->width,
+            'form'         => $this,
+            'tabObj'       => $tabObj,
+            'width'        => $this->width,
             'formRightObj' => $formRightObj,
         ];
 
         return view($this->view, $data)->render();
     }
-
-
 }

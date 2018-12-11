@@ -4,7 +4,6 @@ namespace App\Src\Frontend\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\FrontendController;
-use Illuminate\Http\Request;
 
 class IndexController extends FrontendController
 {

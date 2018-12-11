@@ -5,14 +5,10 @@ namespace App\Src\Admin\Extensions;
 use Encore\Admin\Admin;
 use Encore\Admin\Grid\Displayers\AbstractDisplayer;
 
-
 class ModuleInstall extends AbstractDisplayer
 {
-
-
     public function display($outGrid = 'left')
     {
-
         Admin::script($this->_getScript(route('modules.module-install')));
 
         return "<a class='grid-check-row' data-id='{$this->row->id}' title='Установить/Переустановить модуль'><i class='fa fa-rocket'></i></a>";

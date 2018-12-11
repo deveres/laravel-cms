@@ -62,7 +62,7 @@ class NewsController extends Controller
 
         // set the `text`、`color`、and `value`
         $states = [
-            'on' => ['value' => 1, 'text' => 'Вкл', 'color' => 'success'],
+            'on'  => ['value' => 1, 'text' => 'Вкл', 'color' => 'success'],
             'off' => ['value' => 0, 'text' => 'Выкл', 'color' => 'danger'],
         ];
         if ($can_edit) {
@@ -85,7 +85,6 @@ class NewsController extends Controller
                 }
             });
         }
-
 
         $grid->filter(function (Filter $filter) {
             //$filter->disableIdFilter();
@@ -120,12 +119,12 @@ class NewsController extends Controller
     /**
      * @param $id
      * @param Content $content
+     *
      * @return Content
      */
     public function edit($id, Content $content)
     {
-
-        $this->setTitle($this->resources[$this->_resource]['name'] . ' - Редактирование');
+        $this->setTitle($this->resources[$this->_resource]['name'].' - Редактирование');
         $this->breadcrumbs->addCrumb('Редактирование', '');
 
         $content->header($this->resources[$this->_resource]['name'])
@@ -147,7 +146,6 @@ class NewsController extends Controller
      */
     protected function form($id = 0)
     {
-
         $form = new CustomForm(new ModNews());
         $form->disableViewCheck();
         $form->disableEditingCheck();
@@ -180,15 +178,15 @@ class NewsController extends Controller
                 function ($form) {
                     // If it is not an edit state, add field unique verification
                     if (!$id = $form->model()->id) {
-                        return 'required|unique:' . $form->model()->getTable() . ',alias|min:10';
+                        return 'required|unique:'.$form->model()->getTable().',alias|min:10';
                     }
 
-                    return 'required|unique:' . $form->model()->getTable() . ',alias,' . $id . ',id|min:10';
+                    return 'required|unique:'.$form->model()->getTable().',alias,'.$id.',id|min:10';
                 },
                 [
                     'required' => 'Поле обязательно для заполнения',
-                    'min' => 'Значение должно иметь минимум 10 символа',
-                    'unique' => 'Запись с таким значением уже существует',
+                    'min'      => 'Значение должно иметь минимум 10 символа',
+                    'unique'   => 'Запись с таким значением уже существует',
                 ]
             );
         })->tab('Картинки', function (Form $form) use ($id) {
@@ -203,41 +201,40 @@ class NewsController extends Controller
         $langs = get_active_langs();
         foreach ($langs as $one) {
             $form->tab($one['name'], function (Form $form) use ($one, $id) {
-                $form->htmlFull('<h4 class="form-header">Переводы на ' . $one['name'] . ' язык</h4>');
+                $form->htmlFull('<h4 class="form-header">Переводы на '.$one['name'].' язык</h4>');
 
                 $trans_item = $form->model()->findOrNew($id);
 
                 $translation = $trans_item->getTranslation($one['alias'], true);
-                $form->hidden('translate[' . $one['alias'] . '][locale]', 'Алиас языка')->default($one['alias']);
-
+                $form->hidden('translate['.$one['alias'].'][locale]', 'Алиас языка')->default($one['alias']);
 
                 $form->text(
-                    'translate[' . $one['alias'] . '][name]',
+                    'translate['.$one['alias'].'][name]',
                     'Заголовок'
                 )->default($translation ? $translation->name : old('translate.ru.name'));
                 $form->textarea(
-                    'translate[' . $one['alias'] . '][introtext]',
+                    'translate['.$one['alias'].'][introtext]',
                     'Короткое описание'
                 )->rows(4)->default($translation ? $translation->introtext : old('translate.ru.introtext'));
                 $form->ckeditor(
-                    'translate[' . $one['alias'] . '][text]',
+                    'translate['.$one['alias'].'][text]',
                     'Описание'
                 )->default($translation ? $translation->text : old('translate.ru.text'));
                 $form->divider();
                 $form->text(
-                    'translate[' . $one['alias'] . '][seo_h1]',
+                    'translate['.$one['alias'].'][seo_h1]',
                     'SEO H1'
                 )->default($translation ? $translation->seo_h1 : old('translate.ru.seo_h1'));
                 $form->text(
-                    'translate[' . $one['alias'] . '][seo_title]',
+                    'translate['.$one['alias'].'][seo_title]',
                     'Meta Title'
                 )->default($translation ? $translation->seo_title : old('translate.ru.seo_title'));
                 $form->textarea(
-                    'translate[' . $one['alias'] . '][seo_keywords]',
+                    'translate['.$one['alias'].'][seo_keywords]',
                     'Meta Keywords'
                 )->rows(4)->default($translation ? $translation->seo_keywords : old('translate.ru.seo_keywords'));
                 $form->textarea(
-                    'translate[' . $one['alias'] . '][seo_description]',
+                    'translate['.$one['alias'].'][seo_description]',
                     'Meta Description'
                 )->rows(4)->default($translation ? $translation->seo_description : old('translate.ru.seo_description'));
             });
@@ -249,13 +246,13 @@ class NewsController extends Controller
             $form1->display('updated_at');
 
             $statuses1 = [
-                'on' => ['value' => 1, 'text' => 'Включено', 'color' => 'success'],
+                'on'  => ['value' => 1, 'text' => 'Включено', 'color' => 'success'],
                 'off' => ['value' => 0, 'text' => 'Отключено', 'color' => 'danger'],
             ];
             $form1->switch('state', 'Статус')->states($statuses1);
 
             $form1->switch('comments_enabled', 'показать комментарии')->states($statuses1);
-            // $form1->select('state', 'Статус')->options([1 => 'Включено', 0 => 'Отключено'])->config( 'allowClear',false);
+        // $form1->select('state', 'Статус')->options([1 => 'Включено', 0 => 'Отключено'])->config( 'allowClear',false);
         }, true);
 
         // callback after save
@@ -281,7 +278,7 @@ class NewsController extends Controller
      */
     public function create(Content $content)
     {
-        $this->setTitle($this->resources[$this->_resource]['name'] . ' - Создать');
+        $this->setTitle($this->resources[$this->_resource]['name'].' - Создать');
         $this->breadcrumbs->addCrumb('Создать', '');
 
         return $content

@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 
 class AddDeletedFlagToTranslations extends Migration
 {
-
     /**
      * Run the migrations.
      *

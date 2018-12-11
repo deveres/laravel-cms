@@ -14,7 +14,7 @@ class LabelLang extends Model implements Sortable
     use SortableTrait;
 
     public $sortable = [
-        'order_column_name' => 'ord',
+        'order_column_name'  => 'ord',
         'sort_when_creating' => true,
     ];
     public $incrementing = 'id';
@@ -65,7 +65,7 @@ class LabelLang extends Model implements Sortable
     /**
      * Метод получения и установки выбранного языка из
      * строки URL или из установок по-умолчанию.
-     * Выбранный язык регистрируется через класс Registry с индексом selected_lang
+     * Выбранный язык регистрируется через класс Registry с индексом selected_lang.
      *
      * @return array Массив данных о языке
      */
@@ -76,12 +76,14 @@ class LabelLang extends Model implements Sortable
             $langs = $this->getCached();
             $router_lang = Arrays::first(Arrays::FilterValues($langs, 'alias', '=', $router_alias));
             Registry::set('selected_lang', $router_lang);
+
             return $router_lang;
         }
 
         $default_lang = $this->getDefault();
         if ($default_lang !== false) {
             Registry::set('selected_lang', $default_lang);
+
             return $default_lang;
         }
     }
@@ -93,8 +95,7 @@ class LabelLang extends Model implements Sortable
             return $langs;
         }
 
-        $cache_path = storage_path('app') . '/cache/labels/langs.json';
-
+        $cache_path = storage_path('app').'/cache/labels/langs.json';
 
         if (!file_exists($cache_path)) {
             $langs = self::query()->where('state', 1)->orderBy('default', 'DESC')->get()->toArray();
@@ -109,5 +110,4 @@ class LabelLang extends Model implements Sortable
     {
         return self::query()->orderBy('default', 'DESC')->first()->toArray();
     }
-
 }

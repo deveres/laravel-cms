@@ -2,21 +2,15 @@
 
 namespace Tests;
 
-use Illuminate\Filesystem\Filesystem;
+use App;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 //use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Schema;
 use Laravel\BrowserKitTesting\TestCase as BaseTestCase;
-use App;
-
-
 
 class TestCase extends BaseTestCase
 {
-
     use DatabaseTransactions;
     use CreatesApplication;
     //use DatabaseMigrations;
@@ -26,22 +20,20 @@ class TestCase extends BaseTestCase
 
     public function setUp()
     {
-
         parent::setUp();
 
         $this->env = $this->app->environment();
 
-/*
-        echo 'Env set to: '.$this->env.PHP_EOL;
-        echo 'DB_CONNECTION='.env('DB_CONNECTION' ).PHP_EOL;
-        echo 'DB_HOST='.env('DB_HOST' ).PHP_EOL;
-        echo 'DB_PORT='.env('DB_PORT' ).PHP_EOL;
-        echo 'DB_DATABASE='.env('DB_DATABASE' ).PHP_EOL;
-        echo '-----------------------------------------------'.PHP_EOL;
-*/
+        /*
+                echo 'Env set to: '.$this->env.PHP_EOL;
+                echo 'DB_CONNECTION='.env('DB_CONNECTION' ).PHP_EOL;
+                echo 'DB_HOST='.env('DB_HOST' ).PHP_EOL;
+                echo 'DB_PORT='.env('DB_PORT' ).PHP_EOL;
+                echo 'DB_DATABASE='.env('DB_DATABASE' ).PHP_EOL;
+                echo '-----------------------------------------------'.PHP_EOL;
+        */
 
-        $adminConfig = require __DIR__ . '/../config/admin.php';
-
+        $adminConfig = require __DIR__.'/../config/admin.php';
 
         $this->app['config']->set('debugbar.enabled', env('DEBUGBAR_ENABLED', false));
         $this->app['config']->set('database.default', 'pgsql');
@@ -49,9 +41,8 @@ class TestCase extends BaseTestCase
         $this->app['config']->set('database.connections.pgsql.host', env('DB_HOST', '127.0.0.1'));
         $this->app['config']->set('database.connections.pgsql.port', '5432');
 
-
         $this->app['config']->set('app.key', 'AckfSECXIvnK5r28GVIWUAxmbBSjTsmF');
-        $this->app['config']->set('filesystems', require __DIR__ . '/../config/filesystems.php');
+        $this->app['config']->set('filesystems', require __DIR__.'/../config/filesystems.php');
         $this->app['config']->set('admin', $adminConfig);
 
         foreach (array_dot(array_get($adminConfig, 'auth'), 'auth.') as $key => $value) {
@@ -71,8 +62,6 @@ class TestCase extends BaseTestCase
         if (file_exists($routes = admin_path('routes.php'))) {
             require $routes;
         }
-
-
     }
 
     /**
@@ -85,7 +74,7 @@ class TestCase extends BaseTestCase
 
     public function registerConfig()
     {
-        $files = glob(app_path('Src/Config/') . '*.php');
+        $files = glob(app_path('Src/Config/').'*.php');
         if ($files) {
             foreach ($files as $one) {
                 $tmp = explode('.', basename($one));
@@ -94,7 +83,7 @@ class TestCase extends BaseTestCase
                     $configs = require_once $one;
 
                     if (isset($configs['path']) && $configs['path']) {
-                        $this->mergeConfigFrom($one, 'modules.' . $configs['path']);
+                        $this->mergeConfigFrom($one, 'modules.'.$configs['path']);
                     }
                 }
             }
@@ -103,11 +92,8 @@ class TestCase extends BaseTestCase
 
     public function tearDown()
     {
-
         $this->refresh($this->env);
         parent::tearDown();
-
-
     }
 
     public function refresh($env = 'testing')

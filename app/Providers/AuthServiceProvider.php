@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -27,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         \Gate::define('ltm-admin-translations', function ($user) {
             /* @var $user \App\User */
             // modify the code below to return true for users that can administer translations
-            if(\Admin::user()->id==1){
+            if (\Admin::user()->id == 1) {
                 return true;
             }
         });
@@ -37,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
             // modify the code below to return true for users that can administer translations
             // or edit translation so that missing keys will be logged for all sessions of
             // these users instead of one out of N sessions as given by random lottery result
-            if(\Admin::user()->id==1){
+            if (\Admin::user()->id == 1) {
                 return true;
             }
         });

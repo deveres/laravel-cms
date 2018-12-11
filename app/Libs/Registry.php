@@ -4,18 +4,17 @@ namespace App\Libs;
 
 /**
  * @name Registry
- * @package bitrix
- * @subpackage utils
+ *
  * @version 1.0
  * @desc Класс для регистрации данных в глобальной области видимости
  */
 class Registry
 {
-    private static $_data = array();
+    private static $_data = [];
 
     public static function set($token, $value)
     {
-        self::$_data[$token] =& $value;
+        self::$_data[$token] = &$value;
     }
 
     public static function issetItem($token)
@@ -38,13 +37,10 @@ class Registry
         return self::$_data;
     }
 
-    function __destruct()
+    public function __destruct()
     {
-
         foreach (self::$_data as $key => $item) {
             unset(self::$_data[$key]);
         }
     }
 }
-
-?>

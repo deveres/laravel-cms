@@ -2,7 +2,6 @@
 
 namespace App\Src\Frontend\Controllers\News;
 
-
 use App\Http\Controllers\FrontendController;
 use App\Src\Models\News\ModNews;
 use Illuminate\Http\Request;
@@ -32,15 +31,11 @@ class NewsController extends FrontendController
         $news = ModNews::query()->where('state', 1)->paginate();
         $news->appends($filter);
 
-
-
-
         return view('frontend.news.index', compact('news'));
     }
 
-    public function view(Request $request, ModNews $modNews ){
-
-
+    public function view(Request $request, ModNews $modNews)
+    {
         $this->setMetaH1($modNews->seo_h1);
         $this->setMetaTitle($modNews->seo_title);
         $this->setMetaDescription($modNews->seo_description);

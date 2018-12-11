@@ -205,7 +205,7 @@ class FilterTree implements Renderable
      * Add form attributes.
      *
      * @param array|string $attr
-     * @param string $value
+     * @param string       $value
      *
      * @return $this
      */
@@ -231,9 +231,8 @@ class FilterTree implements Renderable
     {
         $params = $this->getVariables();
         //Admin::js('/vendor/vakata/jstree/jstree.min.js');
-       // Admin::css('/vendor/vakata/jstree/themes/' . $this->getTheme() . '/style.css');
-        Admin::script( view('admin::widgets.tree.scripts', $params)->render());
-
+        // Admin::css('/vendor/vakata/jstree/themes/' . $this->getTheme() . '/style.css');
+        Admin::script(view('admin::widgets.tree.scripts', $params)->render());
 
         return view('admin::widgets.tree.main', $params)->render();
     }
@@ -266,18 +265,18 @@ class FilterTree implements Renderable
     protected function initAttributes()
     {
         $this->attributes = [
-            'display_field' => 'name',
-            'primary_key' => $this->model->getKeyName(),
-            'root_name' => 'Root',              //Name of root element
-            'root_path' => false,               //enable/disable link of root element
-            'theme' => 'admin',                 //Theme name
-            'link_path' => null,                //Url prefix
-            'selected' => 0,                    //Selected element
-            'plugins' => ['types'],             // Tree plugins ['types','search','contextmenu']
-            'show_search_input' => false,       //show hide search input box
-            'add_url' => [],                  //additional  url
-            'edit_url' => '',                 //edit url prefix
-            'token' => md5(time()),              // unique name for request parameter
+            'display_field'       => 'name',
+            'primary_key'         => $this->model->getKeyName(),
+            'root_name'           => 'Root',              //Name of root element
+            'root_path'           => false,               //enable/disable link of root element
+            'theme'               => 'admin',                 //Theme name
+            'link_path'           => null,                //Url prefix
+            'selected'            => 0,                    //Selected element
+            'plugins'             => ['types'],             // Tree plugins ['types','search','contextmenu']
+            'show_search_input'   => false,       //show hide search input box
+            'add_url'             => [],                  //additional  url
+            'edit_url'            => '',                 //edit url prefix
+            'token'               => md5(time()),              // unique name for request parameter
             'tree_recursive_path' => 'admin::widgets.tree.level',
         ];
     }
@@ -295,7 +294,7 @@ class FilterTree implements Renderable
             if ('filter' === $key || is_array($value) || $key === $this->attributes['token']) {
                 continue;
             }
-            $str .= '&' . $key . '=' . $value;
+            $str .= '&'.$key.'='.$value;
         }
 
         return $str;
@@ -309,7 +308,7 @@ class FilterTree implements Renderable
     protected function getVariables()
     {
         return [
-            'tree_data' => $this->data,
+            'tree_data'  => $this->data,
             'attributes' => $this->formatAttribute(),
         ];
     }

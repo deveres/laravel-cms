@@ -1,18 +1,20 @@
 <?php
 
 /**
- * Шорткат для функции _t
+ * Шорткат для функции _t.
+ *
  * @return string
  */
 if (!function_exists('get_label')) {
     function get_label()
     {
         $params = func_get_args();
+
         return call_user_func_array('_t', $params);
     }
 }
 
-/**
+/*
  * Обязательный первый аргумент как get_label
  * Остальные параметры нужны для парсинга параметров в строке метки
  * Можно передавать либо numerical or assoc array
@@ -34,15 +36,21 @@ if (!function_exists('_t')) {
 
         $numargs = func_num_args();
         $arg_list = func_get_args();
-        if (!$numargs) return '';
+        if (!$numargs) {
+            return '';
+        }
 
         $namespace = labels_get_namespace();
 
         $path = func_get_arg(0);
-        if ($namespace !== false) $path = $namespace . $path;
+        if ($namespace !== false) {
+            $path = $namespace.$path;
+        }
         $label = setif($labels, $path, $path);
 
-        if ($numargs == 1) return $label;
+        if ($numargs == 1) {
+            return $label;
+        }
 
         $data = func_get_arg(1);
         if (!is_array($data)) {
@@ -56,13 +64,13 @@ if (!function_exists('_t')) {
         if ($is_numerical) {
             $text = sprintf_array($label, $data);
             if (!$text) {
-                new \Exception('Не удалось распарсить метку ' . $label, 404, __FILE__, __LINE__);
+                new \Exception('Не удалось распарсить метку '.$label, 404, __FILE__, __LINE__);
                 $text = '';
             }
         } else {
-            $places = array();
+            $places = [];
             foreach ($data as $key => $value) {
-                $places['{' . $key . '}'] = $value;
+                $places['{'.$key.'}'] = $value;
             }
             $text = strtr($label, $places);
         }
@@ -74,7 +82,7 @@ if (!function_exists('_t')) {
 if (!function_exists('labels_set_namespace')) {
     function labels_set_namespace($namespace)
     {
-        \App\Libs\Registry::set('labels_namespace', rtrim($namespace, '/') . '/');
+        \App\Libs\Registry::set('labels_namespace', rtrim($namespace, '/').'/');
     }
 }
 
@@ -103,11 +111,12 @@ if (!function_exists('labels_set_lang')) {
     function labels_set_lang($lang_alias)
     {
         $model = new \App\Src\Models\Langs\Label();
+
         return $model->setLang($lang_alias);
     }
 }
 
-/**
+/*
  * sprintf use array
  *
  * @see http://jp.php.net/manual/ja/function.printf.php
@@ -119,15 +128,15 @@ if (!function_exists('labels_set_lang')) {
 if (!function_exists('sprintf_array')) {
     function sprintf_array($format, $arr)
     {
-        return call_user_func_array('sprintf', array_merge((array)$format, $arr));
+        return call_user_func_array('sprintf', array_merge((array) $format, $arr));
     }
-
 }
 
 if (!function_exists('date_get_month')) {
     function date_get_month($date, $with_day_flag = false)
     {
         $month = date('n', strtotime($date));
-        return $with_day_flag ? get_label('month/fullof_' . $month) : get_label('month/full_' . $month);
+
+        return $with_day_flag ? get_label('month/fullof_'.$month) : get_label('month/full_'.$month);
     }
 }

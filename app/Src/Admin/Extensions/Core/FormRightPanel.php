@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: veres
  * Date: 10/5/2018
- * Time: 9:15 PM
+ * Time: 9:15 PM.
  */
 
 namespace App\Src\Admin\Extensions\Core;
-
 
 use Encore\Admin\Form;
 use Illuminate\Support\Collection;
@@ -47,18 +46,20 @@ class FormRightPanel
     }
 
     /**
-     * append right panel
+     * append right panel.
+     *
      * @param $title
      * @param \Closure $content
-     * @param bool $active
-     * @param string $theme
+     * @param bool     $active
+     * @param string   $theme
+     *
      * @return $this
      */
     public function append($title, \Closure $content, $active = false, $theme = 'danger')
     {
         $fields = $this->collectFields($content);
 
-        $id = 'form-' . ($this->panels->count() + 1);
+        $id = 'form-'.($this->panels->count() + 1);
 
         $this->panels->push(compact('id', 'title', 'fields', 'active', 'theme'));
 
@@ -80,7 +81,6 @@ class FormRightPanel
 
         $all = $fields->toArray();
         $tabPanels = clone $this->form->getTab();
-
 
         if (is_object($tabPanels) && $tabPanels instanceof CustomTab) {
             if ($this->offset == 0) {

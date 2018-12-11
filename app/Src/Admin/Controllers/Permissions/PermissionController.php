@@ -8,7 +8,6 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
-use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
 
 class PermissionController extends \Encore\Admin\Controllers\PermissionController
@@ -41,21 +40,20 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
 
         $grid = new Grid(new $permissionModel());
 
-
         $grid->option('grid_mini_filter', [
             'Admin\GridMiniFilter' => [
-                'model_name' => $permissionModel,
-                'url' => '/' . request()->route()->uri(),
-                'field_name' => 'cat_id',
-                'param_name' => 'cat_id',
+                'model_name'   => $permissionModel,
+                'url'          => '/'.request()->route()->uri(),
+                'field_name'   => 'cat_id',
+                'param_name'   => 'cat_id',
                 'param_values' => PermissionCategory::query()->pluck('name',
-                    'id')->toArray()
-            ]
+                    'id')->toArray(),
+            ],
         ]);
 
         $grid->id('ID')->sortable();
         $grid->cat_id('Категория')->display(function ($userId) {
-            return '<strong style="color:maroon">' . PermissionCategory::find($userId)->name . '</strong>';
+            return '<strong style="color:maroon">'.PermissionCategory::find($userId)->name.'</strong>';
         });
         $grid->slug(trans('admin.slug'));
 
@@ -76,7 +74,7 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
                     return "<span class='label label-primary'>{$name}</span>";
                 })->implode('&nbsp;');
 
-                $path = '/' . trim(config('admin.route.prefix'), '/') . $path;
+                $path = '/'.trim(config('admin.route.prefix'), '/').$path;
 
                 return "<div style='margin-bottom: 5px;'>$method<code>$path</code></div>";
             })->implode('');
@@ -92,16 +90,12 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
         });
 
         $grid->filter(function ($filter) {
-
             $filter->where(function ($query) {
                 if ($this->input > 0) {
-
                     $query->where('cat_id', $this->input);
-
                 }
             }, 'Категория', 'cat_id')->select(['0' => 'Все'] + PermissionCategory::query()->pluck('name',
                     'id')->toArray());
-
         });
 
         //$grid->expandFilter();
@@ -112,7 +106,7 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
     /**
      * Show interface.
      *
-     * @param mixed $id
+     * @param mixed   $id
      * @param Content $content
      *
      * @return Content
@@ -158,7 +152,7 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
                     return "<span class='label label-primary'>{$name}</span>";
                 })->implode('&nbsp;');
 
-                $path = '/' . trim(config('admin.route.prefix'), '/') . $path;
+                $path = '/'.trim(config('admin.route.prefix'), '/').$path;
 
                 return "<div style='margin-bottom: 5px;'>$method<code>$path</code></div>";
             })->implode('');

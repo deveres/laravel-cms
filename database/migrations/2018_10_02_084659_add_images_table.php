@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddImagesTable extends Migration
 {
@@ -22,7 +22,6 @@ class AddImagesTable extends Migration
             $table->string('filename', 255)->nullable();
             $table->string('alt', 100)->nullable();
             $table->string('disk', 100)->nullable();
-
         });
     }
 

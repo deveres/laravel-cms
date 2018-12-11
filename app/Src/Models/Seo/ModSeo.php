@@ -2,13 +2,10 @@
 
 namespace App\Src\Models\Seo;
 
-
 use Illuminate\Database\Eloquent\Model;
-
 
 class ModSeo extends Model
 {
-
     use \Dimsav\Translatable\Translatable;
 
     public $translationModel = 'App\Src\Models\Seo\ModSeoI18n';
@@ -20,7 +17,6 @@ class ModSeo extends Model
 
     public $dates = ['created_at', 'updated_at'];
 
-
     // protected $guard = 'admin';
     public $translatedAttributes = ['introtext', 'text', 'seo_h1', 'seo_title', 'seo_keywords', 'seo_description'];
     protected $primaryKey = 'id';
@@ -28,11 +24,12 @@ class ModSeo extends Model
 
     /**
      * ModSeo constructor.
+     *
      * @param array $attributes
      */
     public function __construct(array $attributes = [])
     {
-        $this->table = env('DB_TABLE_PREFIX', 'mod_') . 'seo';
+        $this->table = env('DB_TABLE_PREFIX', 'mod_').'seo';
 
         parent::__construct($attributes);
     }
@@ -42,14 +39,11 @@ class ModSeo extends Model
         parent::boot();
 
         static::deleted(function (ModSeo $item) {
-
             if ($item->attributes['id']) {
                 app('images.photo')->deleteItemImages('seo', $item->attributes['id']);
             }
 
             return true;
         });
-
-
     }
 }
