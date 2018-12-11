@@ -6,7 +6,6 @@ use App\Src\Models\Langs\LabelLang;
 use Illuminate\Support\Facades\Schema;
 use Tests\AdminTrait;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LangsTest extends TestCase
 {
@@ -15,7 +14,7 @@ class LangsTest extends TestCase
     use AdminTrait;
 
     /**
-     * test files existence
+     * test files existence.
      */
     public function testInstalledDirectories()
     {
@@ -25,19 +24,17 @@ class LangsTest extends TestCase
 
         $this->assertFileExists(app_path('Src/Models/Langs/LabelLang.php'));
 
-        $configPath = app_path('Src/Config/') . $this->config_alias . '.php';
+        $configPath = app_path('Src/Config/').$this->config_alias.'.php';
         $this->assertFileExists($configPath);
         //$this->assertFileExists(admin_path('Config/' . $this->config_alias . '.php'));
 
         $adminConfig = require $configPath;
 
         $this->app['config']->set($this->config_alias, $adminConfig);
-
-
     }
 
     /**
-     * test db table existence
+     * test db table existence.
      */
     public function testLangsTableExists()
     {
@@ -45,17 +42,17 @@ class LangsTest extends TestCase
     }
 
     /**
-     * test admin page exist
+     * test admin page exist.
      */
     public function testLangsPageExists()
     {
-        $response = $this->get('/' . config('admin.route.prefix') . '/langs');
+        $response = $this->get('/'.config('admin.route.prefix').'/langs');
         // $this->assertEquals(200, $response->status());
         $response->assertResponseStatus(200);
     }
 
     /**
-     * test if view add button
+     * test if view add button.
      */
     public function testCanViewCreateButton()
     {
@@ -65,11 +62,10 @@ class LangsTest extends TestCase
     }
 
     /**
-     * test if can add
+     * test if can add.
      */
     public function testCanAddLanguages()
     {
-
         $item = ['name' => 'Test', 'alias' => 'ts'];
 
         $this->visit('admin/langs/create')
@@ -85,20 +81,18 @@ class LangsTest extends TestCase
 
         $this->visit('admin/langs')
             ->see('Test');
-
     }
 
     /**
-     * test if can edit
+     * test if can edit.
      */
     public function testCanEditLanguages()
     {
         $this->assertTrue(true);
     }
 
-
     /**
-     * test if can be deleted
+     * test if can be deleted.
      */
     public function testCanDeleteLanguages()
     {

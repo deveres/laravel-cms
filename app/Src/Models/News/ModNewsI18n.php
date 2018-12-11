@@ -2,14 +2,10 @@
 
 namespace App\Src\Models\News;
 
-
 use Illuminate\Database\Eloquent\Model;
-
 
 class ModNewsI18n extends Model
 {
-
-
     public $incrementing = 'id';
     public $timestamps = false;
     public $fillable = ['name', 'introtext', 'text', 'seo_h1', 'seo_title', 'seo_keywords', 'seo_description'];
@@ -17,14 +13,13 @@ class ModNewsI18n extends Model
 
     /**
      * ModSeo constructor.
+     *
      * @param array $attributes
      */
     public function __construct(array $attributes = [])
     {
-        $this->table = env('DB_TABLE_PREFIX', 'mod_') . 'news_i18n';
+        $this->table = env('DB_TABLE_PREFIX', 'mod_').'news_i18n';
 
         parent::__construct($attributes);
     }
-
-
 }

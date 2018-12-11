@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Request;
 use Encore\Admin\Facades\Admin;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Request;
 
 /**
- * Class Controller
- * @package App\Http\Controllers
+ * Class Controller.
+ *
  * @property $view - current viewer
  * @property $current_module - name of current module
  * @property $resources - current module resources config
@@ -28,16 +28,15 @@ class Controller extends BaseController
 
     /**
      * Create a new controller instance.
-     *  all admin controllers must extends this controller
+     *  all admin controllers must extends this controller.
+     *
      * @return void
      */
     public function __construct()
     {
         $this->view = view();
 
-
         $this->breadcrumbs = app('backend.breadcrumbs');
-
 
         $this->fetchModule();
 
@@ -45,15 +44,12 @@ class Controller extends BaseController
         $this->_setCurrentResources();
 
         $this->setTitle('', '');
-
-
     }
 
     public function fetchModule()
     {
         $module = '';
         if (request()->route()) {
-
             $segments = request()->segments();
             if ($segments) {
                 $segments = array_diff($segments, [config('admin.route.prefix')]);
@@ -61,31 +57,26 @@ class Controller extends BaseController
                 $first = explode('_', $first);
                 $first_element = array_shift($first);
 
-
-                if (config('modules.' . $first_element)) {
-                    $module = config('modules.' . $first_element)['path'];
+                if (config('modules.'.$first_element)) {
+                    $module = config('modules.'.$first_element)['path'];
                 }
             }
-
-
         }
         if ($module == '') {
             $module = 'admincore';
         }
-
 
         $this->current_module = $module;
     }
 
     private function _setBreadCrumbs()
     {
-
         if ($this->current_module) {
-            $admin_menu = config('modules.' . $this->current_module . '.admin_menu');
-            $module_config = config('modules.' . $this->current_module);
+            $admin_menu = config('modules.'.$this->current_module.'.admin_menu');
+            $module_config = config('modules.'.$this->current_module);
 
             if ($module_config['path']) {
-                $this->breadcrumbs->addCrumb($module_config['name'], route($module_config['path'] . '.index'));
+                $this->breadcrumbs->addCrumb($module_config['name'], route($module_config['path'].'.index'));
             }
         }
         /*
@@ -95,23 +86,22 @@ class Controller extends BaseController
 
 
                 }*/
-
     }
 
     public function _setCurrentResources()
     {
-        $this->resources = (config('modules.' . $this->current_module . '.resources'));
+        $this->resources = (config('modules.'.$this->current_module.'.resources'));
     }
 
     public function setTitle($title = '', $subtitle = '')
     {
-
-        $this->view->share('htmlheader_title', ($title) ? (" - " . $title) : '');
+        $this->view->share('htmlheader_title', ($title) ? (' - '.$title) : '');
         $this->view->share('site_subtitle', $subtitle);
     }
 
     /**
      * @param string $permission
+     *
      * @return bool
      */
     public function lCheckPermission($permission = 'read')
@@ -125,11 +115,11 @@ class Controller extends BaseController
 
     /**
      * @param array $segments
+     *
      * @return array|string
      */
     public function makePermission($permission = '', $segments = [])
     {
-
         if (is_array($segments) && count($segments) == 0) {
             if ($this->current_module) {
                 $segments[] = $this->current_module;
@@ -140,7 +130,6 @@ class Controller extends BaseController
         }
 
         $ret = implode('.', array_merge($segments, [$permission]));
-
 
         return $ret;
     }

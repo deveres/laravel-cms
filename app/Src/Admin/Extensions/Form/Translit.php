@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: vadim
  * Date: 05.10.2018
- * Time: 12:41
+ * Time: 12:41.
  */
 
 namespace App\Src\Admin\Extensions\Form;
@@ -12,22 +12,18 @@ use Encore\Admin\Form\Field;
 
 class Translit extends Field
 {
-
     use Field\PlainInput;
 
-
     protected static $js = [
-        'backend/js/translit.js'
+        'backend/js/translit.js',
     ];
 
     protected $from_field = 'edit[name]';
     protected $lock_state = 0;
     protected $lock_alias = 'lock_alias';
 
-
     public function __construct($column, $arguments)
     {
-
         if (isset($arguments[0])) {
             $item = trim(array_shift($arguments));
             $this->from_field = $item ?: $this->from_field;
@@ -41,12 +37,9 @@ class Translit extends Field
             $this->lock_state = $item ?: $this->lock_state;
         }
 
-
         $this->column = $column;
         $this->label = $this->formatLabel($arguments);
         $this->id = $this->formatId($column);
-
-
     }
 
     public function render()
@@ -55,9 +48,7 @@ class Translit extends Field
         $lock_alias = $this->lock_alias;
         $lock_state = $this->lock_state;
 
-
         unset($this->attributes['from'], $this->attributes['lock_alias'], $this->attributes['state']);
-
 
         $this->initPlainInput();
 
@@ -66,9 +57,8 @@ class Translit extends Field
             ->defaultAttribute('id', $this->id)
             ->defaultAttribute('name', $this->elementName ?: $this->formatName($this->column))
             ->defaultAttribute('value', old($this->column, $this->value()))
-            ->defaultAttribute('class', 'form-control ' . $this->getElementClassString())
+            ->defaultAttribute('class', 'form-control '.$this->getElementClassString())
             ->defaultAttribute('placeholder', $this->getPlaceholder());
-
 
         if ($lock_alias) {
             if ($lock_state) {
@@ -76,16 +66,15 @@ class Translit extends Field
             }
             $img = $lock_state ? asset('backend/images/lock_on22.png') : asset('backend/images/lock_off22.png');
             $this->append("
-                        <img src='" . $img . "' title='Заблокировать алиас для редактирования'
-                         style='margin-bottom:-5px; cursor:pointer;'   class='" . $lock_alias . "_field_img' />
+                        <img src='".$img."' title='Заблокировать алиас для редактирования'
+                         style='margin-bottom:-5px; cursor:pointer;'   class='".$lock_alias."_field_img' />
                    ");
         }
 
         $this->addVariables([
             'prepend' => $this->prepend,
-            'append' => $this->append,
+            'append'  => $this->append,
         ]);
-
 
         $translite_from = $from_field;
         $translite_to = $this->column();
@@ -121,8 +110,7 @@ var translite_to = '{$translite_to}';
 
 
 EOT;
+
         return parent::render();
-
     }
-
 }

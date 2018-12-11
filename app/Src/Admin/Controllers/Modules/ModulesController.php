@@ -28,7 +28,7 @@ class ModulesController extends Controller
 
         $counter = 1;
         foreach ($cats as $item) {
-            $id = (int)substr($item, 3);
+            $id = (int) substr($item, 3);
             if (!$id) {
                 continue;
             }
@@ -36,7 +36,7 @@ class ModulesController extends Controller
             $cat = Module::query()->find($id);
             $cat->{$cat->sortable['order_column_name']} = $counter;
             $cat->save();
-            ++$counter;
+            $counter++;
         }
     }
 
@@ -85,13 +85,13 @@ class ModulesController extends Controller
 
             if (!$module && !empty($one_conf['name']) && !empty($one_conf['path'])) {
                 $module = new Module([
-                    'key' => $key,
-                    'path' => $one_conf['path'],
-                    'name' => $one_conf['name'],
-                    'icon' => !empty($one_conf['icon']) ? $one_conf['icon'] : '',
-                    'icon_color' => !empty($one_conf['icon_color']) ? $one_conf['icon_color'] : '',
+                    'key'         => $key,
+                    'path'        => $one_conf['path'],
+                    'name'        => $one_conf['name'],
+                    'icon'        => !empty($one_conf['icon']) ? $one_conf['icon'] : '',
+                    'icon_color'  => !empty($one_conf['icon_color']) ? $one_conf['icon_color'] : '',
                     'description' => !empty($one_conf['description']) ? $one_conf['description'] : '',
-                    'state' => 0,
+                    'state'       => 0,
                 ]);
                 $module->save();
             }
@@ -168,7 +168,7 @@ class ModulesController extends Controller
         });
 
         $statuses1 = [
-            'on' => ['value' => 1, 'text' => 'Включено', 'color' => 'success'],
+            'on'  => ['value' => 1, 'text' => 'Включено', 'color' => 'success'],
             'off' => ['value' => 0, 'text' => 'Отключено', 'color' => 'danger'],
         ];
 

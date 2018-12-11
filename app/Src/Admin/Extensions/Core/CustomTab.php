@@ -2,14 +2,11 @@
 
 namespace App\Src\Admin\Extensions\Core;
 
-use Encore\Admin\Form;
-use Illuminate\Support\Collection;
 use Encore\Admin\Form\Tab;
+use Illuminate\Support\Collection;
 
 class CustomTab extends Tab
 {
-
-
     public function getOffset()
     {
         return $this->offset;
@@ -31,13 +28,11 @@ class CustomTab extends Tab
         $all = $fields->toArray();
         $rightPanels = clone $this->form->getRightPanel();
 
-
         if (is_object($rightPanels) && $rightPanels instanceof FormRightPanel) {
             if ($this->offset == 0) {
                 $this->offset = $rightPanels->getOffset();
             }
         }
-
 
         foreach ($this->form->rows as $row) {
             $rowFields = array_map(function ($field) {
@@ -61,11 +56,8 @@ class CustomTab extends Tab
 
         $fields = $fields->slice($this->offset);
 
-
         $this->offset += $fields->count();
 
         return $fields;
     }
-
-
 }

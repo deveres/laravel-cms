@@ -2,7 +2,6 @@
 
 namespace App\Src\Models\Modules;
 
-
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EloquentSortable\SortableTrait;
 
@@ -11,7 +10,7 @@ class Module extends Model
     use SortableTrait;
 
     public $sortable = [
-        'order_column_name' => 'module_order',
+        'order_column_name'  => 'module_order',
         'sort_when_creating' => true,
     ];
 
@@ -25,5 +24,4 @@ class Module extends Model
     protected $table = 'system_modules';
 
     protected $guarded = ['id'];
-
 }

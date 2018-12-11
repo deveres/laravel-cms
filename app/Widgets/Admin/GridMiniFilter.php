@@ -23,14 +23,14 @@ class GridMiniFilter extends AbstractWidget
 
         $totals = [];
         foreach ($this->config['param_values'] as $key => $one) {
-            $totals[(string)$key] = $this->config['model_name']::query()->where($this->config['field_name'],
+            $totals[(string) $key] = $this->config['model_name']::query()->where($this->config['field_name'],
                 $key)->count();
         }
 
         return view('admin::widgets.grid.grid_mini_filter', [
-            'config' => $this->config,
-            'totals' => $totals,
-            'selected' => request()->get($this->config['param_name'], 0),
+            'config'     => $this->config,
+            'totals'     => $totals,
+            'selected'   => request()->get($this->config['param_name'], 0),
             'totals_all' => $this->config['model_name']::query()->count(),
         ]);
     }

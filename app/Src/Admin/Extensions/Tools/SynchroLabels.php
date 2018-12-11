@@ -22,7 +22,8 @@ class SynchroLabels extends AbstractTool
         //@todo set messages from
         $message = trans('admin.refresh_succeeded');
 
-        $url =route('synchro-labels');
+        $url = route('synchro-labels');
+
         return <<<EOT
          (function(){
             var synchroLabels=0;

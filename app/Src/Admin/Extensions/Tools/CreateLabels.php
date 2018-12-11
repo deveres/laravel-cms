@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Request;
 
 class CreateLabels extends AbstractTool
 {
-    public $parent_value=0;
+    public $parent_value = 0;
 
     public function __construct($parent = 0)
     {

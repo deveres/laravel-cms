@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddCategoryNameToPermissionsTable extends Migration
 {
@@ -16,7 +16,7 @@ class AddCategoryNameToPermissionsTable extends Migration
         Schema::create('admin_permissions_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255);
-           // $table->timestamps();
+            // $table->timestamps();
         });
 
         Schema::table('admin_permissions', function (Blueprint $table) {
@@ -31,7 +31,6 @@ class AddCategoryNameToPermissionsTable extends Migration
      */
     public function down()
     {
-
         Schema::table('admin_permissions', function (Blueprint $table) {
             $table->dropColumn('cat_id');
         });

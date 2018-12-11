@@ -8,8 +8,6 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Str;
 
 class PermissionCategoriesController extends \Encore\Admin\Controllers\PermissionController
 {
@@ -37,14 +35,11 @@ class PermissionCategoriesController extends \Encore\Admin\Controllers\Permissio
      */
     protected function grid()
     {
-
-
         $grid = new Grid(new PermissionCategory());
 
         $grid->id('ID')->sortable();
 
         $grid->name(trans('admin.name'));
-
 
         $grid->tools(function (Grid\Tools $tools) {
             $tools->batch(function (Grid\Tools\BatchActions $actions) {
@@ -55,10 +50,8 @@ class PermissionCategoriesController extends \Encore\Admin\Controllers\Permissio
         $grid->actions(function ($actions) {
             $actions->disableView();
 
-
             $actions->column->setAttributes(['class' => 'row_actions']);
         });
-
 
         return $grid;
     }
@@ -66,7 +59,7 @@ class PermissionCategoriesController extends \Encore\Admin\Controllers\Permissio
     /**
      * Show interface.
      *
-     * @param mixed $id
+     * @param mixed   $id
      * @param Content $content
      *
      * @return Content
@@ -88,14 +81,11 @@ class PermissionCategoriesController extends \Encore\Admin\Controllers\Permissio
      */
     protected function detail($id)
     {
-
-
         $show = new Show(PermissionCategory::findOrFail($id));
 
         $show->id('ID');
 
         $show->name(trans('admin.name'));
-
 
         return $show;
     }
@@ -123,15 +113,11 @@ class PermissionCategoriesController extends \Encore\Admin\Controllers\Permissio
      */
     public function form()
     {
-
-
         $form = new Form(new PermissionCategory());
 
         $form->display('id', 'ID');
 
-
         $form->text('name', trans('admin.name'))->rules('required');
-
 
         return $form;
     }
@@ -150,6 +136,4 @@ class PermissionCategoriesController extends \Encore\Admin\Controllers\Permissio
             ->description(trans('admin.create'))
             ->body($this->form());
     }
-
-
 }

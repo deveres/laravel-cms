@@ -35,11 +35,10 @@ class Label extends Model
         Registry::set('labels', $this->getLabels($lang_alias));
     }
 
-
     /**
      * @param bool $lang_alias
-     * @return bool|mixed
      *
+     * @return bool|mixed
      */
     public function getLabels($lang_alias = false)
     {
@@ -50,8 +49,10 @@ class Label extends Model
 
         $base = storage_path('app');
 
-        $path = $base . '/cache/labels/' . $lang_alias . '.json';
-        if (!file_exists($path) || !is_readable($path)) return false;
+        $path = $base.'/cache/labels/'.$lang_alias.'.json';
+        if (!file_exists($path) || !is_readable($path)) {
+            return false;
+        }
 
         return json_decode(file_get_contents($path), true);
     }

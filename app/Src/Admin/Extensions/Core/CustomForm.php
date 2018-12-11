@@ -3,25 +3,24 @@
  * Created by PhpStorm.
  * User: vadim
  * Date: 05.10.2018
- * Time: 17:51
+ * Time: 17:51.
  */
 
 namespace App\Src\Admin\Extensions\Core;
 
-use Encore\Admin\Form;
 use Closure;
+use Encore\Admin\Form;
 
 class CustomForm extends Form
 {
-
     /**
      * @var null
      */
     protected $rightPanel = null;
 
-
     /**
      * CustomForm constructor.
+     *
      * @param $model
      * @param Closure|null $callback
      */
@@ -51,10 +50,12 @@ class CustomForm extends Form
     }
 
     /**
-     * right panel
+     * right panel.
+     *
      * @param $title
      * @param Closure $content
-     * @param bool $active
+     * @param bool    $active
+     *
      * @return $this
      */
     public function rightPanel($title, Closure $content, $active = false)
@@ -75,5 +76,4 @@ class CustomForm extends Form
 
         return $this->rightPanel;
     }
-
 }

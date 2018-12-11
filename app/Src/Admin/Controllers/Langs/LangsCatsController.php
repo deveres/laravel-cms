@@ -94,13 +94,14 @@ class LangsCatsController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param int     $id
      * @param Content $content
+     *
      * @return Content
      */
     public function edit($id, Content $content)
     {
-        $this->setTitle($this->resources[$this->_resource]['name'] . ' - Редактирование');
+        $this->setTitle($this->resources[$this->_resource]['name'].' - Редактирование');
         $this->breadcrumbs->addCrumb('Редактирование', '');
 
         $content->header($this->resources[$this->_resource]['name'])
@@ -133,14 +134,14 @@ class LangsCatsController extends Controller
             $form->htmlFull('<h4 class="form-header">Основная информация</h4>');
 
             $states = [
-                'on' => ['value' => 1, 'text' => 'Да', 'color' => 'success'],
+                'on'  => ['value' => 1, 'text' => 'Да', 'color' => 'success'],
                 'off' => ['value' => 0, 'text' => 'Нет', 'color' => 'danger'],
             ];
 
             $form->display('id', 'ID');
             $form->text('name', 'Название')->rules('required|min:3');
             $form->text('alias', 'Алиас')->rules(function ($form) {
-                return 'required|min:2|unique:label_cats,alias,' . (($form->model()->id) ? $form->model()->id : 0);
+                return 'required|min:2|unique:label_cats,alias,'.(($form->model()->id) ? $form->model()->id : 0);
             });
 
             $form->select('parent_id', 'Родительская категория')->default(0)->options(function ($id) use ($form) {
@@ -160,7 +161,7 @@ class LangsCatsController extends Controller
             $form1->display('updated_at');
 
             $statuses1 = [
-                'on' => ['value' => 1, 'text' => 'Включено', 'color' => 'success'],
+                'on'  => ['value' => 1, 'text' => 'Включено', 'color' => 'success'],
                 'off' => ['value' => 0, 'text' => 'Отключено', 'color' => 'danger'],
             ];
             $form1->switch('state', 'Статус')->states($statuses1);
@@ -176,7 +177,7 @@ class LangsCatsController extends Controller
      */
     public function create(Content $content)
     {
-        $this->setTitle($this->resources[$this->_resource]['name'] . ' - Создать');
+        $this->setTitle($this->resources[$this->_resource]['name'].' - Создать');
         $this->breadcrumbs->addCrumb('Создать', '');
 
         $content->header($this->resources[$this->_resource]['name'])
@@ -198,7 +199,7 @@ class LangsCatsController extends Controller
 
         $counter = 1;
         foreach ($cats as $item) {
-            $id = (int)substr($item, 3);
+            $id = (int) substr($item, 3);
             if (!$id) {
                 continue;
             }
@@ -206,7 +207,7 @@ class LangsCatsController extends Controller
             $cat = LabelCat::query()->find($id);
             $cat->{$cat->getOrderColumn()} = $counter;
             $cat->save();
-            ++$counter;
+            $counter++;
         }
     }
 }

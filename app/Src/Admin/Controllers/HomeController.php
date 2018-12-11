@@ -14,14 +14,12 @@ class HomeController extends Controller
     public function index()
     {
         return Admin::content(function (Content $content) {
-
             $content->header('Dashboard');
             $content->description('Description...');
 
             $content->row(Dashboard::title());
 
             $content->row(function (Row $row) {
-
                 $row->column(4, function (Column $column) {
                     $column->append(Dashboard::environment());
                 });

@@ -7,7 +7,7 @@ use Encore\Admin\Grid\Displayers\AbstractDisplayer;
 
 class RowOrderable extends AbstractDisplayer
 {
-    public function display($outGrid = 'left', $route=null)
+    public function display($outGrid = 'left', $route = null)
     {
         $this->grid->rows(function (\Encore\Admin\Grid\Row $row) {
             $row->setAttributes(['id' => 'tr_'.$row->id, 'class' => 'tr_depth_'.(($row->depth) ? $row->depth : 0).' tr_parent_'.$row->parent_id]);
@@ -19,7 +19,7 @@ class RowOrderable extends AbstractDisplayer
 				<input type="hidden" value="'.$this->row->id.'" class="input_sort_parent_'.$this->row->parent_id.'" />';
     }
 
-    protected function _getScript($route =null)
+    protected function _getScript($route = null)
     {
         $url = $route;
 

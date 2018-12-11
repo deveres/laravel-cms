@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateLabelsTable extends Migration
 {
@@ -17,7 +17,6 @@ class CreateLabelsTable extends Migration
             $table->increments('id');
             $table->integer('parent_id')->default(0);
             $table->string('label', 150)->nullable();
-
         });
     }
 

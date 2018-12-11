@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateModulesTable extends Migration
 {
@@ -26,10 +26,8 @@ class CreateModulesTable extends Migration
             $table->tinyInteger('state')->default(1);
             $table->integer('module_order')->default(0);
 
-
             $table->index('state');
         });
-
     }
 
     /**

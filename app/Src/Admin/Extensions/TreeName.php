@@ -16,7 +16,7 @@ class TreeName extends AbstractDisplayer
         if ($route) {
             $result = '
             <div style="float: right;">
-                <a href="' . route($route, [$param => $id]) . '">Перейти</a>
+                <a href="'.route($route, [$param => $id]).'">Перейти</a>
             </div>';
         }
 
@@ -29,23 +29,23 @@ class TreeName extends AbstractDisplayer
                     $parent = $this->_getParent($grid_data, $id, $counter);
 
                     if (!$parent['last']) {
-                        $result .= '<img src="' . asset('backend/images/tree_line3.gif') . '" style="margin-bottom:-2px;" />';
+                        $result .= '<img src="'.asset('backend/images/tree_line3.gif').'" style="margin-bottom:-2px;" />';
                     } else {
-                        $result .= '<img src="' . asset('backend/images/tree_line1.gif') . '" style="margin-bottom:-2px;" />';
+                        $result .= '<img src="'.asset('backend/images/tree_line1.gif').'" style="margin-bottom:-2px;" />';
                     }
-                    ++$counter;
+                    $counter++;
                 }
 
-                $result .= '<img src="' . asset('backend/images/tree_line2.gif') . '" style="margin-bottom:-2px;" />';
+                $result .= '<img src="'.asset('backend/images/tree_line2.gif').'" style="margin-bottom:-2px;" />';
             } else {
-                $result .= str_repeat('<img src="' . asset('backend/images/tree_line2.gif') . '" style="margin-bottom:-2px;" />', $row_data['depth'] - 1);
+                $result .= str_repeat('<img src="'.asset('backend/images/tree_line2.gif').'" style="margin-bottom:-2px;" />', $row_data['depth'] - 1);
             }
         }
 
         if ($row_data['child_count'] > 0) {
-            $result .= '<img src="' . asset('backend/images/folder.gif') . '" style="margin-bottom:-2px;"  /> ';
+            $result .= '<img src="'.asset('backend/images/folder.gif').'" style="margin-bottom:-2px;"  /> ';
         } else {
-            $result .= '<img src="' . asset('backend/images/folder.gif') . '" style="margin-bottom:-2px;"  /> ';
+            $result .= '<img src="'.asset('backend/images/folder.gif').'" style="margin-bottom:-2px;"  /> ';
         }
         $result .= $value;
         $result .= '</div>';

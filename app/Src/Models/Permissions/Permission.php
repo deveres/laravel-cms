@@ -2,7 +2,6 @@
 
 namespace App\Src\Models\Permissions;
 
-
 use Encore\Admin\Auth\Database\Permission as EncorePermissions;
 
 class Permission extends EncorePermissions
@@ -10,8 +9,7 @@ class Permission extends EncorePermissions
     /**
      * @var array
      */
-    protected $fillable = ['name','cat_id', 'slug', 'http_method', 'http_path'];
-
+    protected $fillable = ['name', 'cat_id', 'slug', 'http_method', 'http_path'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -20,5 +18,4 @@ class Permission extends EncorePermissions
     {
         return $this->belongsTo('App\Src\Models\Permissions\PermissionCategory', 'cat_id');
     }
-
 }

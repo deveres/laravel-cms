@@ -5,9 +5,7 @@ namespace App\Src\Models\Langs;
 use App\Src\Services\I18nService;
 use Encore\Admin\Traits\AdminBuilder;
 use Encore\Admin\Traits\ModelTree;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class LabelCat extends Model
 {
@@ -49,7 +47,7 @@ class LabelCat extends Model
         $result = [];
         $counter = 1;
         foreach ($data as $value) {
-           // $value = (array) $value;
+            // $value = (array) $value;
 
             $result[$value['id']] = $value;
             $result[$value['id']]->depth = $depth;
@@ -57,13 +55,11 @@ class LabelCat extends Model
             $result[$value['id']]->last = ($counter === count($data));
             $result[$value['id']]->link = $parent_link.$value->alias.'/';
 
-
-
             $add_data = $this->getStructure($value->id, $exclude_id, $just_state_on, $depth + 1, $result[$value['id']]->link);
             $result[$value['id']]->child_count = count($add_data);
             $result += $add_data;
 
-            ++$counter;
+            $counter++;
         }
 
         unset($table);

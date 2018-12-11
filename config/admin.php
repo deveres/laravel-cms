@@ -99,7 +99,7 @@ return [
     'auth' => [
         'guards' => [
             'admin' => [
-                'driver' => 'session',
+                'driver'   => 'session',
                 'provider' => 'admin',
             ],
         ],
@@ -107,7 +107,7 @@ return [
         'providers' => [
             'admin' => [
                 'driver' => 'eloquent',
-                'model' => Encore\Admin\Auth\Database\Administrator::class,
+                'model'  => Encore\Admin\Auth\Database\Administrator::class,
             ],
         ],
     ],
@@ -129,7 +129,7 @@ return [
         // Image and file upload path under the disk above.
         'directory' => [
             'image' => 'images',
-            'file' => 'files',
+            'file'  => 'files',
         ],
     ],
 
@@ -157,7 +157,7 @@ return [
         // Permission table and model.
         'permissions_table' => 'admin_permissions',
         //'permissions_model' => Encore\Admin\Auth\Database\Permission::class,
-        'permissions_model' => Encore\Admin\Auth\Database\Permission::class,
+        'permissions_model'          => Encore\Admin\Auth\Database\Permission::class,
         'permissions_model_category' => Encore\Admin\Auth\Database\PermissionCategory::class,
 
         // Menu table and model.
@@ -166,11 +166,11 @@ return [
         'menu_model' => App\Src\Models\Menu\Menu::class,
 
         // Pivot table for table above.
-        'operation_log_table' => 'admin_operation_log',
+        'operation_log_table'    => 'admin_operation_log',
         'user_permissions_table' => 'admin_user_permissions',
-        'role_users_table' => 'admin_role_users',
+        'role_users_table'       => 'admin_role_users',
         'role_permissions_table' => 'admin_role_permissions',
-        'role_menu_table' => 'admin_role_menu',
+        'role_menu_table'        => 'admin_role_menu',
     ],
 
     /*
@@ -311,26 +311,26 @@ return [
 
             // Editor configuration
             'config' => [
-                'lang' => 'en',
+                'lang'   => 'en',
                 'hegiht' => 500,
-            ]
+            ],
 
         ],
-        'config'=>[
-            'enable'=>true,
+        'config'=> [
+            'enable'=> true,
 
-                'name'=>'config',
-                'table'=>'admin_config',
+                'name' => 'config',
+                'table'=> 'admin_config',
                 //'controller'=>'Encore\Admin\Config\ConfigController',
                 'controller' => 'App\Src\Admin\Controllers\Config\ConfigController',
-                'categories'=>[
-                    'general'=>'Опции сайта',
-                    'system'=>'Системные',
-                ]
+                'categories' => [
+                    'general'=> 'Опции сайта',
+                    'system' => 'Системные',
+                ],
         ],
         'env-manager' => [
             // If the value is set to false, this extension will be disabled
-            'enable' => true
+            'enable' => true,
         ],
         'composer-viewer' => [
             // Set this to false if you want to disable this extension
@@ -339,7 +339,7 @@ return [
 
         'cropper' => [
               'enable' => true,
-        ]
+        ],
 
     ],
 ];

@@ -72,7 +72,7 @@ class LangsLabelsController extends Controller
         $grid = new Grid(new Label());
 
         $grid->parent_id('Путь')->display(function () {
-            return I18nService::getLabelPath($this->parent_id) . '/' . $this->label;
+            return I18nService::getLabelPath($this->parent_id).'/'.$this->label;
         })->sortable();
 
         if ($can_edit) {
@@ -82,7 +82,7 @@ class LangsLabelsController extends Controller
         }
 
         foreach (LabelLang::getActive() as $oneLang) {
-            $field = 'value_' . $oneLang['id'];
+            $field = 'value_'.$oneLang['id'];
             if ($can_edit) {
                 $grid->{$field}($oneLang['name'])->sortable()->editable('textarea');
             } else {
@@ -121,9 +121,9 @@ class LangsLabelsController extends Controller
                 $langs = get_active_langs();
                 $input = $this->input;
 
-                $query->where('label', 'LIKE', $input . '%');
+                $query->where('label', 'LIKE', $input.'%');
                 foreach ($langs as $lang) {
-                    $query->orWhere('value_' . $lang['id'], 'LIKE', $input . '%');
+                    $query->orWhere('value_'.$lang['id'], 'LIKE', $input.'%');
                 }
             }, 'Метка', 'label_val');
         });
@@ -144,7 +144,7 @@ class LangsLabelsController extends Controller
      */
     public function edit($id, Content $content)
     {
-        $this->setTitle($this->resources[$this->_resource]['name'] . ' - Редактирование');
+        $this->setTitle($this->resources[$this->_resource]['name'].' - Редактирование');
         $this->breadcrumbs->addCrumb('Редактирование', '');
 
         $content->header($this->resources[$this->_resource]['name'])
@@ -159,6 +159,7 @@ class LangsLabelsController extends Controller
 
     /**
      * @param int $id
+     *
      * @return CustomForm
      */
     protected function form($id = 0)
@@ -176,18 +177,18 @@ class LangsLabelsController extends Controller
         $form->hidden('parent_id');
         $langs = get_active_langs();
         foreach ($langs as $one) {
-            $form->hidden('value_' . $one['id']);
+            $form->hidden('value_'.$one['id']);
         }
 
         $form->text('label')->rules(
             function ($form) {
-                return 'required|regex:/^[a-zA-Z0-9\-\_]+$/ui|min:3|max:150|unique_by_parent:labels,label,' . (($form->model()->id) ? $form->model()->id : 0) . ',id,parent_id,' . $form->model()->parent_id;
+                return 'required|regex:/^[a-zA-Z0-9\-\_]+$/ui|min:3|max:150|unique_by_parent:labels,label,'.(($form->model()->id) ? $form->model()->id : 0).',id,parent_id,'.$form->model()->parent_id;
             },
             [
-                'required' => 'Алиас метки не может быть пустым',
-                'regex' => 'Алиас метки может содержать буквы английского алфавита(a-zA-Z), цифры(0-9), тире(-) и знак подчёркивания(_)',
-                'min' => 'Алиас должен иметь минимум 3 символа',
-                'max' => 'Алиас должен иметь не  более 150 символов',
+                'required'         => 'Алиас метки не может быть пустым',
+                'regex'            => 'Алиас метки может содержать буквы английского алфавита(a-zA-Z), цифры(0-9), тире(-) и знак подчёркивания(_)',
+                'min'              => 'Алиас должен иметь минимум 3 символа',
+                'max'              => 'Алиас должен иметь не  более 150 символов',
                 'unique_by_parent' => 'Метка с таким алиасом в этой директории уже существует',
             ]
         );
@@ -202,7 +203,7 @@ class LangsLabelsController extends Controller
      */
     public function create(Content $content)
     {
-        $this->setTitle($this->resources[$this->_resource]['name'] . ' - Создать');
+        $this->setTitle($this->resources[$this->_resource]['name'].' - Создать');
         $this->breadcrumbs->addCrumb('Создать', '');
 
         $content->header($this->resources[$this->_resource]['name'])

@@ -100,11 +100,12 @@ class LangsController extends Controller
     /**
      * @param $id
      * @param Content $content
+     *
      * @return Content
      */
     public function edit($id, Content $content)
     {
-        $this->setTitle($this->resources[$this->_resource]['name'] . ' - Редактирование');
+        $this->setTitle($this->resources[$this->_resource]['name'].' - Редактирование');
         $this->breadcrumbs->addCrumb('Редактирование', '');
 
         $content->header($this->resources[$this->_resource]['name'])
@@ -137,14 +138,14 @@ class LangsController extends Controller
             $form->htmlFull('<h4 class="form-header">Основная информация</h4>');
 
             $states = [
-                'on' => ['value' => 1, 'text' => 'Да', 'color' => 'success'],
+                'on'  => ['value' => 1, 'text' => 'Да', 'color' => 'success'],
                 'off' => ['value' => 0, 'text' => 'Нет', 'color' => 'danger'],
             ];
 
             $form->display('id', 'ID');
             $form->text('name', 'Название')->rules('required|min:3');
             $form->text('alias', 'Алиас')->rules(function ($form) {
-                return 'required|min:2|unique:label_langs,alias,' . (($form->model()->id) ? $form->model()->id : 0);
+                return 'required|min:2|unique:label_langs,alias,'.(($form->model()->id) ? $form->model()->id : 0);
             });
 
             $form->switch('default', 'По умолчанию')->states($states);
@@ -154,7 +155,7 @@ class LangsController extends Controller
             $form1->display('id', 'ID');
 
             $statuses1 = [
-                'on' => ['value' => 1, 'text' => 'Включено', 'color' => 'success'],
+                'on'  => ['value' => 1, 'text' => 'Включено', 'color' => 'success'],
                 'off' => ['value' => 0, 'text' => 'Отключено', 'color' => 'danger'],
             ];
             $form1->switch('state', 'Статус')->states($statuses1);
@@ -170,7 +171,7 @@ class LangsController extends Controller
      */
     public function create(Content $content)
     {
-        $this->setTitle($this->resources[$this->_resource]['name'] . ' - Создать');
+        $this->setTitle($this->resources[$this->_resource]['name'].' - Создать');
         $this->breadcrumbs->addCrumb('Создать', '');
 
         $content->header($this->resources[$this->_resource]['name'])
