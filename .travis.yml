@@ -21,14 +21,15 @@ services:
   - postgresql
 
 before_script:
+  - phpenv config-rm xdebug.ini
   - cp .env.travis .env.testing
   - psql -c 'create database laravel_admin_test;' -U postgres
   - export PGPASSWORD=''; psql -U postgres -h localhost -d laravel_admin_test -f database/dump/2018-09-28.sql
   - unset PGPASSWORD
-  - travis_retry composer self-update
-  - travis_retry composer update --no-progress
-  - travis_retry composer install --no-progress --no-interaction
+  - composer self-update
+  - composer update --no-progress
+  - composer install --no-progress --no-interaction
 
 
 script:
-  - composer test
+  - phpunit
