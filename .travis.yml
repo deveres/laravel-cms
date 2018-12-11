@@ -13,7 +13,7 @@ dist: precise
 
 env:
   global:
-    - NODE_ENV=testing
+    - NODE_ENV=test
 
 addons:
   postgresql: "9.5"
