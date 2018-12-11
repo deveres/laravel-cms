@@ -1,0 +1,34 @@
+language: php
+
+php:
+  - 7
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: hhvm
+
+sudo: required
+dist: precise
+
+env:
+  global:
+    - NODE_ENV=testing
+
+addons:
+  postgresql: "9.5"
+services:
+  - postgresql
+
+before_script:
+  - cp .env.travis .env.testing
+  - psql -c 'create database laravel-admin-test;' -U postgres
+  - export PGPASSWORD=''; psql -U postgres -h localhost -d laravel-admin-test -f database/dump/2018-09-28.sql
+  - unset PGPASSWORD
+  - travis_retry composer self-update
+  - travis_retry composer update --no-progress
+  - travis_retry composer install --no-progress --no-interaction
+
+
+script:
+  - composer test
