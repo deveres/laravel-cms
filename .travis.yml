@@ -31,5 +31,6 @@ before_script:
   - composer update --no-progress
   - composer install --no-progress --no-interaction
 
+
 script:
-  - phpunit
+  - vendor/bin/phpunit
