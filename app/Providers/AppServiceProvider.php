@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Encore\Admin\Config\Config;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
@@ -14,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Blade::withoutDoubleEncoding();
+        Paginator::useBootstrapThree();
+
         Config::load();
 
         \Config::set('app.locale', get_default_lang_alias());
@@ -63,7 +68,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton('backend.breadcrumbs', function () {
             $breadcrumbs = new \Creitive\Breadcrumbs\Breadcrumbs();
-            $breadcrumbs->addCrumb("<i class='fa fa-dashboard'></i>".' Главная', config('admin.route.prefix'));
+            $breadcrumbs->addCrumb("<i class='fa fa-dashboard'></i> ".trans('admin.main'), config('admin.route.prefix'));
             $breadcrumbs->addCssClasses('breadcrumb '); //breadcrumb-arrow
             $breadcrumbs->setDivider(null);
 
