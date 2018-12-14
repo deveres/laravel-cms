@@ -167,6 +167,7 @@ return [
         Vsch\TranslationManager\ManagerServiceProvider::class,
         Vsch\TranslationManager\TranslationServiceProvider::class,
         Dimsav\Translatable\TranslatableServiceProvider::class,
+        Arrilot\Widgets\ServiceProvider::class,
     ],
 
     /*
@@ -220,6 +221,8 @@ return [
         'Html'         => Collective\Html\HtmlFacade::class,
         'Plupload'     => Jenky\LaravelPlupload\Facades\Plupload::class,
         'Debugbar'     => Barryvdh\Debugbar\Facade::class,
+        'Widget'       => Arrilot\Widgets\Facade::class,
+        'AsyncWidget'  => Arrilot\Widgets\AsyncFacade::class,
 
     ],
 

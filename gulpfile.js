@@ -4,7 +4,7 @@ var elixir = require('laravel-elixir')
 
 elixir(function(mix) {
     mix.less("app.less")
-        .less('./resources/assets/backend/less/admin-custom.less', './public/backend/css/admin-custom.css')
+        .less('./resources/backend/less/admin-custom.less', './public/backend/css/admin-custom.css')
         .copy('./vendor/vakata/jstree/dist', './public/vendor/vakata/jstree')
     ;
 });
