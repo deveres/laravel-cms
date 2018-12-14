@@ -7,10 +7,14 @@ use App\Libs\Registry;
 use App\Src\Models\Langs\Label;
 use App\Src\Services\SeoRepository;
 use Carbon\Carbon;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 
 class FrontendController extends BaseController
 {
@@ -26,6 +30,7 @@ class FrontendController extends BaseController
 
     public function __construct()
     {
+
         Carbon::setLocale(get_selected_lang_alias());
 
         $this->view = view();
@@ -33,6 +38,7 @@ class FrontendController extends BaseController
         $this->_setOptions();
         $this->_setMeta();
         $this->_publishMeta();
+
     }
 
     private function _setLabels()
@@ -43,9 +49,11 @@ class FrontendController extends BaseController
             // if (get_url_lang_alias() === false && $lang_segment_req && !is_ajax_mode()) direct_reload();
         }
 
+
         $labels_model = app(Label::class);
         $labels = $labels_model->getLabels(get_selected_lang_alias());
         Registry::set('labels', $labels);
+
 
         $this->view->share('selected_lang_alias', get_selected_lang_alias());
         $this->view->share('cur_lang_alias', get_selected_lang_alias());
@@ -68,36 +76,46 @@ class FrontendController extends BaseController
         $this->setMetaDescription(get_label('site/defaultMetaDescription'));
         $this->setMetaTitle(get_label('site/defaultMetaTitle'));
 
+
         $root_url = \Request::root();
         $full_url = \Request::Url();
 
+
         $langs = Arrays::ValuesFromField(get_active_langs(), 'alias');
 
+
         $query = str_replace($root_url, '', $full_url);
+
 
         //разбиваем на массив по разделителю
         $segments = explode('/', $query);
 
         //Если URL (где нажали на переключение языка) содержал корректную метку языка
         if ($segments && isset($segments[1]) && in_array($segments[1], $langs)) {
+
             unset($segments[1]); //удаляем метку
         }
 
+
         //формируем полный URL
-        $query = implode('/', $segments);
+        $query = implode("/", $segments);
         if ($query) {
             $item = SeoRepository::getByUri($query);
 
             if ($item) {
                 $item = $item->translate(\App::getLocale());
 
+                
                 $this->setMetaKeywords($item->seo_keywords);
                 $this->setMetaDescription($item->seo_description);
                 $this->setMetaTitle($item->seo_title ? $item->seo_title : $item->seo_h1);
                 $this->setMetaH1($item->seo_h1);
                 $this->setMetaSeoText($item->text);
+
             }
+
         }
+
 
         // dump(\Route::current());
     }

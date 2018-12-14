@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Src\Models\Label;
 use Encore\Admin\Config\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +18,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Blade::withoutDoubleEncoding();
+        Paginator::useBootstrapThree();
+
         Config::load();
+
 
         \Config::set('app.locale', get_default_lang_alias());
         \Config::set('translatable.fallback_locale', get_default_lang_alias());
@@ -63,7 +71,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton('backend.breadcrumbs', function () {
             $breadcrumbs = new \Creitive\Breadcrumbs\Breadcrumbs();
-            $breadcrumbs->addCrumb("<i class='fa fa-dashboard'></i>".' Главная', config('admin.route.prefix'));
+            $breadcrumbs->addCrumb("<i class='fa fa-dashboard'></i> " . trans('admin.main'), config('admin.route.prefix'));
             $breadcrumbs->addCssClasses('breadcrumb '); //breadcrumb-arrow
             $breadcrumbs->setDivider(null);
 
@@ -71,9 +79,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('images.photo', function ($app, $params) {
+
             $reflection = new \ReflectionClass('\App\Libs\LibImages');
             $filter = $reflection->newInstanceArgs($params);
-
             return $filter;
         });
 
@@ -83,7 +91,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function registerConfig()
     {
-        $files = glob(app_path('Src/Config/').'*.php');
+        $files = glob(app_path('Src/Config/') . '*.php');
         if ($files) {
             foreach ($files as $one) {
                 $tmp = explode('.', basename($one));
@@ -92,7 +100,7 @@ class AppServiceProvider extends ServiceProvider
                     $configs = require_once $one;
 
                     if (isset($configs['path']) && $configs['path']) {
-                        $this->mergeConfigFrom($one, 'modules.'.$configs['path']);
+                        $this->mergeConfigFrom($one, 'modules.' . $configs['path']);
                     }
                 }
             }
@@ -101,9 +109,9 @@ class AppServiceProvider extends ServiceProvider
 
     private function _loadHelpers()
     {
-        require_once __DIR__.'/../Helpers/debug_helper.php';
-        require_once __DIR__.'/../Helpers/modules_helper.php';
-        require_once __DIR__.'/../Helpers/langs_helper.php';
-        require_once __DIR__.'/../Helpers/labels_helper.php';
+        require_once __DIR__ . '/../Helpers/debug_helper.php';
+        require_once __DIR__ . '/../Helpers/modules_helper.php';
+        require_once __DIR__ . '/../Helpers/langs_helper.php';
+        require_once __DIR__ . '/../Helpers/labels_helper.php';
     }
 }
