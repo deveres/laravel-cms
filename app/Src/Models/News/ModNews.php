@@ -38,7 +38,7 @@ class ModNews extends Model
      */
     public function __construct(array $attributes = [])
     {
-        $this->table = env('DB_TABLE_PREFIX', 'mod_') . 'news';
+        $this->table = env('DB_TABLE_PREFIX', 'mod_').'news';
 
         parent::__construct($attributes);
     }

@@ -29,7 +29,7 @@ class ModSeo extends Model
      */
     public function __construct(array $attributes = [])
     {
-        $this->table = env('DB_TABLE_PREFIX', 'mod_') . 'seo';
+        $this->table = env('DB_TABLE_PREFIX', 'mod_').'seo';
 
         parent::__construct($attributes);
     }

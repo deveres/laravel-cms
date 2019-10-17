@@ -18,7 +18,7 @@ class LString
      * Функция конвертирования регистра строки.
      *
      * @param string $string
-     * @param bool $way 0 - в нижний регистр, 1 - в верхний
+     * @param bool   $way    0 - в нижний регистр, 1 - в верхний
      *
      * @return string
      */
@@ -88,8 +88,8 @@ class LString
      * Implementation substr() function for utf-8 encoding string.
      *
      * @param string $str
-     * @param int $offset
-     * @param int $length
+     * @param int    $offset
+     * @param int    $length
      *
      * @return string
      *
@@ -175,7 +175,7 @@ class LString
             preg_match("/.*\.{1}(.{1,4})$/i", $fname, $match);
         }
 
-        return time() . substr(microtime(), 2, 6) . '.' . $match[1];
+        return time().substr(microtime(), 2, 6).'.'.$match[1];
     }
 
     /**
@@ -238,10 +238,10 @@ class LString
             'ь' => '',
             'э' => 'je',
             'ю' => 'ju',
-            'я' => 'ja'
+            'я' => 'ja',
         ];
         foreach ($rules as $cyr => $lat) {
-            $text = preg_replace('/' . $cyr . '/', $lat, self::utf8_lowercase($text));
+            $text = preg_replace('/'.$cyr.'/', $lat, self::utf8_lowercase($text));
         }
 
         return $text;
