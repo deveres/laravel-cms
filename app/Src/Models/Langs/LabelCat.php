@@ -90,7 +90,7 @@ class LabelCat extends Model
     {
         parent::boot();
 
-        static::saved(function (LabelCat $cat) {
+        static::saved(function (self $cat) {
             I18nService::export();
 
             return true;

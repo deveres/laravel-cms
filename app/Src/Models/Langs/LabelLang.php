@@ -37,14 +37,14 @@ class LabelLang extends Model implements Sortable
     {
         parent::boot();
 
-        static::saved(function (LabelLang $lang) {
+        static::saved(function (self $lang) {
             I18nService::syncLabelLang($lang);
             I18nService::export();
 
             return true;
         });
 
-        static::deleted(function (LabelLang $lang) {
+        static::deleted(function (self $lang) {
             I18nService::deleteLangsTableField($lang->id);
             I18nService::syncLabelLang($lang);
             I18nService::export();

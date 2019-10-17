@@ -1,4 +1,4 @@
-@extends('admin::index')
+@extends('admin::index', ['header' => $header])
 
 @section('content')
     <section class="content-header">
@@ -10,8 +10,8 @@
 
         <div class="page_header">
             <h3>
-                {{ $header or trans('admin.title') }}
-                <small>{{ $description or trans('admin.description') }}</small>
+                {{ $header?$header:trans('admin.title') }}
+                <small>{{ $description?$description:trans('admin.description') }}</small>
             </h3>
         </div>
 

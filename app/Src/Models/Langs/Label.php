@@ -23,7 +23,7 @@ class Label extends Model
     {
         parent::boot();
 
-        static::saved(function (Label $label) {
+        static::saved(function (self $label) {
             I18nService::export();
 
             return true;

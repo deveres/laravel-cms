@@ -1,6 +1,5 @@
 <?php
 
-
 //Переключение языков
 Route::get('setlocale/{lang}', function ($lang) {
     $referer = Redirect::back()->getTargetUrl(); //URL предыдущей страницы

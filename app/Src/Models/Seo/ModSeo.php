@@ -38,7 +38,7 @@ class ModSeo extends Model
     {
         parent::boot();
 
-        static::deleted(function (ModSeo $item) {
+        static::deleted(function (self $item) {
             if ($item->attributes['id']) {
                 app('images.photo')->deleteItemImages('seo', $item->attributes['id']);
             }

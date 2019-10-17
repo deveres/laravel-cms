@@ -47,7 +47,7 @@ class ModNews extends Model
     {
         parent::boot();
 
-        static::deleted(function (ModNews $item) {
+        static::deleted(function (self $item) {
             if ($item->attributes['id']) {
                 app('images.photo')->deleteItemImages('news', $item->attributes['id']);
             }
