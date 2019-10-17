@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'main'                  => 'Главная',
     'online'                => 'Онлайн',
     'login'                 => 'Войти',
     'logout'                => 'Выйти',
