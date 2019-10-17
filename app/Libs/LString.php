@@ -184,7 +184,6 @@ class LString
      * @param string $text Текст для преобразования
      *
      * @return string Экранированный и очищенный от запрещённых символов.
-     *
      * @author Береснев Сергей <rassols[at]gmail.com>
      *
      */
@@ -201,7 +200,6 @@ class LString
      * @param string $text Текст для преобразования
      *
      * @return string Транслитированный текст
-     *
      * @author Береснев Сергей <rassols[at]gmail.com>
      *
      */
