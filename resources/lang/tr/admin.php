@@ -42,6 +42,7 @@ return [
     'back_to_list'          => 'Listeye dön',
     'submit'                => 'Gönder',
     'continue_editing'      => 'Düzenlemeye devam et',
+    'continue_creating'     => 'Oluşturmaya devam et',
     'menu'                  => 'Menü',
     'input'                 => 'Giriş',
     'succeeded'             => 'Başarılı',
@@ -97,6 +98,10 @@ return [
         'filter_clear'       => 'Tümünü göster',
         'filter_placeholder' => 'Filtrele',
     ],
-
-    'menu_titles' => [],
+    'menu_titles'            => [],
+    'grid_items_selected'    => '{n} öğe seçildi',
+    'menu_titles'            => [],
+    'prev'                   => 'Önceki',
+    'next'                   => 'Sonraki',
+    'quick_create'           => 'Hemen oluştur',
 ];

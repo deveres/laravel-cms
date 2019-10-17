@@ -15,7 +15,7 @@ return [
     'admin_menu' => [
         [
             'title'    => 'SEO',
-            'link'     => admin_base_path().'seo',
+            'link'     => admin_base_path().'/seo',
             'resource' => 'seo',
         ],
 

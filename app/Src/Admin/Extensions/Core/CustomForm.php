@@ -10,6 +10,7 @@ namespace App\Src\Admin\Extensions\Core;
 
 use Closure;
 use Encore\Admin\Form;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CustomForm extends Form
 {
@@ -30,9 +31,15 @@ class CustomForm extends Form
 
         $this->builder = new CustomBuilder($this);
 
+        $this->initLayout();
+
         if ($callback instanceof Closure) {
             $callback($this);
         }
+
+        $this->isSoftDeletes = in_array(SoftDeletes::class, class_uses_deep($this->model));
+
+        $this->callInitCallbacks();
     }
 
     /**

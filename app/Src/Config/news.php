@@ -15,7 +15,7 @@ return [
     'admin_menu' => [
         [
             'title'    => 'Новости',
-            'link'     => admin_base_path().'news',
+            'link'     => admin_base_path().'/news',
             'resource' => 'news',
         ],
     ],

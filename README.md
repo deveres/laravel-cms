@@ -13,10 +13,10 @@ Laravel CMS based on z-song/laravel-admin
 # README #
 
 ### Requirements ###
-* nodejs, php >=7.0 
+* nodejs, php >=7.1 
 * nodejs modules grunt-cli,bower,gulp ( global )
-* PHP >= 7.0.0
-* Laravel >= 5.5.0
+* PHP >= 7.1.0
+* Laravel >= 5.7.0
 * Fileinfo PHP Extension
 
 

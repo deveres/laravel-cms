@@ -18,17 +18,17 @@ return [
     'admin_menu' => [
         [
             'title'    => 'Языки',
-            'link'     => admin_base_path().'langs',
+            'link'     => admin_base_path().'/langs',
             'resource' => 'langs',
         ],
         [
             'title'    => 'Категории',
-            'link'     => admin_base_path().'langs_cats',
+            'link'     => admin_base_path().'/langs_cats',
             'resource' => 'langs_cats',
         ],
         [
             'title'    => 'Метки',
-            'link'     => admin_base_path().'langs_labels',
+            'link'     => admin_base_path().'/langs_labels',
             'resource' => 'langs_labels',
         ],
 

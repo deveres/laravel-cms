@@ -13,7 +13,7 @@ return [
     'admin_menu' => [
         [
             'title'    => 'Модули',
-            'link'     => admin_base_path().'modules',
+            'link'     => admin_base_path().'/modules',
             'resource' => 'modules',
         ],
 
