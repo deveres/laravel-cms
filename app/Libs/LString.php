@@ -264,8 +264,8 @@ class LString
     /**
      * Конвертирует регистр букв в строке в кодировке UTF-8.
      *
-     * @param string $s строка
-     * @param int $mode {CASE_LOWER|CASE_UPPER}
+     * @param string $s    строка
+     * @param int    $mode {CASE_LOWER|CASE_UPPER}
      *
      * @return string
      *
@@ -552,8 +552,8 @@ class LString
     /**
      * Специальная функция парсинга строки по заданным разделителям
      *
-     * @param string $string Целевая строка, которую мы будем распарсивать
-     * @param string $delim1 Первый разделитель
+     * @param string              $string Целевая строка, которую мы будем распарсивать
+     * @param string              $delim1 Первый разделитель
      * @param string defaut false $delim2 Второй разделитель
      *
      * @return mixed Возвращает либо итоговы массив либо исходную строку
@@ -619,8 +619,8 @@ class LString
      * Implementation strpos() function for utf-8 encoding string.
      *
      * @param string $haystack The entire string
-     * @param string $needle The searched substring
-     * @param int $offset The optional offset parameter specifies the position from which the search should be performed
+     * @param string $needle   The searched substring
+     * @param int    $offset   The optional offset parameter specifies the position from which the search should be per
      *
      * @return mixed(int/false) Returns the numeric position of the first occurrence of needle in haystack.
      *                          If needle is not found, utf8_strpos() will return FALSE.
