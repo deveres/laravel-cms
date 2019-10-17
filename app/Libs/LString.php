@@ -184,6 +184,7 @@ class LString
      * @param string $text Текст для преобразования
      *
      * @return string Экранированный и очищенный от запрещённых символов.
+     *
      * @author Береснев Сергей <rassols[at]gmail.com>
      *
      */
@@ -200,6 +201,7 @@ class LString
      * @param string $text Текст для преобразования
      *
      * @return string Транслитированный текст
+     *
      * @author Береснев Сергей <rassols[at]gmail.com>
      *
      */
@@ -431,6 +433,7 @@ class LString
             return strtr($s, $trans);
         } else {
             throw new Exception('Parameter 2 should be a constant of CASE_LOWER or CASE_UPPER!');
+
             return $s;
         }
 
