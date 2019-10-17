@@ -607,7 +607,7 @@ class LString
             $konec = ' ...';
             $dl = self::utf8_strpos($str, ' ', $dl);
 
-            return mb_substr($str, 0, $dl, 'utf8') . $konec;
+            return mb_substr($str, 0, $dl, 'utf8').$konec;
         }
 
         return $str;
@@ -690,10 +690,10 @@ class LString
             'ь' => '',
             'э' => 'je',
             'ю' => 'ju',
-            'я' => 'ja'
+            'я' => 'ja',
         ];
         foreach ($rules as $cyr => $lat) {
-            $text = preg_replace('/' . $cyr . '/', $lat, $text);
+            $text = preg_replace('/'.$cyr.'/', $lat, $text);
         }
         /*
         $rules_rum = array('ă'=> 'a', 'î'=> 'i', 'ş'=> 's', 'ț'=> 't', 'â'=> 'a', ' '=> '_', 'ș'=>'s');
@@ -715,7 +715,7 @@ class LString
             $length -= min($length, self::utf8_strlen($etc));
             $string = preg_replace('/\s+?(\S+)?$/', '', self::utf8_substr($string, 0, $length + 1));
 
-            return self::utf8_substr($string, 0, $length) . $etc;
+            return self::utf8_substr($string, 0, $length).$etc;
         } else {
             return $string;
         }
