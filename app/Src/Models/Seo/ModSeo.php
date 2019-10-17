@@ -29,7 +29,7 @@ class ModSeo extends Model
      */
     public function __construct(array $attributes = [])
     {
-        $this->table = env('DB_TABLE_PREFIX', 'mod_').'seo';
+        $this->table = env('DB_TABLE_PREFIX', 'mod_') . 'seo';
 
         parent::__construct($attributes);
     }
@@ -38,7 +38,7 @@ class ModSeo extends Model
     {
         parent::boot();
 
-        static::deleted(function (ModSeo $item) {
+        static::deleted(function (self $item) {
             if ($item->attributes['id']) {
                 app('images.photo')->deleteItemImages('seo', $item->attributes['id']);
             }
