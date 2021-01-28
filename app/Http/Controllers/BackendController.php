@@ -10,7 +10,9 @@ use Illuminate\Routing\Controller as BaseController;
 
 class BackendController extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
 
     public $view = null;
     public $current_module = null;

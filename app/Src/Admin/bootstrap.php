@@ -2,6 +2,7 @@
 
 /**
  * Laravel-admin - admin builder based on Laravel.
+ *
  * @author z-song <https://github.com/z-song>
  *
  * Bootstraper for Admin.
@@ -15,16 +16,14 @@
  * Or require js and css assets:
  * Admin::css('/packages/prettydocs/css/styles.css');
  * Admin::js('/packages/prettydocs/js/main.js');
- *
  */
 
 use App\Src\Admin\Extensions\Form\HtmlFull;
 use App\Src\Admin\Extensions\Form\Translit;
-use App\Src\Admin\Extensions\Grid\RowDisplayers\TreeNameGridDisplayer;
 use App\Src\Admin\Extensions\Grid\RowDisplayers\RowOrderableGridDisplayer;
+use App\Src\Admin\Extensions\Grid\RowDisplayers\TreeNameGridDisplayer;
 use Encore\Admin\Form;
 use Encore\Admin\Grid\Column;
-
 
 Encore\Admin\Form::forget(['map', 'editor']);
 

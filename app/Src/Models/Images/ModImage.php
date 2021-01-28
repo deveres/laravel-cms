@@ -4,7 +4,6 @@ namespace App\Src\Models\Images;
 
 use Illuminate\Database\Eloquent\Model;
 
-
 class ModImage extends Model
 {
     // protected $guard = 'admin';
@@ -21,13 +20,13 @@ class ModImage extends Model
 
     /**
      * ModSeo constructor.
+     *
      * @param array $attributes
      */
     public function __construct(array $attributes = [])
     {
-        $this->table = env('DB_TABLE_PREFIX', 'mod_') . 'images';
+        $this->table = env('DB_TABLE_PREFIX', 'mod_').'images';
 
         parent::__construct($attributes);
     }
-
 }

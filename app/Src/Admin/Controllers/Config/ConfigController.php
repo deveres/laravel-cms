@@ -4,8 +4,6 @@ namespace App\Src\Admin\Controllers\Config;
 
 use App\Http\Controllers\BackendController;
 use App\Src\Admin\Extensions\Core\CustomForm;
-use App\Src\Admin\Services\AdminMenuService;
-use App\Src\Models\Modules\Module;
 use Carbon\Carbon;
 use Encore\Admin\Config\ConfigModel;
 use Encore\Admin\Controllers\HasResourceActions;
@@ -26,7 +24,6 @@ class ConfigController extends BackendController
      */
     public function index(Content $content)
     {
-
         return $content
             ->header('Config')
             ->description('list')
@@ -59,10 +56,10 @@ class ConfigController extends BackendController
         $grid->value();
         $grid->description();
 
-        $grid->created_at()->display(function ($date){
-          return Carbon::parse($date)->format(Carbon::DEFAULT_TO_STRING_FORMAT);
+        $grid->created_at()->display(function ($date) {
+            return Carbon::parse($date)->format(Carbon::DEFAULT_TO_STRING_FORMAT);
         });
-        $grid->updated_at()->display(function ($date){
+        $grid->updated_at()->display(function ($date) {
             return Carbon::parse($date)->format(Carbon::DEFAULT_TO_STRING_FORMAT);
         });
 
@@ -116,12 +113,12 @@ class ConfigController extends BackendController
             $tools->disableView();
         });
 
-        $form->tab('Общее', function (Form $form) use ($id) {
-
-
+        $form->tab('Общее', function (Form $form) {
             $form->display('id', 'ID');
-            $form->select('category', 'Категория')->options(config('admin.extensions.config.categories',
-                []))->rules('required', ['required' => 'Поле обязательно для заполнения']);
+            $form->select('category', 'Категория')->options(config(
+                'admin.extensions.config.categories',
+                []
+            ))->rules('required', ['required' => 'Поле обязательно для заполнения']);
             $form->text('name')->rules('required');
             $form->textarea('value')->rules('required');
             $form->textarea('description');

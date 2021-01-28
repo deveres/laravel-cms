@@ -184,7 +184,7 @@ return [
         'roles_model' => Encore\Admin\Auth\Database\Role::class,
 
         // Permission table and model.
-        'permissions_table' => 'admin_permissions',
+        'permissions_table'          => 'admin_permissions',
         'permissions_category_table' => 'admin_permissions_categories',
         'permissions_model'          => App\Src\Models\Permissions\Permission::class,
         'permissions_model_category' => App\Src\Models\Permissions\PermissionCategory::class,
@@ -427,14 +427,14 @@ return [
         'config'=> [
             'enable'=> true,
 
-                'name' => 'config',
-                'table'=> 'admin_config',
-                //'controller'=>'Encore\Admin\Config\ConfigController',
-                'controller' => 'App\Src\Admin\Controllers\Config\ConfigController',
-                'categories' => [
-                    'general'=> 'Опции сайта',
-                    'system' => 'Системные',
-                ],
+            'name' => 'config',
+            'table'=> 'admin_config',
+            //'controller'=>'Encore\Admin\Config\ConfigController',
+            'controller' => 'App\Src\Admin\Controllers\Config\ConfigController',
+            'categories' => [
+                'general'=> 'Опции сайта',
+                'system' => 'Системные',
+            ],
         ],
         'env-manager' => [
             // If the value is set to false, this extension will be disabled
@@ -446,14 +446,13 @@ return [
         ],
 
         'cropper' => [
-              'enable' => true,
+            'enable' => true,
         ],
-
 
         'media-manager' => [
 
             // Select a local disk that you configured in `config/filesystem.php`
-            'disk' => 'web'
+            'disk' => 'web',
         ],
     ],
 ];

@@ -26,7 +26,7 @@ class ModNews extends Model implements TranslatableContract
         'seo_h1',
         'seo_title',
         'seo_keywords',
-        'seo_description'
+        'seo_description',
     ];
 
     public $incrementing = 'id';
@@ -36,10 +36,7 @@ class ModNews extends Model implements TranslatableContract
 
     protected $primaryKey = 'id';
 
-
     protected $guarded = ['id'];
-
-
 
     public $dates = ['created_at', 'updated_at'];
 
@@ -79,5 +76,4 @@ class ModNews extends Model implements TranslatableContract
             return $image;
         }
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace App\Src\Models\Menu;
 
-
 use Encore\Admin\Auth\Database\Menu as EncoreMenu;
 
 /**
@@ -20,6 +19,4 @@ class Menu extends EncoreMenu
      * @var array
      */
     protected $fillable = ['parent_id', 'order', 'title', 'icon', 'uri', 'permission', 'icon_color'];
-
-
 }

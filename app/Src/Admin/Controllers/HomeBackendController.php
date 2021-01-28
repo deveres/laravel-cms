@@ -17,7 +17,6 @@ class HomeBackendController extends BackendController
             ->description('Description...')
             ->row(Dashboard::title())
             ->row(function (Row $row) {
-
                 $row->column(4, function (Column $column) {
                     $column->append(Dashboard::environment());
                 });

@@ -12,26 +12,22 @@ use Encore\Admin\Grid;
 use Encore\Admin\Grid\Filter;
 use Encore\Admin\Layout\Content;
 
-
 class ModulesBackendController extends BackendController
 {
-
     use HasResourceActions;
 
     public $_resource = 'modules';
 
     /**
-     * сортировка
+     * сортировка.
      */
     public function rowOrderable()
     {
-
         $cats = request()->get('items', []);
 
         $counter = 1;
         foreach ($cats as $item) {
-
-            $id = (int)substr($item, 3);
+            $id = (int) substr($item, 3);
             if (!$id) {
                 continue;
             }
@@ -41,12 +37,11 @@ class ModulesBackendController extends BackendController
             $cat->save();
             $counter++;
         }
-
     }
-
 
     /**
      * @param Content $content
+     *
      * @return Content
      */
     protected function index(Content $content)
@@ -60,7 +55,7 @@ class ModulesBackendController extends BackendController
     }
 
     /**
-     * Synchronize modules with DB
+     * Synchronize modules with DB.
      */
     public function synchronizeModules()
     {
@@ -69,22 +64,19 @@ class ModulesBackendController extends BackendController
             $module = Module::query()->where('key', $key)->get()->toArray();
 
             if (!$module && !empty($one_conf['name']) && !empty($one_conf['path'])) {
-
                 $module = new Module([
 
-                    'key' => $key,
-                    'path' => $one_conf['path'],
-                    'name' => $one_conf['name'],
-                    'icon' => !empty($one_conf['icon']) ? $one_conf['icon'] : '',
-                    'icon_color' => !empty($one_conf['icon_color']) ? $one_conf['icon_color'] : '',
+                    'key'         => $key,
+                    'path'        => $one_conf['path'],
+                    'name'        => $one_conf['name'],
+                    'icon'        => !empty($one_conf['icon']) ? $one_conf['icon'] : '',
+                    'icon_color'  => !empty($one_conf['icon_color']) ? $one_conf['icon_color'] : '',
                     'description' => !empty($one_conf['description']) ? $one_conf['description'] : '',
-                    'state' => 0
+                    'state'       => 0,
                 ]);
                 $module->save();
             }
-
         }
-
     }
 
     /**
@@ -109,7 +101,6 @@ class ModulesBackendController extends BackendController
             } else {
                 return "<span class='label label-info'>Не установлен</span>";
             }
-
         });
 
         //$grid->ord1(' ')->rowOrderable($grid, route('row-orderable'))->setAttributes(['style'=>'width:20px;']);
@@ -121,8 +112,6 @@ class ModulesBackendController extends BackendController
         });
 
         $grid->actions(function (Grid\Displayers\Actions $actions) {
-
-
             $actions->disableDelete();
             $actions->disableEdit();
         });
@@ -136,7 +125,6 @@ class ModulesBackendController extends BackendController
         $grid->filter(function (Filter $filter) {
             $filter->disableIdFilter();
             $filter->like('name');
-
         });
 
         return $grid;
@@ -150,9 +138,8 @@ class ModulesBackendController extends BackendController
     protected function form()
     {
         return Admin::form(Module::class, function (Form $form) {
-
             $statuses1 = [
-                'on' => ['value' => 1, 'text' => 'Включено', 'color' => 'success'],
+                'on'  => ['value' => 1, 'text' => 'Включено', 'color' => 'success'],
                 'off' => ['value' => 0, 'text' => 'Отключено', 'color' => 'danger'],
             ];
 

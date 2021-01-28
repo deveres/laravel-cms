@@ -52,21 +52,19 @@ class FormRightPanel
      * @param \Closure $content
      * @param bool     $active
      * @param string   $theme
-     * @param integer   $offset
+     * @param int      $offset
      *
      * @return $this
      */
     public function append($title, \Closure $content, $active = false, $theme = 'danger', $offset = 0)
     {
-        if ($offset>0){
+        if ($offset > 0) {
             $this->offset = $offset;
         }
-
 
         $fields = $this->collectFields($content);
 
         $id = 'form-'.($this->panels->count() + 1);
-
 
         $this->panels->push(compact('id', 'title', 'fields', 'active', 'theme'));
 

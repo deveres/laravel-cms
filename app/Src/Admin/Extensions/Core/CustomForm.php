@@ -62,7 +62,7 @@ class CustomForm extends Form
      * @param $title
      * @param Closure $content
      * @param bool    $active
-     * @param integer    $offset
+     * @param int     $offset
      *
      * @return $this
      */

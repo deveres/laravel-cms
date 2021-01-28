@@ -1,11 +1,12 @@
 <?php
 
 /**
- * Функция для получения значения элемента массива
+ * Функция для получения значения элемента массива.
  *
- * @param array $array
+ * @param array  $array
  * @param string $index
- * @param mixed $default - значение, возвращаемое в случае, если элемент не найден
+ * @param mixed  $default - значение, возвращаемое в случае, если элемент не найден
+ *
  * @return mixed
  */
 if (!function_exists('setif')) {
@@ -15,14 +16,12 @@ if (!function_exists('setif')) {
     }
 }
 
-
 if (!function_exists('setif_strict')) {
     function setif_strict($array, $index, $default = false)
     {
         return (isset($array[$index]) && $array[$index] != '') ? $array[$index] : $default;
     }
 }
-
 
 if (!function_exists('print_pre')) {
     function print_pre($var)
@@ -35,38 +34,40 @@ if (!function_exists('print_pre')) {
 /**
  * @desc Вывод массива в виде дерева
  *
- * @param array $array
- * @param string $str - строка для вывода после массива, например для проверки
+ * @param array  $array
+ * @param string $str   - строка для вывода после массива, например для проверки
+ *
  * @return void
  */
 if (!function_exists('pre')) {
-    function pre($array = array(), $str = '')
+    function pre($array = [], $str = '')
     {
-        if (!headers_sent()){
+        if (!headers_sent()) {
             header('Content-type:text/html; charset=utf-8');
         }
-        echo('<pre>');
+        echo '<pre>';
         print_r($array);
-        echo('</pre>' . $str);
+        echo '</pre>'.$str;
     }
 }
 
 /**
  * @desc Вывод массива в виде дерева и прекращение работы скрипта
  *
- * @param array $array
- * @param string $str - строка для вывода после массива, например для проверки
+ * @param array  $array
+ * @param string $str   - строка для вывода после массива, например для проверки
+ *
  * @return void
  */
 if (!function_exists('pred')) {
-    function pred($array = array(), $str = '')
+    function pred($array = [], $str = '')
     {
-        if (!headers_sent()){
+        if (!headers_sent()) {
             header('Content-type:text/html; charset=utf-8');
         }
-        echo('<pre>');
+        echo '<pre>';
         print_r($array);
-        die('</pre>' . $str);
+        exit('</pre>'.$str);
     }
 }
 
@@ -76,12 +77,12 @@ if (!function_exists('pred')) {
 if (!function_exists('vre')) {
     function vre()
     {
-        if (!headers_sent()){
+        if (!headers_sent()) {
             header('Content-type:text/html; charset=utf-8');
         }
-        echo('<pre>');
+        echo '<pre>';
         var_dump(func_get_args());
-        echo('</pre>');
+        echo '</pre>';
     }
 }
 
@@ -91,17 +92,18 @@ if (!function_exists('vre')) {
 if (!function_exists('vred')) {
     function vred()
     {
-        if (!headers_sent()){
+        if (!headers_sent()) {
             header('Content-type:text/html; charset=utf-8');
         }
-        echo('<pre>');
+        echo '<pre>';
         var_dump(func_get_args());
-        die('</pre>');
+        exit('</pre>');
     }
 }
 
 /**
- * Функция получения реального IP адреса
+ * Функция получения реального IP адреса.
+ *
  * @return string
  */
 if (!function_exists('getRealIp')) {
@@ -114,6 +116,7 @@ if (!function_exists('getRealIp')) {
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
+
         return $ip;
     }
 }
@@ -126,8 +129,9 @@ if (!function_exists('hex2bin')) {
         }
         $r = '';
         for ($a = 0; $a < strlen($str); $a += 2) {
-            $r .= chr(hexdec($str{$a} . $str{($a + 1)}));
+            $r .= chr(hexdec($str[$a].$str[($a + 1)]));
         }
+
         return $r;
     }
 }
