@@ -1,7 +1,8 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale(), 'namespace'=>'Controllers'], function() {
+Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale(), 'namespace'=>'Controllers'], function () {
     //Route::model('mod-news', \App\Src\Models\News\ModNews::class);
 
     Route::get('/', 'IndexController@index');

@@ -3,19 +3,13 @@
 namespace App\Src\Admin\Controllers\Permissions;
 
 use App\Src\Models\Permissions\PermissionCategory;
-use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 use Illuminate\Support\Str;
 
 class PermissionController extends \Encore\Admin\Controllers\PermissionController
 {
-
-
-
-
     /**
      * Make a grid builder.
      *
@@ -27,15 +21,16 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
 
         $grid = new Grid(new $permissionModel());
 
-
         $grid->option('grid_mini_filter', [
             'Admin\GridMiniFilter' => [
                 'model_name'   => $permissionModel,
                 'url'          => '/'.request()->route()->uri(),
                 'field_name'   => 'cat_id',
                 'param_name'   => 'cat_id',
-                'param_values' => PermissionCategory::query()->pluck('name',
-                    'id')->toArray(),
+                'param_values' => PermissionCategory::query()->pluck(
+                    'name',
+                    'id'
+                )->toArray(),
             ],
         ]);
 
@@ -83,19 +78,17 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
                 if ($this->input > 0) {
                     $query->where('cat_id', $this->input);
                 }
-            }, 'Категория', 'cat_id')->select(['0' => 'Все'] + PermissionCategory::query()->pluck('name',
-                    'id')->toArray());
+            }, 'Категория', 'cat_id')->select(['0' => 'Все'] + PermissionCategory::query()->pluck(
+                'name',
+                'id'
+            )->toArray());
         });
 
         $grid->actions(function ($actions) {
-
-
             $actions->column->setAttributes(['class' => 'row_actions']);
         });
 
-
         return $grid;
-
     }
 
     protected function detail($id)
@@ -138,13 +131,6 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
         return $show;
     }
 
-
-
-
-
-
-
-
     /**
      * Make a form builder.
      *
@@ -156,12 +142,14 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
 
         $form = new Form(new $permissionModel());
 
-        $form->tab('Общее', function (Form $form)  {
+        $form->tab('Общее', function (Form $form) {
             $form->display('id', 'ID');
 
             $form->text('slug', trans('admin.slug'))->rules('required');
-            $form->select('cat_id', 'Категория')->options(PermissionCategory::query()->pluck('name',
-                'id'))->rules('required', ['required' => 'Поле обязательно для заполнения']);
+            $form->select('cat_id', 'Категория')->options(PermissionCategory::query()->pluck(
+                'name',
+                'id'
+            ))->rules('required', ['required' => 'Поле обязательно для заполнения']);
             $form->text('name', trans('admin.name'))->rules('required');
 
             $form->multipleSelect('http_method', trans('admin.http.method'))
@@ -172,7 +160,7 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
             $form->display('created_at', trans('admin.created_at'));
             $form->display('updated_at', trans('admin.updated_at'));
         });
+
         return $form;
     }
-
 }

@@ -6,14 +6,10 @@ use App\Src\Admin\Services\AdminMenuService;
 use App\Src\Models\Modules\Module;
 use Encore\Admin\Actions\RowAction;
 
-class ModuleInstallGridRowAction  extends RowAction
+class ModuleInstallGridRowAction extends RowAction
 {
     public function handle(Module $module)
     {
-
-
-
-
         if ($module) {
             if (AdminMenuService::installModuleMenu($module)) {
                 $module->state = 1;
@@ -22,9 +18,9 @@ class ModuleInstallGridRowAction  extends RowAction
         }
 
         // return a new html to the front end after saving
-        if ($module->state==1){
+        if ($module->state == 1) {
             $html = "<span class='label label-success'>Установлен</span>";
-        }else {
+        } else {
             $html = "<span class='label label-error'>Не установлен</span>";
         }
 
@@ -36,6 +32,4 @@ class ModuleInstallGridRowAction  extends RowAction
     {
         return "<i class='fa fa-rocket'></i>";
     }
-
-
 }

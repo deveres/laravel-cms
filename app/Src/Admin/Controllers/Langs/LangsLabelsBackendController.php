@@ -92,7 +92,7 @@ class LangsLabelsBackendController extends BackendController
 
         $grid->disableCreateButton();
 
-        $grid->actions(function ($actions) use ($can_delete, $can_edit) {
+        $grid->actions(function ($actions) use ($can_delete) {
             $actions->column->setAttributes(['class' => 'row_actions']);
             $actions->disableEdit();
             $actions->disableView();

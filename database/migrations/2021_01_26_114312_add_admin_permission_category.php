@@ -26,22 +26,20 @@ class AddAdminPermissionCategory extends Migration
         if ($permission) {
             $menu = new Menu(
                 [
-                    'title' => 'Permission Categories',
-                    'icon' => 'fa-clone',
+                    'title'      => 'Permission Categories',
+                    'icon'       => 'fa-clone',
                     'icon_color' => '#FFFFFF',
-                    'uri' => '/auth/permissions-cat',
-                    'parent_id' => $permission->id,
+                    'uri'        => '/auth/permissions-cat',
+                    'parent_id'  => $permission->id,
 
                 ]
             );
             $menu->save();
-
         }
 
         Schema::table(config('admin.database.permissions_table'), function (Blueprint $table) {
             $table->unsignedInteger('cat_id')->default(1);
         });
-
     }
 
     /**

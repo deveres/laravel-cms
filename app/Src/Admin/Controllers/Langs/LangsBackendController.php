@@ -134,7 +134,7 @@ class LangsBackendController extends BackendController
             $tools->disableView();
         });
 
-        $form->tab('Общее', function (Form $form) use ($id) {
+        $form->tab('Общее', function (Form $form) {
             $form->html('<div class="form-group"><div class="col-md-12"><h4 class="form-header">Основная информация</h4></div></div>');
 
             $states = [

@@ -120,6 +120,7 @@ class PermissionCategoriesController extends BackendController
 
             $form->text('name', trans('admin.name'))->rules('required');
         });
+
         return $form;
     }
 

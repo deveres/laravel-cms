@@ -8,15 +8,12 @@
 
 namespace App\Src\Admin\Extensions\Core;
 
-use Encore\Admin\Admin;
 use Encore\Admin\Form\Builder;
 
 class CustomBuilder extends Builder
 {
     public function render(): string
     {
-
-
         $formRightObj = $this->form->getRightPanel();
         $this->removeReservedFields();
 
@@ -29,10 +26,10 @@ class CustomBuilder extends Builder
         $this->addCascadeScript();
 
         $data = [
-            'form'   => $this,
-            'tabObj' => $tabObj,
-            'width'  => $this->width,
-            'layout' => $this->form->getLayout(),
+            'form'         => $this,
+            'tabObj'       => $tabObj,
+            'width'        => $this->width,
+            'layout'       => $this->form->getLayout(),
             'formRightObj' => $formRightObj,
         ];
 

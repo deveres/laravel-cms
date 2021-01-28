@@ -15,8 +15,6 @@ class AddAdminMenuIconColor extends Migration
     {
         //
         Schema::table(config('admin.database.menu_table'), function (Blueprint $table) {
-
-
             $table->string('icon_color', 7)->default('#FFFFFF');
         });
     }

@@ -2,19 +2,17 @@
 
 namespace App\Src\Admin\Controllers\Menu;
 
-use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
 use Encore\Admin\Layout\Column;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Layout\Row;
-use Encore\Admin\Tree;
 use Encore\Admin\Widgets\Box;
 
 class MenuController extends \Encore\Admin\Controllers\MenuController
 {
-
     /**
      * @param Content $content
+     *
      * @return Content
      */
     public function index(Content $content)
@@ -49,9 +47,6 @@ class MenuController extends \Encore\Admin\Controllers\MenuController
             });
     }
 
-
-
-
     public function form()
     {
         $menuModel = config('admin.database.menu_model');
@@ -59,7 +54,7 @@ class MenuController extends \Encore\Admin\Controllers\MenuController
         $roleModel = config('admin.database.roles_model');
 
         $form = new Form(new $menuModel());
-        $form->tab('Общее', function (Form $form) use($menuModel, $roleModel, $permissionModel) {
+        $form->tab('Общее', function (Form $form) use ($menuModel, $roleModel, $permissionModel) {
             $form->display('id', 'ID');
 
             $form->select('parent_id', trans('admin.parent_id'))->options($menuModel::selectOptions());
@@ -75,11 +70,9 @@ class MenuController extends \Encore\Admin\Controllers\MenuController
             $form->display('created_at', trans('admin.created_at'));
             $form->display('updated_at', trans('admin.updated_at'));
         });
+
         return $form;
     }
-
-
-
 
     /**
      * Help message for icon field.

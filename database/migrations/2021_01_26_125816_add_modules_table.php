@@ -31,26 +31,24 @@ class AddModulesTable extends Migration
 
         $menu = new \App\Src\Models\Menu\Menu(
             [
-                'title' => 'Модули',
-                'icon' => 'fa-cubes',
+                'title'      => 'Модули',
+                'icon'       => 'fa-cubes',
                 'icon_color' => '#FFFFFF',
-                'uri' => '',
-                'parent_id' => 0,
+                'uri'        => '',
+                'parent_id'  => 0,
             ]
         );
         $menu->save();
         $menu1 = new \App\Src\Models\Menu\Menu(
             [
-                'title' => 'Модули',
-                'icon' => 'fa-cubes',
+                'title'      => 'Модули',
+                'icon'       => 'fa-cubes',
                 'icon_color' => '#FFFFFF',
-                'uri' => '/modules',
-                'parent_id' => $menu->id,
+                'uri'        => '/modules',
+                'parent_id'  => $menu->id,
             ]
         );
         $menu->save();
-
-
     }
 
     /**

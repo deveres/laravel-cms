@@ -19,7 +19,6 @@ class Label extends Model
 
     protected $guarded = ['id'];
 
-
     protected static function boot()
     {
         parent::boot();

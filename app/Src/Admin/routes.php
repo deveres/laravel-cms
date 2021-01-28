@@ -1,7 +1,5 @@
 <?php
 
-
-
 use Illuminate\Routing\Router;
 
 Admin::routes();
@@ -26,9 +24,8 @@ Route::group([
     'prefix'        => config('admin.route.prefix'),
     'namespace'     => config('admin.route.namespace'),
     'middleware'    => config('admin.route.middleware'),
-    'as'            => config('admin.route.prefix') . '.',
+    'as'            => config('admin.route.prefix').'.',
 ], function (Router $router) {
-
     $router->get('/', 'HomeBackendController@index')->name('home');
 
     Route::group([], function (Router $router) {
@@ -44,40 +41,37 @@ Route::group([
         Route::group(['namespace' => 'Modules'], function (Router $router) {
             $router->resource('modules', ModulesBackendController::class);
             $router->post('/modules/row-orderable', 'ModulesBackendController@rowOrderable')->name('modules.row-orderable');
-
         });
 
         Route::group(['namespace' => 'Seo'], function (Router $router) {
             $router->resource('seo', SeoBackendController::class);
         });
 
-/*
-        Route::group(['prefix' => 'translations'], function () {
-            Vsch\TranslationManager\Translator::routes();
-        });
-*/
+        /*
+                Route::group(['prefix' => 'translations'], function () {
+                    Vsch\TranslationManager\Translator::routes();
+                });
+        */
 
         Route::group(['namespace' => 'News'], function (Router $router) {
             $router->resource('news', NewsBackendController::class);
         });
-
-
 
         Route::group(['namespace' => 'Images'], function (Router $router) {
             $router->resource('images', ImagesBackendController::class);
 
             $router->post('/images/upload', 'ImagesBackendController@uploadImage')->name('images.upload');
 
-            $router->get('/images/{module}/{item_id}/{size?}/{filename}',
+            $router->get(
+                '/images/{module}/{item_id}/{size?}/{filename}',
                 function ($module, $item_id, $size, $filename) {
                     return app('images.photo')->downloadPhoto($module, $item_id, $size, $filename);
-                })->name('download.image');
+                }
+            )->name('download.image');
 
             $router->post('/images/delete', 'ImagesBackendController@deleteImage')->name('images.delete');
             $router->post('/images/delete-all', 'ImagesBackendController@deleteAllImages')->name('images.delete.all');
             $router->post('/images/setmain', 'ImagesBackendController@mainImage')->name('images.main');
         });
-
     });
-
 });

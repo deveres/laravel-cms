@@ -1,209 +1,248 @@
 <?php
 /**
  * @name DQ_Arrays Class of DoubleQuality Engine
- * @package dqengine
- * @subpackage core
- * @author Beresnev Sergey
- * @version 1.0
  *
+ * @author Beresnev Sergey
+ *
+ * @version 1.0
  */
 
 namespace App\Libs;
 
-use App\Libs\LString;
-
-
 class Arrays
 {
-    static function check($arr)
+    public static function check($arr)
     {
-        if (!is_array($arr)) throw new Exception('Переданный объект не является массивом');
+        if (!is_array($arr)) {
+            throw new Exception('Переданный объект не является массивом');
+        }
     }
 
-    static function Id2Keys($arr = array(), $id_field = 'id')
+    public static function Id2Keys($arr = [], $id_field = 'id')
     {
-        if (!is_array($arr)) return array();
-        $res = array();
+        if (!is_array($arr)) {
+            return [];
+        }
+        $res = [];
         foreach ($arr as $value) {
             $res[$value[$id_field]] = $value;
         }
+
         return $res;
     }
 
-    static function Value2Key($arr = array())
+    public static function Value2Key($arr = [])
     {
-        if (!is_array($arr)) return array();
+        if (!is_array($arr)) {
+            return [];
+        }
 
-        $res = array();
+        $res = [];
         foreach ($arr as $value) {
             $res[$value] = $value;
         }
+
         return $res;
     }
 
-    static function Value2Ids($arr = array(), $id_field = 'id', $value_field = false)
+    public static function Value2Ids($arr = [], $id_field = 'id', $value_field = false)
     {
-        if (!is_array($arr)) return false;
-        $res = array();
+        if (!is_array($arr)) {
+            return false;
+        }
+        $res = [];
         foreach ($arr as $value) {
             $res[$value[$id_field]] = ($value_field ? $value[$value_field] : $value);
         }
+
         return $res;
     }
 
-    static function Values2Ids($arr = array(), $id_field = 'id', $value_field = false)
+    public static function Values2Ids($arr = [], $id_field = 'id', $value_field = false)
     {
-        if (!is_array($arr)) return false;
-        $res = array();
+        if (!is_array($arr)) {
+            return false;
+        }
+        $res = [];
         foreach ($arr as $value) {
             $res[$value[$id_field]][] = ($value_field ? setif($value, $value_field, false) : $value);
         }
+
         return $res;
     }
 
-    static function Id2Id($arr = array(), $id_field = 'id', $keys = true)
+    public static function Id2Id($arr = [], $id_field = 'id', $keys = true)
     {
-        if (!is_array($arr)) return array();
+        if (!is_array($arr)) {
+            return [];
+        }
 
-        $res = array();
+        $res = [];
         foreach ($arr as $value) {
-            if (!isset($value[$id_field])) continue;
+            if (!isset($value[$id_field])) {
+                continue;
+            }
             if ($keys) {
                 $res[$value[$id_field]] = $value[$id_field];
             } else {
                 $res[] = setif($value, $id_field, '');
             }
         }
+
         return $res;
     }
 
-    static function getIds($arr = array(), $id_field = 'id', $unique = false)
+    public static function getIds($arr = [], $id_field = 'id', $unique = false)
     {
         $data = self::Id2Id($arr, $id_field, false);
-        if ($unique) $data = array_unique($data);
+        if ($unique) {
+            $data = array_unique($data);
+        }
+
         return $data;
     }
 
-    static function MinValue($arr = array())
+    public static function MinValue($arr = [])
     {
-        if (!is_array($arr)) return false;
+        if (!is_array($arr)) {
+            return false;
+        }
         sort($arr, SORT_NUMERIC);
+
         return array_shift($arr);
     }
 
-    static function MaxValue($arr = array())
+    public static function MaxValue($arr = [])
     {
-        if (!is_array($arr)) return false;
+        if (!is_array($arr)) {
+            return false;
+        }
         rsort($arr, SORT_NUMERIC);
+
         return array_shift($arr);
     }
 
-    static function SortValue2Ids(&$arr = array(), $id_field = 'id', $value_field = 'value', $order = 'max')
+    public static function SortValue2Ids(&$arr = [], $id_field = 'id', $value_field = 'value', $order = 'max')
     {
-        if (!is_array($arr)) return false;
+        if (!is_array($arr)) {
+            return false;
+        }
         $res = self::Values2Ids($arr, $id_field, $value_field);
         foreach ($res as &$value) {
             $value = ($order == 'max' ? self::MaxValue($value) : self::MinValue($value));
         }
         $arr = $res;
+
         return $res;
     }
 
-    static function Unique(&$arr)
+    public static function Unique(&$arr)
     {
         foreach ($arr as &$value) {
             $value = array_unique($value);
         }
+
         return $arr;
     }
 
-    static function elements($arr, $offset = 0, $limit = 0)
+    public static function elements($arr, $offset = 0, $limit = 0)
     {
-        if (!$limit) $limit = sizeof($arr) - $offset;
+        if (!$limit) {
+            $limit = sizeof($arr) - $offset;
+        }
 
         $counter = 0;
-        $res = array();
+        $res = [];
         foreach ($arr as $value) {
             if ($counter >= $offset && $counter < $offset + $limit) {
                 $res[] = $value;
             }
             $counter++;
         }
+
         return $res;
     }
 
-    static function DeleteEmpty($arr)
+    public static function DeleteEmpty($arr)
     {
         foreach ($arr as $key => $value) {
             if (is_array($value)) {
-                if (sizeof($value) == 0) unset($arr[$key]);
+                if (sizeof($value) == 0) {
+                    unset($arr[$key]);
+                }
             } else {
-                if (!$value) unset($arr[$key]);
+                if (!$value) {
+                    unset($arr[$key]);
+                }
             }
         }
+
         return $arr;
     }
 
-    static function FilterValues(&$arr, $value_field = 'value', $eq_type = '=', $eq_value = 0)
+    public static function FilterValues(&$arr, $value_field = 'value', $eq_type = '=', $eq_value = 0)
     {
         require_once 'LString.php';
 
         if (!is_array($arr) || (is_object($arr) && !$arr instanceof ArrayAccess)) {
-            return array();
+            return [];
         }
 
-        $res = array();
+        $res = [];
         foreach ($arr as $value) {
-            if (!isset($value[$value_field])) continue;
+            if (!isset($value[$value_field])) {
+                continue;
+            }
             switch ($eq_type) {
-                default :
-                case(1):
-                case('='):
-                case('ravno'):
-                case('equal'):
+                default:
+                case 1:
+                case '=':
+                case 'ravno':
+                case 'equal':
                     if ($value[$value_field] == $eq_value) {
                         $res[] = $value;
                     }
                     break;
-                case(2):
-                case('<'):
-                case('menishe'):
-                case('less'):
+                case 2:
+                case '<':
+                case 'menishe':
+                case 'less':
                     if ($value[$value_field] < $eq_value) {
                         $res[] = $value;
                     }
                     break;
-                case(3):
-                case('>'):
-                case('bolishe'):
-                case('more'):
+                case 3:
+                case '>':
+                case 'bolishe':
+                case 'more':
                     if ($value[$value_field] > $eq_value) {
                         $res[] = $value;
                     }
                     break;
-                case(4):
-                case('<='):
+                case 4:
+                case '<=':
                     if ($value[$value_field] <= $eq_value) {
                         $res[] = $value;
                     }
                     break;
-                case(5):
-                case('>='):
+                case 5:
+                case '>=':
                     if ($value[$value_field] >= $eq_value) {
                         $res[] = $value;
                     }
                     break;
-                case('includes'):
+                case 'includes':
                     if (LString::utf8_strpos(LString::utf8_lowercase($value[$value_field]), LString::utf8_lowercase($eq_value)) !== false) {
                         $res[] = $value;
                     }
                     break;
             }
         }
+
         return $res;
     }
 
-    static function trim(&$arr, $delete_symbols = ' ')
+    public static function trim(&$arr, $delete_symbols = ' ')
     {
         foreach ($arr as &$value) {
             if (is_array($value)) {
@@ -212,46 +251,54 @@ class Arrays
                 $value = trim($value, $delete_symbols);
             }
         }
+
         return $arr;
     }
 
-    static function prepareStandart($arr, $id_field = 'id', $value_field = 'value')
+    public static function prepareStandart($arr, $id_field = 'id', $value_field = 'value')
     {
-        $res = array();
+        $res = [];
         foreach ($arr as $value) {
-            $res[] = array(0 => $value[$id_field], 1 => $value[$value_field],
-                'id' => $value[$id_field], 'value' => $value[$value_field]);
+            $res[] = [0 => $value[$id_field], 1 => $value[$value_field],
+                'id'    => $value[$id_field], 'value' => $value[$value_field], ];
         }
+
         return $res;
     }
 
-    static function sum($arr, $field)
+    public static function sum($arr, $field)
     {
         $res = 0;
         foreach ($arr as $value) {
             $res += $value[$field];
         }
+
         return $res;
     }
 
-    static function val($arr, $field)
+    public static function val($arr, $field)
     {
         return isset($arr[$field]) ? $arr[$field] : false;
     }
 
-    static function first($arr)
+    public static function first($arr)
     {
-        if (!is_array($arr) || sizeof($arr) == 0) return array();
-        foreach ($arr as $value) break;
+        if (!is_array($arr) || sizeof($arr) == 0) {
+            return [];
+        }
+        foreach ($arr as $value) {
+            break;
+        }
+
         return $value;
     }
 
-    static function last($arr)
+    public static function last($arr)
     {
         return array_pop($arr);
     }
 
-    static function next($arr, $need_value = NULL, $return_first_onerror = true)
+    public static function next($arr, $need_value = null, $return_first_onerror = true)
     {
         if (!isset($need_value)) {
             return next($arr);
@@ -259,7 +306,9 @@ class Arrays
 
         $next_flag = false;
         foreach ($arr as $value) {
-            if ($next_flag) return $value;
+            if ($next_flag) {
+                return $value;
+            }
 
             if ($need_value == $value) {
                 $next_flag = true;
@@ -273,22 +322,27 @@ class Arrays
         }
     }
 
-    static function fpush($arr, $value, $key = false)
+    public static function fpush($arr, $value, $key = false)
     {
-        if (!is_array($arr) || sizeof($arr) == 0) return array();
+        if (!is_array($arr) || sizeof($arr) == 0) {
+            return [];
+        }
 
-        $res = $key !== false ? array($key => $value) : array($value);
+        $res = $key !== false ? [$key => $value] : [$value];
         foreach ($arr as $elem_key => $elem_value) {
             $res[$elem_key] = $elem_value;
         }
+
         return $res;
     }
 
-    static function after($arr, $add_arr, $after_key = 0)
+    public static function after($arr, $add_arr, $after_key = 0)
     {
-        if (!is_array($arr) || !is_array($add_arr)) return array();
+        if (!is_array($arr) || !is_array($add_arr)) {
+            return [];
+        }
 
-        $res = array();
+        $res = [];
         foreach ($arr as $key => $value) {
             $res[$key] = $value;
             if ($key == $after_key) {
@@ -301,22 +355,28 @@ class Arrays
         return $res;
     }
 
-    static function ValuesFromField($arr, $field, $key = false)
+    public static function ValuesFromField($arr, $field, $key = false)
     {
-        if (!is_array($arr)) return array();
-        $res = array();
-        foreach ($arr as $value) {
-            if ($key)
-                $res[$value[$key]] = $value[$field];
-            else
-                $res[] = $value[$field];
+        if (!is_array($arr)) {
+            return [];
         }
+        $res = [];
+        foreach ($arr as $value) {
+            if ($key) {
+                $res[$value[$key]] = $value[$field];
+            } else {
+                $res[] = $value[$field];
+            }
+        }
+
         return $res;
     }
 
-    public static function setBitMask($arr = array(), $keys = false)
+    public static function setBitMask($arr = [], $keys = false)
     {
-        if (!is_array($arr) || sizeof($arr) == 0) return 0;
+        if (!is_array($arr) || sizeof($arr) == 0) {
+            return 0;
+        }
 
         $result = 0;
         foreach ($arr as $elem_key => $elem_value) {
@@ -326,6 +386,7 @@ class Arrays
                 $result = $result | 1 << $elem_value;
             }
         }
+
         return $result;
     }
 
@@ -334,7 +395,7 @@ class Arrays
         $grade = 20;
 
         $mask = intval($mask);
-        $result = array();
+        $result = [];
 
         $counter = 0;
         while ($counter < $grade) {
@@ -345,6 +406,7 @@ class Arrays
             }
             $counter++;
         }
+
         return $result;
     }
 
@@ -352,7 +414,7 @@ class Arrays
      * функция сортировки массисва по полю
      * masort($yourArray, 'name');  сортировка по полю name
      * masort($yourArray, 'surname, name'); отсортировать массив по полю "surname", а те у кого одинаковый "surname", по полю "name"
-     * masort($yourArray, 'priority DESC, surname, name'); 
+     * masort($yourArray, 'priority DESC, surname, name');
      */
     /*
         static function masort(&$data, $sortby)
@@ -395,9 +457,11 @@ class Arrays
         }
     */
 
-    static function masort(&$data, $sortby)
+    public static function masort(&$data, $sortby)
     {
-        if (!sizeof($data)) return array();
+        if (!sizeof($data)) {
+            return [];
+        }
 
         $sortby = str_replace('ASC', '', $sortby);
 
@@ -417,39 +481,43 @@ class Arrays
                     return $c;
                 }
 
-
                 if (isset($a[$key])) {
                     if (is_numeric($a[$key])) {
                         if ($asc) {
-                            if ($c = (($a[$key] == $b[$key]) ? 0 : (($a[$key] < $b[$key]) ? -1 : 1))) return $c;
+                            if ($c = (($a[$key] == $b[$key]) ? 0 : (($a[$key] < $b[$key]) ? -1 : 1))) {
+                                return $c;
+                            }
                         } else {
-                            if ($c = (($a[$key] == $b[$key]) ? 0 : (($a[$key] > $b[$key]) ? -1 : 1))) return $c;
+                            if ($c = (($a[$key] == $b[$key]) ? 0 : (($a[$key] > $b[$key]) ? -1 : 1))) {
+                                return $c;
+                            }
                         }
-
                     } else {
                         if ($asc) {
-                            if (($c = strcasecmp($a[$key], $b[$key])) != 0) return $c;
+                            if (($c = strcasecmp($a[$key], $b[$key])) != 0) {
+                                return $c;
+                            }
                         } else {
-                            if (($c = strcasecmp($a[$key], $b[$key])) != 0) return -1 * $c;
+                            if (($c = strcasecmp($a[$key], $b[$key])) != 0) {
+                                return -1 * $c;
+                            }
                         }
-
                     }
                 }
             }
 
             return $c;
         });
-
-
     }
 
     /**
-     * Получить значение битовой маски
+     * Получить значение битовой маски.
      *
      * @param        array        data
-     * @return        int
+     *
+     * @return int
      */
-    static public function getBitmaskFromArray(array $data)
+    public static function getBitmaskFromArray(array $data)
     {
         $mask = 0;
 
@@ -461,25 +529,29 @@ class Arrays
     }
 
     /**
-     * Получить массив по битовой маски
+     * Получить массив по битовой маски.
      *
      * @param        int                mask
      * @param        int                bitCount
-     * @return        array
+     *
+     * @return array
      */
-    static public function getArrayFromBitmask($mask, $bitCount = 8)
+    public static function getArrayFromBitmask($mask, $bitCount = 8)
     {
-        $data = array();
+        $data = [];
 
-        for ($i = 0; $i < $bitCount; $i++)
-            if ($mask >> $i & 1)
+        for ($i = 0; $i < $bitCount; $i++) {
+            if ($mask >> $i & 1) {
                 $data[$i] = true;
+            }
+        }
 
         return $data;
     }
 
     /**
-     * Метод преобразования строки с разделителями в массив
+     * Метод преобразования строки с разделителями в массив.
+     *
      * @descr Помимо обычного преобразования, удаляются пустые элементы и обрезаются конечные пробелы элементов
      *
      * @param string $delimiter
@@ -487,7 +559,7 @@ class Arrays
      *
      * @return array
      */
-    static public function explode($delimiter, $string)
+    public static function explode($delimiter, $string)
     {
         return self::deleteEmpty(self::trim(explode($delimiter, $string)));
     }

@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Creitive\Breadcrumbs\Breadcrumbs;
 use Encore\Admin\Config\Config;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
@@ -11,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
         //
         $this->app->singleton('backend.breadcrumbs', function () {
             $breadcrumbs = new \Creitive\Breadcrumbs\Breadcrumbs();
-            $breadcrumbs->addCrumb("<i class='fa fa-dashboard'></i>" . ' Главная', config('admin.route.prefix'));
+            $breadcrumbs->addCrumb("<i class='fa fa-dashboard'></i>".' Главная', config('admin.route.prefix'));
             $breadcrumbs->addCssClasses('breadcrumb '); //breadcrumb-arrow
             $breadcrumbs->setDivider(null);
 
@@ -33,9 +31,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind('images.photo', function ($app, $params) {
-
             $reflection = new \ReflectionClass('\App\Libs\LibImages');
             $filter = $reflection->newInstanceArgs($params);
+
             return $filter;
         });
 
@@ -50,8 +48,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-	    Blade::withoutDoubleEncoding();
+        Blade::withoutDoubleEncoding();
         Paginator::useBootstrapThree();
 
         //
@@ -98,12 +95,11 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
         });
-
     }
 
     public function registerConfig()
     {
-        $files = glob(app_path('Src/Config/') . '*.php');
+        $files = glob(app_path('Src/Config/').'*.php');
         if ($files) {
             foreach ($files as $one) {
                 $tmp = explode('.', basename($one));
@@ -112,7 +108,7 @@ class AppServiceProvider extends ServiceProvider
                     $configs = require_once $one;
 
                     if (isset($configs['path']) && $configs['path']) {
-                        $this->mergeConfigFrom($one, 'modules.' . $configs['path']);
+                        $this->mergeConfigFrom($one, 'modules.'.$configs['path']);
                     }
                 }
             }

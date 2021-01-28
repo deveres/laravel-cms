@@ -22,7 +22,7 @@ class SynchroLabelsGridTool extends AbstractTool
         //@todo set messages from
         $message = trans('admin.refresh_succeeded');
 
-        $url = route(config('admin.route.prefix') . '.synchro-labels');
+        $url = route(config('admin.route.prefix').'.synchro-labels');
 
         return <<<EOT
          (function(){

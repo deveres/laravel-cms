@@ -3,22 +3,10 @@
 namespace App\Src\Admin\Controllers\Images;
 
 use App\Http\Controllers\BackendController;
-use App\Libs\Arrays;
-use App\Src\Models\Langs\LabelLang;
-use App\Src\Models\Seo\ModSeo;
-
-
-use Cviebrock\EloquentSluggable\Services\SlugService;
 use Encore\Admin\Controllers\HasResourceActions;
-use Encore\Admin\Facades\Admin;
-use Encore\Admin\Form;
-use Encore\Admin\Grid;
-use Encore\Admin\Grid\Filter;
 use Encore\Admin\Layout\Content;
-use Intervention\Image\Facades\Image;
 use Jenky\LaravelPlupload\Facades\Plupload;
 use Symfony\Component\HttpFoundation\Request;
-use Storage;
 
 class ImagesBackendController extends BackendController
 {
@@ -26,28 +14,20 @@ class ImagesBackendController extends BackendController
 
     public $_resource = 'images';
 
-
     public function index(Content $content)
     {
-
     }
 
     public function show(Content $content)
     {
-
     }
 
     public function uploadImage(Request $request)
     {
-
-
         $ret = Plupload::file('file', function ($file) use ($request) {
-
             $input = $request->all();
             $id = setif($input, 'item_id');
             $alias = setif($input, 'alias');
-
-
 
             $images = app('images.photo')->init($alias, $id);
             $photo = $images->plUpload($request, $file, 'file');
@@ -61,16 +41,16 @@ class ImagesBackendController extends BackendController
 
             // This will be included in JSON response result
             return [
-                'success' => true,
-                'message' => 'Upload successful.',
-                'id' => $photo['item']->id,
-                'name' => $photo['item']->filename,
-                'data' => $photo['item'],
+                'success'  => true,
+                'message'  => 'Upload successful.',
+                'id'       => $photo['item']->id,
+                'name'     => $photo['item']->filename,
+                'data'     => $photo['item'],
                 'urlImage' => app('images.photo')->photo([
-                    'module' => $alias,
-                    'size' => 100,
+                    'module'  => $alias,
+                    'size'    => 100,
                     'item_id' => $photo['item']->item_id,
-                    'img' => $photo['item']->filename ? $photo['item']->filename : 0
+                    'img'     => $photo['item']->filename ? $photo['item']->filename : 0,
                 ]),
                 // 'url' => $photo->getImageUrl($filename, 'medium'),
                 // 'deleteUrl' => route('photos.destroy', $photo)
@@ -83,7 +63,6 @@ class ImagesBackendController extends BackendController
 
     public function deleteImage(Request $request)
     {
-
         $id = $request->get('id', 0);
 
         $ret = app('images.photo')->deleteImage($id);
@@ -93,7 +72,6 @@ class ImagesBackendController extends BackendController
 
     public function deleteAllImages(Request $request)
     {
-
         $item_id = $request->get('item_id', 0);
         $module = $request->get('module', '');
 
@@ -102,10 +80,8 @@ class ImagesBackendController extends BackendController
         return ['success' => $ret];
     }
 
-
     public function mainImage(Request $request)
     {
-
         $id = $request->get('id', 0);
         $item_id = $request->get('item_id', 0);
         $module = $request->get('module', '');
@@ -114,6 +90,4 @@ class ImagesBackendController extends BackendController
 
         return ['success' => $ret];
     }
-
-
 }

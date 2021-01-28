@@ -165,8 +165,10 @@ class NewsBackendController extends BackendController
 
             $item = $form->model()->findOrNew($id);
 
-            $form->hidden('lock_alias', 'Алиас редактируемый?')->default($item ? $item->lock_alias : old('lock_alias',
-                0));
+            $form->hidden('lock_alias', 'Алиас редактируемый?')->default($item ? $item->lock_alias : old(
+                'lock_alias',
+                0
+            ));
 
             $form->translit(
                 'alias',
@@ -201,8 +203,6 @@ class NewsBackendController extends BackendController
         $langs = get_active_langs();
         foreach ($langs as $one) {
             $form->tab($one['name'], function (Form $form) use ($one, $id) {
-
-
                 $form->html('<div class="form-group"><div class="col-md-12"><h4 class="form-header">Переводы на '.$one['name'].' язык</h4></div></div>');
 
                 $trans_item = $form->model()->findOrNew($id);
@@ -254,8 +254,8 @@ class NewsBackendController extends BackendController
             $form1->switch('state', 'Статус')->states($statuses1);
 
             $form1->switch('comments_enabled', 'показать комментарии')->states($statuses1);
-            // $form1->select('state', 'Статус')->options([1 => 'Включено', 0 => 'Отключено'])->config( 'allowClear',false);
-        }, true, 11+(7*count($langs)));
+        // $form1->select('state', 'Статус')->options([1 => 'Включено', 0 => 'Отключено'])->config( 'allowClear',false);
+        }, true, 11 + (7 * count($langs)));
 
         // callback after save
         $form->saved(function (Form $form) {
