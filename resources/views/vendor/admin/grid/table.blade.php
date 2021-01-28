@@ -1,4 +1,4 @@
-<div class="box box-info">
+<div class="box grid-box">
     @if(isset($title))
         <div class="box-header with-border">
             <h3 class="box-title"> {{-- $title --}}</h3>
@@ -6,47 +6,50 @@
     @endif
 
 
-    <div class="box-header with-border">
-        <div class="pull-right">
-            {!! $grid->renderExportButton() !!}
-            {!! $grid->renderCreateButton() !!}
-        </div>
-        <span>
-            {!! $grid->renderHeaderTools() !!}
-        </span>
-    </div>
+        @if ( $grid->showTools() || $grid->showExportBtn() || $grid->showCreateBtn() )
+            <div class="box-header with-border">
+                <div class="pull-right">
+                    {!! $grid->renderColumnSelector() !!}
+                    {!! $grid->renderExportButton() !!}
+                    {!! $grid->renderCreateButton() !!}
+                </div>
+                @if ( $grid->showTools() )
+                    <div class="pull-left">
+                        {!! $grid->renderHeaderTools() !!}
+                    </div>
+                @endif
+            </div>
+        @endif
 
     {!! $grid->renderFilter() !!}
 
+        {{-- $grid->renderHeader() --}}
+
 <!-- /.box-header -->
-@php
-    try{
-        $grid_mini_filter = $grid->option('grid_mini_filter');
-    }catch(\Exception $e){
-        $grid_mini_filter = null;
-    }
-@endphp
+
 
     <div id="adminGrid" class="box-body table-responsive no-padding">
 
-                @if (!empty($grid_mini_filter) && $grid_mini_filter)
-                    @foreach ($grid_mini_filter as $one_minifilter_key=>$one_minifilter)
-                        @widget( $one_minifilter_key, $one_minifilter)
-                    @endforeach
-                @endif
 
-        <table class="table table_bord table-bordered table-striped table-hover">
+        <table class="table table_bord table-bordered table-striped table-hover" id="{{ $grid->tableID }}">
             <thead>
             <tr>
                 @foreach($grid->visibleColumns() as $column)
-                    <th>{{$column->getLabel()}}{!! $column->renderHeader() !!}</th>
+                    <th {!! $column->formatHtmlAttributes() !!}>{!! $column->getLabel() !!}{!! $column->renderHeader() !!}</th>
                 @endforeach
-
-
             </tr>
             </thead>
 
+            @if ($grid->hasQuickCreate())
+                {!! $grid->renderQuickCreate() !!}
+            @endif
+
+
             <tbody>
+            @if($grid->rows()->isEmpty() && $grid->showDefineEmptyPage())
+                @include('admin::grid.empty-grid')
+            @endif
+
             @foreach($grid->rows() as $row)
                 <tr {!! $row->getRowAttributes() !!}>
                     @foreach($grid->visibleColumnNames() as $name)
@@ -56,7 +59,10 @@
                     @endforeach
                 </tr>
             @endforeach
+
             </tbody>
+
+            {!! $grid->renderTotalRow() !!}
 
         </table>
 

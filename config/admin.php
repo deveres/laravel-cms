@@ -110,7 +110,7 @@ return [
     */
     'auth' => [
 
-        'controller' => App\Admin\Controllers\AuthController::class,
+        'controller' => App\Src\Admin\Controllers\AuthController::class,
 
         'guard' => 'admin',
 
@@ -185,9 +185,11 @@ return [
 
         // Permission table and model.
         'permissions_table' => 'admin_permissions',
+        'permissions_category_table' => 'admin_permissions_categories',
+        'permissions_model'          => App\Src\Models\Permissions\Permission::class,
+        'permissions_model_category' => App\Src\Models\Permissions\PermissionCategory::class,
         //'permissions_model' => Encore\Admin\Auth\Database\Permission::class,
-        'permissions_model'          => Encore\Admin\Auth\Database\Permission::class,
-        'permissions_model_category' => Encore\Admin\Auth\Database\PermissionCategory::class,
+        //'permissions_model_category' => Encore\Admin\Auth\Database\PermissionCategory::class,
 
         // Menu table and model.
         'menu_table' => 'admin_menu',
@@ -341,7 +343,7 @@ return [
     |
     | Whether enable default breadcrumb for every page content.
     */
-    'enable_default_breadcrumb' => true,
+    'enable_default_breadcrumb' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -376,7 +378,7 @@ return [
     | The global Grid action display class.
     |--------------------------------------------------------------------------
     */
-   // 'grid_action_class' => \Encore\Admin\Grid\Displayers\DropdownActions::class,
+    //'grid_action_class' => \Encore\Admin\Grid\Displayers\DropdownActions::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -447,5 +449,11 @@ return [
               'enable' => true,
         ],
 
+
+        'media-manager' => [
+
+            // Select a local disk that you configured in `config/filesystem.php`
+            'disk' => 'web'
+        ],
     ],
 ];

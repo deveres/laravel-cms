@@ -15,14 +15,7 @@ trait CreatesApplication
     {
         $app = require __DIR__.'/../bootstrap/app.php';
 
-        $app->booting(function () {
-            $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-            $loader->alias('Admin', \Encore\Admin\Facades\Admin::class);
-        });
-
         $app->make(Kernel::class)->bootstrap();
-
-        $app->register('Encore\Admin\AdminServiceProvider');
 
         return $app;
     }

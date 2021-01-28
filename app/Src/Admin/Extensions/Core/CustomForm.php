@@ -62,12 +62,13 @@ class CustomForm extends Form
      * @param $title
      * @param Closure $content
      * @param bool    $active
+     * @param integer    $offset
      *
      * @return $this
      */
-    public function rightPanel($title, Closure $content, $active = false)
+    public function rightPanel($title, Closure $content, $active = false, $offset = 0)
     {
-        $this->getRightPanel()->append($title, $content, $active);
+        $this->getRightPanel()->append($title, $content, $active, 'danger', $offset);
 
         return $this;
     }

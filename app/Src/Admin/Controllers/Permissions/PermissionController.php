@@ -12,22 +12,9 @@ use Illuminate\Support\Str;
 
 class PermissionController extends \Encore\Admin\Controllers\PermissionController
 {
-    use HasResourceActions;
 
-    /**
-     * Index interface.
-     *
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function index(Content $content)
-    {
-        return $content
-            ->header(trans('admin.permissions'))
-            ->description(trans('admin.list'))
-            ->body($this->grid()->render());
-    }
+
+
 
     /**
      * Make a grid builder.
@@ -40,6 +27,7 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
 
         $grid = new Grid(new $permissionModel());
 
+
         $grid->option('grid_mini_filter', [
             'Admin\GridMiniFilter' => [
                 'model_name'   => $permissionModel,
@@ -51,16 +39,15 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
             ],
         ]);
 
-        $grid->id('ID')->sortable();
+        $grid->column('id', 'ID')->sortable();
         $grid->cat_id('Категория')->display(function ($userId) {
             return '<strong style="color:maroon">'.PermissionCategory::find($userId)->name.'</strong>';
         });
-        $grid->slug(trans('admin.slug'));
+        $grid->column('slug', trans('admin.slug'));
+        $grid->column('name', trans('admin.name'));
 
-        $grid->name(trans('admin.name'));
-
-        $grid->http_path(trans('admin.route'))->display(function ($path) {
-            return collect(explode("\r\n", $path))->map(function ($path) {
+        $grid->column('http_path', trans('admin.route'))->display(function ($path) {
+            return collect(explode("\n", $path))->map(function ($path) {
                 $method = $this->http_method ?: ['ANY'];
 
                 if (Str::contains($path, ':')) {
@@ -74,14 +61,16 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
                     return "<span class='label label-primary'>{$name}</span>";
                 })->implode('&nbsp;');
 
-                $path = '/'.trim(config('admin.route.prefix'), '/').$path;
+                if (!empty(config('admin.route.prefix'))) {
+                    $path = '/'.trim(config('admin.route.prefix'), '/').$path;
+                }
 
                 return "<div style='margin-bottom: 5px;'>$method<code>$path</code></div>";
             })->implode('');
         });
 
-        $grid->created_at(trans('admin.created_at'));
-        $grid->updated_at(trans('admin.updated_at'));
+        $grid->column('created_at', trans('admin.created_at'));
+        $grid->column('updated_at', trans('admin.updated_at'));
 
         $grid->tools(function (Grid\Tools $tools) {
             $tools->batch(function (Grid\Tools\BatchActions $actions) {
@@ -98,46 +87,29 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
                     'id')->toArray());
         });
 
-        //$grid->expandFilter();
+        $grid->actions(function ($actions) {
+
+
+            $actions->column->setAttributes(['class' => 'row_actions']);
+        });
+
 
         return $grid;
+
     }
 
-    /**
-     * Show interface.
-     *
-     * @param mixed   $id
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function show($id, Content $content)
-    {
-        return $content
-            ->header(trans('admin.permissions'))
-            ->description(trans('admin.detail'))
-            ->body($this->detail($id));
-    }
-
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     *
-     * @return Show
-     */
     protected function detail($id)
     {
         $permissionModel = config('admin.database.permissions_model');
 
         $show = new Show($permissionModel::findOrFail($id));
 
-        $show->id('ID');
+        $show->field('id', 'ID');
         $show->cat_id('Категория');
-        $show->slug(trans('admin.slug'));
-        $show->name(trans('admin.name'));
+        $show->field('slug', trans('admin.slug'));
+        $show->field('name', trans('admin.name'));
 
-        $show->http_path(trans('admin.route'))->as(function ($path) {
+        $show->field('http_path', trans('admin.route'))->unescape()->as(function ($path) {
             return collect(explode("\r\n", $path))->map(function ($path) {
                 $method = $this->http_method ?: ['ANY'];
 
@@ -152,33 +124,26 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
                     return "<span class='label label-primary'>{$name}</span>";
                 })->implode('&nbsp;');
 
-                $path = '/'.trim(config('admin.route.prefix'), '/').$path;
+                if (!empty(config('admin.route.prefix'))) {
+                    $path = '/'.trim(config('admin.route.prefix'), '/').$path;
+                }
 
                 return "<div style='margin-bottom: 5px;'>$method<code>$path</code></div>";
             })->implode('');
         });
 
-        $show->created_at(trans('admin.created_at'));
-        $show->updated_at(trans('admin.updated_at'));
+        $show->field('created_at', trans('admin.created_at'));
+        $show->field('updated_at', trans('admin.updated_at'));
 
         return $show;
     }
 
-    /**
-     * Edit interface.
-     *
-     * @param $id
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function edit($id, Content $content)
-    {
-        return $content
-            ->header(trans('admin.permissions'))
-            ->description(trans('admin.edit'))
-            ->body($this->form()->edit($id));
-    }
+
+
+
+
+
+
 
     /**
      * Make a form builder.
@@ -191,47 +156,23 @@ class PermissionController extends \Encore\Admin\Controllers\PermissionControlle
 
         $form = new Form(new $permissionModel());
 
-        $form->display('id', 'ID');
-        $form->select('cat_id', 'Категория')->options(PermissionCategory::query()->pluck('name',
-            'id'))->rules('required', ['required' => 'Поле обязательно для заполнения']);
-        $form->text('slug', trans('admin.slug'))->rules('required');
-        $form->text('name', trans('admin.name'))->rules('required');
+        $form->tab('Общее', function (Form $form)  {
+            $form->display('id', 'ID');
 
-        $form->multipleSelect('http_method', trans('admin.http.method'))
-            ->options($this->getHttpMethodsOptions())
-            ->help(trans('admin.all_methods_if_empty'));
-        $form->textarea('http_path', trans('admin.http.path'));
+            $form->text('slug', trans('admin.slug'))->rules('required');
+            $form->select('cat_id', 'Категория')->options(PermissionCategory::query()->pluck('name',
+                'id'))->rules('required', ['required' => 'Поле обязательно для заполнения']);
+            $form->text('name', trans('admin.name'))->rules('required');
 
-        $form->display('created_at', trans('admin.created_at'));
-        $form->display('updated_at', trans('admin.updated_at'));
+            $form->multipleSelect('http_method', trans('admin.http.method'))
+                ->options($this->getHttpMethodsOptions())
+                ->help(trans('admin.all_methods_if_empty'));
+            $form->textarea('http_path', trans('admin.http.path'));
 
+            $form->display('created_at', trans('admin.created_at'));
+            $form->display('updated_at', trans('admin.updated_at'));
+        });
         return $form;
     }
 
-    /**
-     * Get options of HTTP methods select field.
-     *
-     * @return array
-     */
-    protected function getHttpMethodsOptions()
-    {
-        $permissionModel = config('admin.database.permissions_model');
-
-        return array_combine($permissionModel::$httpMethods, $permissionModel::$httpMethods);
-    }
-
-    /**
-     * Create interface.
-     *
-     * @param Content $content
-     *
-     * @return Content
-     */
-    public function create(Content $content)
-    {
-        return $content
-            ->header(trans('admin.permissions'))
-            ->description(trans('admin.create'))
-            ->body($this->form());
-    }
 }

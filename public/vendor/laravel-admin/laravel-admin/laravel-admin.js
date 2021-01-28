@@ -9,7 +9,7 @@ $.fn.editable.defaults.error = function (data) {
     var msg = '';
     if (data.responseJSON.errors) {
         $.each(data.responseJSON.errors, function (k, v) {
-            msg += v + '\\n';
+            msg += v + "\n";
         });
     }
     return msg
@@ -173,5 +173,26 @@ $('#totop').on('click', function (e) {
     $.admin.getToken = function () {
         return $('meta[name="csrf-token"]').attr('content');
     };
+
+    $.admin.loadedScripts = [];
+
+    $.admin.loadScripts = function(arr) {
+        var _arr = $.map(arr, function(src) {
+
+            if ($.inArray(src, $.admin.loadedScripts)) {
+                return;
+            }
+
+            $.admin.loadedScripts.push(src);
+
+            return $.getScript(src);
+        });
+
+        _arr.push($.Deferred(function(deferred){
+            $(deferred.resolve);
+        }));
+
+        return $.when.apply($, _arr);
+    }
 
 })(jQuery);

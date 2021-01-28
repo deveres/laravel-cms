@@ -19,11 +19,12 @@ class Label extends Model
 
     protected $guarded = ['id'];
 
+
     protected static function boot()
     {
         parent::boot();
 
-        static::saved(function (self $label) {
+        static::saved(function (Label $label) {
             I18nService::export();
 
             return true;

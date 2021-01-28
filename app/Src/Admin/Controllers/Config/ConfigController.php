@@ -2,7 +2,11 @@
 
 namespace App\Src\Admin\Controllers\Config;
 
+use App\Http\Controllers\BackendController;
 use App\Src\Admin\Extensions\Core\CustomForm;
+use App\Src\Admin\Services\AdminMenuService;
+use App\Src\Models\Modules\Module;
+use Carbon\Carbon;
 use Encore\Admin\Config\ConfigModel;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
@@ -11,7 +15,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class ConfigController
+class ConfigController extends BackendController
 {
     use HasResourceActions;
 
@@ -22,6 +26,7 @@ class ConfigController
      */
     public function index(Content $content)
     {
+
         return $content
             ->header('Config')
             ->description('list')
@@ -54,8 +59,12 @@ class ConfigController
         $grid->value();
         $grid->description();
 
-        $grid->created_at();
-        $grid->updated_at();
+        $grid->created_at()->display(function ($date){
+          return Carbon::parse($date)->format(Carbon::DEFAULT_TO_STRING_FORMAT);
+        });
+        $grid->updated_at()->display(function ($date){
+            return Carbon::parse($date)->format(Carbon::DEFAULT_TO_STRING_FORMAT);
+        });
 
         $grid->actions(function ($actions) {
             $actions->disableView();
@@ -108,7 +117,7 @@ class ConfigController
         });
 
         $form->tab('Общее', function (Form $form) use ($id) {
-            $form->htmlFull('<h4 class="form-header">Основная информация</h4>');
+
 
             $form->display('id', 'ID');
             $form->select('category', 'Категория')->options(config('admin.extensions.config.categories',
@@ -122,7 +131,7 @@ class ConfigController
             $form1->display('id', 'ID');
             $form1->display('created_at');
             $form1->display('updated_at');
-        }, true);
+        }, true, 5);
 
         return $form;
     }

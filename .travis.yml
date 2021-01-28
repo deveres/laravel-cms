@@ -1,36 +1,42 @@
+dist: xenial
+
+sudo: true
+
 language: php
 
+services:
+  - mysql
+
 php:
-  - 7.1
+  - "7.2"
 
-matrix:
-  fast_finish: true
-  allow_failures:
-    - php: hhvm
-
-sudo: required
-dist: precise
 
 env:
   global:
+    - TZ: 'Europe/Moscow'
     - NODE_ENV=test
-
-addons:
-  postgresql: "9.5"
-services:
-  - postgresql
+    - MYSQL_DATABASE=laravel_cms_7
+    - MYSQL_USER=root
+    - MYSQL_ROOT_PASSWORD=
+    - DB_HOST=127.0.0.1
 
 before_script:
   - phpenv config-rm xdebug.ini
   - cp .env.travis .env
   - cp phpunit.xml.dist  phpunit.xml
-  - psql -c 'create database laravel_admin_test;' -U postgres
-  - export PGPASSWORD=''; psql -U postgres -h localhost -d laravel_admin_test -f database/dump/2018-09-28.sql
-  - unset PGPASSWORD
+  - wget https://repo.mysql.com//mysql-apt-config_0.8.10-1_all.deb
+  - sudo dpkg -i mysql-apt-config_0.8.10-1_all.deb
+  - sudo apt-get update -q
+  - sudo apt-get install -q -y --allow-unauthenticated -o Dpkg::Options::=--force-confnew mysql-server
+  - sudo systemctl restart mysql
+  - sudo mysql_upgrade
+  - mysql --version
+  - echo "SET GLOBAL sql_mode='';" | mysql --user="$MYSQL_USER" --password="$MYSQL_ROOT_PASSWORD" --host="$DB_HOST"
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;'
+  - cat storage/mysql_dump/dump.sql | mysql --user="$MYSQL_USER" --password="$MYSQL_ROOT_PASSWORD" --host="$DB_HOST" $MYSQL_DATABASE
   - composer self-update
   - composer update --no-progress
   - composer install --no-progress --no-interaction
 
-
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --colors

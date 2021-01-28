@@ -2,10 +2,13 @@
 
 namespace App\Src\Models\News;
 
+use App\Src\Services\I18nService;
+use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
 
 class ModNewsI18n extends Model
 {
+
     public $incrementing = 'id';
     public $timestamps = false;
     public $fillable = ['name', 'introtext', 'text', 'seo_h1', 'seo_title', 'seo_keywords', 'seo_description'];
@@ -22,4 +25,6 @@ class ModNewsI18n extends Model
 
         parent::__construct($attributes);
     }
+
+
 }

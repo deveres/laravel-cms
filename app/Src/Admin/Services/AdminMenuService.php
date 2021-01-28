@@ -29,7 +29,8 @@ class AdminMenuService
         ];
 
         $root = self::getMenu($module->name, 0);
-        if (0 === count($root)) {
+
+        if (!$root) {
             $root = Menu::create($rootMenu);
         }
 
@@ -48,7 +49,7 @@ class AdminMenuService
             ];
 
             $exist = self::getMenu($menu['title'], $menu['parent_id']);
-            if (0 === count($exist)) {
+            if (!$exist) {
                 Menu::create($menu);
             }
             foreach (self::CRUD as $crud) {

@@ -3,22 +3,22 @@
 namespace App\Src\Models\News;
 
 use App\Src\Models\Images\ModImage;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
+use Encore\Admin\Traits\DefaultDatetimeFormat;
 use Illuminate\Database\Eloquent\Model;
 
-class ModNews extends Model
+class ModNews extends Model implements TranslatableContract
 {
-    use \Dimsav\Translatable\Translatable;
+    use Translatable;
+    use DefaultDatetimeFormat;
 
+    /** @var string translation model */
     public $translationModel = 'App\Src\Models\News\ModNewsI18n';
 
     public $translationForeignKey = 'row_id';
 
-    public $incrementing = 'id';
-    public $timestamps = true;
-
-    public $dates = ['created_at', 'updated_at'];
-
-    // protected $guard = 'admin';
+    /** @var array translated fields */
     public $translatedAttributes = [
         'name',
         'introtext',
@@ -26,10 +26,22 @@ class ModNews extends Model
         'seo_h1',
         'seo_title',
         'seo_keywords',
-        'seo_description',
+        'seo_description'
     ];
+
+    public $incrementing = 'id';
+    public $timestamps = true;
+
+    // protected $guard = 'admin';
+
     protected $primaryKey = 'id';
-    protected $fillable = ['log_name', 'alias', 'link', 'state', 'lock_alias', 'comments_enabled'];
+
+
+    protected $guarded = ['id'];
+
+
+
+    public $dates = ['created_at', 'updated_at'];
 
     /**
      * ModSeo constructor.
@@ -67,4 +79,5 @@ class ModNews extends Model
             return $image;
         }
     }
+
 }

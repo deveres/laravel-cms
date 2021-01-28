@@ -14,7 +14,7 @@ class LabelLang extends Model implements Sortable
     use SortableTrait;
 
     public $sortable = [
-        'order_column_name'  => 'ord',
+        'order_column_name' => 'ord',
         'sort_when_creating' => true,
     ];
     public $incrementing = 'id';
@@ -37,14 +37,14 @@ class LabelLang extends Model implements Sortable
     {
         parent::boot();
 
-        static::saved(function (self $lang) {
+        static::saved(function (LabelLang $lang) {
             I18nService::syncLabelLang($lang);
             I18nService::export();
 
             return true;
         });
 
-        static::deleted(function (self $lang) {
+        static::deleted(function (LabelLang $lang) {
             I18nService::deleteLangsTableField($lang->id);
             I18nService::syncLabelLang($lang);
             I18nService::export();
@@ -90,12 +90,11 @@ class LabelLang extends Model implements Sortable
 
     public static function getCached()
     {
-        static $langs = null;
-        if (isset($langs)) {
-            return $langs;
-        }
+        static $langs = NULL;
+        if (isset($langs)) return $langs;
 
-        $cache_path = storage_path('app').'/cache/labels/langs.json';
+        $cache_path = storage_path('app') . '/cache/labels/langs.json';
+
 
         if (!file_exists($cache_path)) {
             $langs = self::query()->where('state', 1)->orderBy('default', 'DESC')->get()->toArray();
@@ -108,6 +107,8 @@ class LabelLang extends Model implements Sortable
 
     public static function getDefault()
     {
-        return self::query()->orderBy('default', 'DESC')->first()->toArray();
+        $label = self::query()->orderBy('default', 'DESC')->first();
+        return $label?$label->toArray():[];
     }
+
 }

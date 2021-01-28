@@ -1,5 +1,5 @@
 # Laravel-cms
-Laravel CMS based on z-song/laravel-admin
+Laravel CMS based on encore/laravel-admin <img src="https://laravel-admin.org/images/logo002.png" height="25px"> with multilanguage content
 
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
@@ -12,56 +12,66 @@ Laravel CMS based on z-song/laravel-admin
 
 # README #
 
-### Requirements ###
-* nodejs, php >=7.1 
-* nodejs modules grunt-cli,bower,gulp ( global )
-* PHP >= 7.1.0
-* Laravel >= 5.7.0
-* Fileinfo PHP Extension
 
+### Requirements ###
+* nodejs, php >=7.2
+* Laravel 6.x, 7.x
 
 
 ### Additional ###
-
-* [encore/laravel-admin: "^1.6"](https://github.com/z-song/laravel-admin)
-* [doctrine/dbal: "^2.6"](https://github.com/doctrine/dbal)
-* [barryvdh/laravel-ide-helper: "^2.4"](https://github.com/barryvdh/laravel-ide-helper)
-* [barryvdh/laravel-debugbar: "^3.1"](https://github.com/barryvdh/laravel-debugbar)
-
+* [encore/laravel-admin: "1.8.*"](https://github.com/z-song/laravel-admin) - https://github.com/z-song/laravel-admin
 
 ### Laravel-admin documentation ###
-*  http://laravel-admin.org/docs/#/
-*  [laravel-admin demo source](https://github.com/z-song/laravel-admin.org)
+*  https://laravel-admin.org/docs
+*  [laravel-admin demo source](https://github.com/z-song/demo.laravel-admin.org)
 
-### Installing ###
-* composer install
-* npm install --save-dev gulp-cli
-* npm install --save-dev gulp 
-* npm install --save-dev laravel-elixir
-* npm install --save-dev laravel-elixir-vue-2
-* npm install --save-dev laravel-elixir-webpack-official
-* npm install gulp -D 
-* touch gulpfile.js
-* npm install -g bower
-* npm install (from root path; processing - package.json)
-* bower install (optional)
-* gulp
+### Installation ###
+
+Create a new database with name ```laravel_cms_7``` in MySql (v.8).
+The database dump is in ```storage/mysql_dump/dump.sql``` and you can import it:
+
+```shell
+mysql> create database `laravel_cms_7`;
+
+mysql> use `laravel_cms_7`;
+
+mysql> source storage/mysql_dump/dump.sql
+```
+
+Then install the project:
+```bash
+composer install
+php artisan migrate 
+npm install
+npm run
+```
 
 
-### Admin part install ###
-* php artisan make:auth (optional)
-* php artisan admin:install (optional - if database is not installed)
-* php artisan migrate (optional)
+
+### Optional installation commands ###
+Run this commands if want to reinstall ``encore/laravel-admin`` interface:
+
+To publish assets and config:
+```shell
+php artisan vendor:publish --provider="Encore\Admin\AdminServiceProvider"
+```
+
+Finish install:
+```shell
+php artisan admin:install
+```
 
 ### Additional: php code check ###
-* [check PSR-1/PSR-2](https://habrahabr.ru/sandbox/101278/)
+* [code check PSR-1/PSR-2](https://habrahabr.ru/sandbox/101278/)
 * [friendsofphp/php-cs-fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer)
-* [Setup PHPStorm](https://hackernoon.com/how-to-configure-phpstorm-to-use-php-cs-fixer-1844991e521f)
-```bash
+* [PHPStorm setup](https://hackernoon.com/how-to-configure-phpstorm-to-use-php-cs-fixer-1844991e521f)
+```shell
   $ composer global require friendsofphp/php-cs-fixer
   $ export PATH="$PATH:$HOME/.composer/vendor/bin"
 ```
 run:
-```bash
+```shell
 php-cs-fixer --diff --dry-run -v fix app
 ```
+
+

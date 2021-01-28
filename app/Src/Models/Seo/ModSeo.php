@@ -2,11 +2,18 @@
 
 namespace App\Src\Models\Seo;
 
-use Illuminate\Database\Eloquent\Model;
 
-class ModSeo extends Model
+use Encore\Admin\Traits\DefaultDatetimeFormat;
+use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
+
+class ModSeo extends Model implements TranslatableContract
 {
-    use \Dimsav\Translatable\Translatable;
+
+    use Translatable;
+    use DefaultDatetimeFormat;
+
 
     public $translationModel = 'App\Src\Models\Seo\ModSeoI18n';
 
@@ -17,6 +24,7 @@ class ModSeo extends Model
 
     public $dates = ['created_at', 'updated_at'];
 
+
     // protected $guard = 'admin';
     public $translatedAttributes = ['introtext', 'text', 'seo_h1', 'seo_title', 'seo_keywords', 'seo_description'];
     protected $primaryKey = 'id';
@@ -24,12 +32,11 @@ class ModSeo extends Model
 
     /**
      * ModSeo constructor.
-     *
      * @param array $attributes
      */
     public function __construct(array $attributes = [])
     {
-        $this->table = env('DB_TABLE_PREFIX', 'mod_').'seo';
+        $this->table = env('DB_TABLE_PREFIX', 'mod_') . 'seo';
 
         parent::__construct($attributes);
     }
@@ -46,4 +53,6 @@ class ModSeo extends Model
             return true;
         });
     }
+
+
 }

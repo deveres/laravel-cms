@@ -2,7 +2,6 @@
 
 /**
  * Laravel-admin - admin builder based on Laravel.
- *
  * @author z-song <https://github.com/z-song>
  *
  * Bootstraper for Admin.
@@ -16,16 +15,22 @@
  * Or require js and css assets:
  * Admin::css('/packages/prettydocs/css/styles.css');
  * Admin::js('/packages/prettydocs/js/main.js');
+ *
  */
-use App\Src\Admin\Extensions\ModuleInstall;
-use App\Src\Admin\Extensions\RowOrderable;
+
+use App\Src\Admin\Extensions\Form\HtmlFull;
+use App\Src\Admin\Extensions\Form\Translit;
+use App\Src\Admin\Extensions\Grid\RowDisplayers\TreeNameGridDisplayer;
+use App\Src\Admin\Extensions\Grid\RowDisplayers\RowOrderableGridDisplayer;
 use Encore\Admin\Form;
 use Encore\Admin\Grid\Column;
 
+
 Encore\Admin\Form::forget(['map', 'editor']);
 
-Column::extend('rowOrderable', RowOrderable::class);
-Column::extend('moduleInstall', ModuleInstall::class);
-Column::extend('treeName', \App\Src\Admin\Extensions\TreeName::class);
-Form::extend('translit', \App\Src\Admin\Extensions\Form\Translit::class);
-Form::extend('htmlFull', \App\Src\Admin\Extensions\Form\HtmlFull::class);
+Column::extend('rowOrderable', RowOrderableGridDisplayer::class); //перетаскивание строк - в гриде
+Column::extend('treeName', TreeNameGridDisplayer::class);         // дерево в таблице  - в гриде
+
+Form::extend('translit', Translit::class);            // транслит - в формах
+
+Form::extend('htmlFull', HtmlFull::class);

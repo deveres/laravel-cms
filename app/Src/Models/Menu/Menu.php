@@ -2,7 +2,8 @@
 
 namespace App\Src\Models\Menu;
 
-use Encore\Admin\Auth\Database\Menu as AdminMenu;
+
+use Encore\Admin\Auth\Database\Menu as EncoreMenu;
 
 /**
  * Class Menu.
@@ -11,12 +12,14 @@ use Encore\Admin\Auth\Database\Menu as AdminMenu;
  *
  * @method where($parent_id, $id)
  */
-class Menu extends AdminMenu
+class Menu extends EncoreMenu
 {
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['parent_id', 'order', 'title', 'icon', 'icon_color', 'uri', 'permission'];
+    protected $fillable = ['parent_id', 'order', 'title', 'icon', 'uri', 'permission', 'icon_color'];
+
+
 }

@@ -2,7 +2,7 @@
 
 namespace App\Src\Frontend\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BackendController;
 use App\Http\Controllers\FrontendController;
 
 class IndexController extends FrontendController

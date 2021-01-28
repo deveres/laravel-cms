@@ -91,9 +91,9 @@
         'silverlight_xap_url'=> asset('vendor/plupload-2.3.6/js/Moxie.xap')
         ]) !!});
 
-        initDeleteAction('{{route('images.delete')}}');
-        initDeleteAllAction('{{route('images.delete.all')}}', '{{$pluploader_id}}');
-        initMainImageAction('{{route('images.main')}}', '{{$pluploader_id}}');
+        initDeleteAction('{{route(config('admin.route.prefix').'.images.delete')}}');
+        initDeleteAllAction('{{route(config('admin.route.prefix').'.images.delete.all')}}', '{{$pluploader_id}}');
+        initMainImageAction('{{route(config('admin.route.prefix').'.images.main')}}', '{{$pluploader_id}}');
 
 
     });
