@@ -2,7 +2,9 @@
 
 namespace App\Src\Admin\Controllers\Config;
 
+use App\Http\Controllers\BackendController;
 use App\Src\Admin\Extensions\Core\CustomForm;
+use Carbon\Carbon;
 use Encore\Admin\Config\ConfigModel;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Facades\Admin;
@@ -11,7 +13,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class ConfigController
+class ConfigController extends BackendController
 {
     use HasResourceActions;
 
@@ -54,8 +56,12 @@ class ConfigController
         $grid->value();
         $grid->description();
 
-        $grid->created_at();
-        $grid->updated_at();
+        $grid->created_at()->display(function ($date) {
+            return Carbon::parse($date)->format(Carbon::DEFAULT_TO_STRING_FORMAT);
+        });
+        $grid->updated_at()->display(function ($date) {
+            return Carbon::parse($date)->format(Carbon::DEFAULT_TO_STRING_FORMAT);
+        });
 
         $grid->actions(function ($actions) {
             $actions->disableView();
@@ -107,12 +113,12 @@ class ConfigController
             $tools->disableView();
         });
 
-        $form->tab('Общее', function (Form $form) use ($id) {
-            $form->htmlFull('<h4 class="form-header">Основная информация</h4>');
-
+        $form->tab('Общее', function (Form $form) {
             $form->display('id', 'ID');
-            $form->select('category', 'Категория')->options(config('admin.extensions.config.categories',
-                []))->rules('required', ['required' => 'Поле обязательно для заполнения']);
+            $form->select('category', 'Категория')->options(config(
+                'admin.extensions.config.categories',
+                []
+            ))->rules('required', ['required' => 'Поле обязательно для заполнения']);
             $form->text('name')->rules('required');
             $form->textarea('value')->rules('required');
             $form->textarea('description');
@@ -122,7 +128,7 @@ class ConfigController
             $form1->display('id', 'ID');
             $form1->display('created_at');
             $form1->display('updated_at');
-        }, true);
+        }, true, 5);
 
         return $form;
     }

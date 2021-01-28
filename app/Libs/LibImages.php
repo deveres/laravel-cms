@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class LibImages
@@ -33,7 +34,7 @@ class LibImages
             'title_upload'           => 'Загрузить изображения',
             'title_list'             => 'Загруженные изображения',
             'pluploader_id'          => 'my_uploader_images',
-            'pluploader_save_action' => route('images.upload'),
+            'pluploader_save_action' => route(config('admin.route.prefix').'.images.upload'),
             'image_alias'            => 'general',
             'item_id'                => $this->_item_id,
             'file_types_title'       => 'Изображения',
@@ -155,7 +156,7 @@ class LibImages
         }
 
         //$filename = str_random(2) . '-' . $file->getClientOriginalName() . '.' . $file->getClientOriginalExtension();
-        $filename = str_random(2).'-'.$file->getClientOriginalName();
+        $filename = Str::random(2).'-'.$file->getClientOriginalName();
 
         $subDir = $path.$item_id.'/';
 
@@ -241,8 +242,10 @@ class LibImages
         $module = setif($params, 'module', '');
         $item_id = setif($params, 'item_id', '0');
 
-        return route('download.image',
-            ['module' => $module, 'item_id' => $item_id, 'size' => $size, 'filename' => $img]);
+        return route(
+            config('admin.route.prefix').'.download.image',
+            ['module' => $module, 'item_id' => $item_id, 'size' => $size, 'filename' => $img]
+        );
     }
 
     /**
@@ -255,7 +258,7 @@ class LibImages
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|string|\Symfony\Component\HttpFoundation\Response
      */
-    public function downloadPhoto($module, $item_id, $size, $filename)
+    public function downloadPhoto($module, $item_id, $size = '', $filename)
     {
         try {
             $size = (!empty($size)) ? $size.'/' : '';
@@ -264,15 +267,20 @@ class LibImages
                 $mime = Storage::disk('web')->mimeType($this->default_image);
                 $filename = '';
 
-                return response($stored, 200, [
+                return response(
+                    $stored,
+                    200,
+                    [
                         'Content-Type'        => $mime,
                         'Content-Disposition' => 'attachment; filename="'.$filename.'"',
                     ]
                 );
             }
 
-            $image = ModImage::query()->where('module', $module)->where('item_id', $item_id)->where('filename',
-                $filename)->first();
+            $image = ModImage::query()->where('module', $module)->where('item_id', $item_id)->where(
+                'filename',
+                $filename
+            )->first();
 
             if ($image && Storage::disk($this->getDisk())->exists($image->path.$size.$filename)) {
                 $stored = Storage::disk($this->getDisk())->get($image->path.$size.$filename);
@@ -283,7 +291,10 @@ class LibImages
                 $filename = '';
             }
 
-            return response($stored, 200, [
+            return response(
+                $stored,
+                200,
+                [
                     'Content-Type'        => $mime,
                     'Content-Disposition' => 'attachment; filename="'.$filename.'"',
                 ]

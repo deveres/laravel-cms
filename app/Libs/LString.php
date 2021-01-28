@@ -77,84 +77,10 @@ class LString
     {
         $length = utf8_strlen($string);
         for ($x = 0; $x < $length; $x++) {
-            $string[$x] = (rand(0, 100) < 51 ? utf8_convert_case($string[$x],
-                CASE_LOWER) : utf8_convert_case($string[$x], CASE_UPPER));
+            $string[$x] = (rand(0, 100) < 51 ? utf8_convert_case($string[$x], CASE_LOWER) : utf8_convert_case($string[$x], CASE_UPPER));
         }
 
         return $string;
-    }
-
-    /**
-     * Implementation substr() function for utf-8 encoding string.
-     *
-     * @param string $str
-     * @param int    $offset
-     * @param int    $length
-     *
-     * @return string
-     *
-     * @link     http://www.w3.org/International/questions/qa-forms-utf-8.html
-     *
-     * @license  http://creativecommons.org/licenses/by-nc-sa/3.0/
-     * @author   Nasibullin Rinat <n a s i b u l l i n  at starlink ru>
-     * @charset  ANSI
-     *
-     * @version  1.0.4
-     */
-    public static function utf8_substr($str, $offset, $length = null)
-    {
-        //в начале пробуем найти стандартные функции
-        if (function_exists('mb_substr')) {
-            return mb_substr($str, $offset, $length, 'utf-8');
-        } //(PHP 4 >= 4.0.6, PHP 5)
-        if (function_exists('iconv_substr')) {
-            return iconv_substr($str, $offset, $length, 'utf-8');
-        } //(PHP 5)
-        //однократные паттерны повышают производительность!
-        preg_match_all('/(?>[\x09\x0A\x0D\x20-\x7E]           # ASCII
-                          | [\xC2-\xDF][\x80-\xBF]            # non-overlong 2-byte
-                          |  \xE0[\xA0-\xBF][\x80-\xBF]       # excluding overlongs
-                          | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2} # straight 3-byte
-                          |  \xED[\x80-\x9F][\x80-\xBF]       # excluding surrogates
-                          |  \xF0[\x90-\xBF][\x80-\xBF]{2}    # planes 1-3
-                          | [\xF1-\xF3][\x80-\xBF]{3}         # planes 4-15
-                          |  \xF4[\x80-\x8F][\x80-\xBF]{2}    # plane 16
-                         )
-                        /xs', $str, $m);
-        if ($length !== null) {
-            $a = array_slice($m[0], $offset, $length);
-        } else {
-            $a = array_slice($m[0], $offset);
-        }
-
-        return implode('', $a);
-    }
-
-    /**
-     * Implementation strlen() function for utf-8 encoding string.
-     * There is a nice hack via the utf8_decode function.
-     *
-     * @param string $str
-     *
-     * @return int
-     *
-     * @license  http://creativecommons.org/licenses/by-nc-sa/3.0/
-     * @author   <chernyshevsky at hotmail dot com>
-     * @author   Nasibullin Rinat <n a s i b u l l i n  at starlink ru>
-     * @charset  ANSI
-     *
-     * @version  1.0.2
-     */
-    public static function utf8_strlen($str)
-    {
-        if (function_exists('mb_strlen')) {
-            return mb_strlen($str, 'utf-8');
-        }
-        if (function_exists('iconv_strlen')) {
-            return iconv_strlen($str, 'utf-8');
-        }
-        //utf8_decode() converts characters that are not in ISO-8859-1 to '?', which, for the purpose of counting, is quite alright.
-        return strlen(utf8_decode($str));
     }
 
     public static function strlen()
@@ -181,6 +107,8 @@ class LString
     /**
      * @desc Функция для url-транслитирования элементов
      *
+     * @author Береснев Сергей <rassols[at]gmail.com>
+     *
      * @param string $text Текст для преобразования
      *
      * @return string Экранированный и очищенный от запрещённых символов.
@@ -195,47 +123,15 @@ class LString
     /**
      * @desc Функция для траслитирования текста по заданному массиву правил
      *
+     * @author Береснев Сергей <rassols[at]gmail.com>
+     *
      * @param string $text Текст для преобразования
      *
      * @return string Транслитированный текст
      */
     public static function getTranslite($text)
     {
-        $rules = [
-            'а' => 'a',
-            'б' => 'b',
-            'в' => 'v',
-            'г' => 'g',
-            'д' => 'd',
-            'е' => 'e',
-            'ё' => 'jo',
-            'ж' => 'zh',
-            'з' => 'z',
-            'и' => 'i',
-            'й' => 'j',
-            'к' => 'k',
-            'л' => 'l',
-            'м' => 'm',
-            'н' => 'n',
-            'о' => 'o',
-            'п' => 'p',
-            'р' => 'r',
-            'с' => 's',
-            'т' => 't',
-            'у' => 'u',
-            'ф' => 'f',
-            'х' => 'h',
-            'ц' => 'c',
-            'ч' => 'ch',
-            'ш' => 'sh',
-            'щ' => 'w',
-            'ъ' => '#',
-            'ы' => 'y',
-            'ь' => '',
-            'э' => 'je',
-            'ю' => 'ju',
-            'я' => 'ja',
-        ];
+        $rules = ['а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'jo', 'ж' => 'zh', 'з' => 'z', 'и' => 'i', 'й' => 'j', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'c', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'w', 'ъ' => '#', 'ы' => 'y', 'ь' => '', 'э' => 'je', 'ю' => 'ju', 'я' => 'ja'];
         foreach ($rules as $cyr => $lat) {
             $text = preg_replace('/'.$cyr.'/', $lat, self::utf8_lowercase($text));
         }
@@ -243,18 +139,73 @@ class LString
         return $text;
     }
 
+    /**
+     * @desc Функция получения русскоязычного варианта окончания для переданного числа
+     *
+     * @param float $value Число, для которого надо подобрать окончание
+     * @param array $names Массив имён вида [0]имя одного; [1]имя от 2 до 4; [2]имя 0 и от 5 до 20
+     *
+     * @return string Возвращает соответствующее числу слово
+     */
+    public static function getNumberWord($value, $names)
+    {
+        $temp = strval($value);
+        $temp = $temp[self::utf8_strlen($temp) - 1];
+
+        return ($temp > 1 && $temp < 5 && (intval($value % 100) > 19 || intval($value % 100) < 10)) ? $names[1] : ($temp == 1 ? $names[0] : $names[2]);
+    }
+
+    public static function camelStyle($string, $up_first = false)
+    {
+        if (strlen($string) == 0) {
+            return '';
+        }
+
+        $flag = 0;
+        for ($i = 0; $i <= strlen($string) - 1; $i++) {
+            if ($flag == 1) {
+                $string[$i] = strtoupper($string[$i]);
+                $flag = 0;
+            }
+
+            if ($string[$i] == '_') {
+                $flag = 1;
+            }
+        }
+        if ($up_first) {
+            $string = ucfirst($string);
+        }
+
+        return str_replace('_', '', $string);
+    }
+
     //UTF-8 Функции от DKLAB
 
     /**
-     * Ярлык для запуска String::utf8_convert_case c параметром CASE_LOWER.
+     * Implementation strlen() function for utf-8 encoding string.
+     * There is a nice hack via the utf8_decode function.
      *
-     * @param string $s
+     * @param string $str
      *
-     * @return string Результат работы utf8_convert_case
+     * @return int
+     *
+     * @license  http://creativecommons.org/licenses/by-nc-sa/3.0/
+     * @author   <chernyshevsky at hotmail dot com>
+     * @author   Nasibullin Rinat <n a s i b u l l i n  at starlink ru>
+     * @charset  ANSI
+     *
+     * @version  1.0.2
      */
-    public static function utf8_lowercase($s)
+    public static function utf8_strlen($str)
     {
-        return self::utf8_convert_case($s, CASE_LOWER);
+        if (function_exists('mb_strlen')) {
+            return mb_strlen($str, 'utf-8');
+        }
+        if (function_exists('iconv_strlen')) {
+            return iconv_strlen($str, 'utf-8');
+        }
+        //utf8_decode() converts characters that are not in ISO-8859-1 to '?', which, for the purpose of counting, is quite alright.
+        return strlen(utf8_decode($str));
     }
 
     /**
@@ -416,6 +367,7 @@ class LString
             if (preg_match('/^[\x00-\x7e]*$/', $s)) {
                 return strtoupper($s);
             } //может, так быстрее?
+
             return strtr($s, array_flip($trans));
         } elseif ($mode == CASE_LOWER) {
             if (function_exists('mb_strtolower')) {
@@ -424,6 +376,7 @@ class LString
             if (preg_match('/^[\x00-\x7e]*$/', $s)) {
                 return strtolower($s);
             } //может, так быстрее?
+
             return strtr($s, $trans);
         } else {
             throw new Exception('Parameter 2 should be a constant of CASE_LOWER or CASE_UPPER!');
@@ -435,43 +388,15 @@ class LString
     }
 
     /**
-     * @desc Функция получения русскоязычного варианта окончания для переданного числа
+     * Ярлык для запуска String::utf8_convert_case c параметром CASE_LOWER.
      *
-     * @param float $value Число, для которого надо подобрать окончание
-     * @param array $names Массив имён вида [0]имя одного; [1]имя от 2 до 4; [2]имя 0 и от 5 до 20
+     * @param string $s
      *
-     * @return string Возвращает соответствующее числу слово
+     * @return string Результат работы utf8_convert_case
      */
-    public static function getNumberWord($value, $names)
+    public static function utf8_lowercase($s)
     {
-        $temp = strval($value);
-        $temp = $temp[self::utf8_strlen($temp) - 1];
-
-        return ($temp > 1 && $temp < 5 && (intval($value % 100) > 19 || intval($value % 100) < 10)) ? $names[1] : ($temp == 1 ? $names[0] : $names[2]);
-    }
-
-    public static function camelStyle($string, $up_first = false)
-    {
-        if (strlen($string) == 0) {
-            return '';
-        }
-
-        $flag = 0;
-        for ($i = 0; $i <= strlen($string) - 1; $i++) {
-            if ($flag == 1) {
-                $string[$i] = strtoupper($string[$i]);
-                $flag = 0;
-            }
-
-            if ($string[$i] == '_') {
-                $flag = 1;
-            }
-        }
-        if ($up_first) {
-            $string = ucfirst($string);
-        }
-
-        return str_replace('_', '', $string);
+        return self::utf8_convert_case($s, CASE_LOWER);
     }
 
     /**
@@ -484,6 +409,43 @@ class LString
     public static function utf8_uppercase($s)
     {
         return self::utf8_convert_case($s, CASE_UPPER);
+    }
+
+    /**
+     * Implementation strpos() function for utf-8 encoding string.
+     *
+     * @param string $haystack The entire string
+     * @param string $needle   The searched substring
+     * @param int    $offset   The optional offset parameter specifies the position from which the search should be performed
+     *
+     * @return mixed(int/false) Returns the numeric position of the first occurrence of needle in haystack.
+     *                          If needle is not found, utf8_strpos() will return FALSE.
+     *
+     * @license  http://creativecommons.org/licenses/by-nc-sa/3.0/
+     * @author   Nasibullin Rinat <n a s i b u l l i n  at starlink ru>
+     * @charset  ANSI
+     *
+     * @version  1.0.0
+     */
+    public static function utf8_strpos($haystack, $needle, $offset = null)
+    {
+        if ($offset === null or $offset < 0) {
+            $offset = 0;
+        }
+        if (function_exists('mb_strpos')) {
+            return mb_strpos($haystack, $needle, $offset, 'utf-8');
+        }
+        if (function_exists('iconv_strpos')) {
+            return iconv_strpos($haystack, $needle, $offset, 'utf-8');
+        }
+        $byte_pos = $offset;
+        do {
+            if (($byte_pos = strpos($haystack, $needle, $byte_pos)) === false) {
+                return false;
+            }
+        } while (($char_pos = self::utf8_strlen(substr($haystack, 0, $byte_pos++))) < $offset);
+
+        return $char_pos;
     }
 
     /**
@@ -547,6 +509,52 @@ class LString
     */
 
     /**
+     * Implementation substr() function for utf-8 encoding string.
+     *
+     * @param string $str
+     * @param int    $offset
+     * @param int    $length
+     *
+     * @return string
+     *
+     * @link     http://www.w3.org/International/questions/qa-forms-utf-8.html
+     *
+     * @license  http://creativecommons.org/licenses/by-nc-sa/3.0/
+     * @author   Nasibullin Rinat <n a s i b u l l i n  at starlink ru>
+     * @charset  ANSI
+     *
+     * @version  1.0.4
+     */
+    public static function utf8_substr($str, $offset, $length = null)
+    {
+        //в начале пробуем найти стандартные функции
+        if (function_exists('mb_substr')) {
+            return mb_substr($str, $offset, $length, 'utf-8');
+        } //(PHP 4 >= 4.0.6, PHP 5)
+        if (function_exists('iconv_substr')) {
+            return iconv_substr($str, $offset, $length, 'utf-8');
+        } //(PHP 5)
+        //однократные паттерны повышают производительность!
+        preg_match_all('/(?>[\x09\x0A\x0D\x20-\x7E]           # ASCII
+                          | [\xC2-\xDF][\x80-\xBF]            # non-overlong 2-byte
+                          |  \xE0[\xA0-\xBF][\x80-\xBF]       # excluding overlongs
+                          | [\xE1-\xEC\xEE\xEF][\x80-\xBF]{2} # straight 3-byte
+                          |  \xED[\x80-\x9F][\x80-\xBF]       # excluding surrogates
+                          |  \xF0[\x90-\xBF][\x80-\xBF]{2}    # planes 1-3
+                          | [\xF1-\xF3][\x80-\xBF]{3}         # planes 4-15
+                          |  \xF4[\x80-\x8F][\x80-\xBF]{2}    # plane 16
+                         )
+                        /xs', $str, $m);
+        if ($length !== null) {
+            $a = array_slice($m[0], $offset, $length);
+        } else {
+            $a = array_slice($m[0], $offset);
+        }
+
+        return implode('', $a);
+    }
+
+    /**
      * Специальная функция парсинга строки по заданным разделителям
      *
      * @param string              $string Целевая строка, которую мы будем распарсивать
@@ -567,7 +575,7 @@ class LString
         }
 
         $result = explode($delim1, $string);
-        if (is_array($result) && count($result) > 0) {
+        if (is_array($result) && sizeof($result) > 0) {
             $return = [];
             if ($delim2 === false) {
                 return DQ_Arrays::trim($result);
@@ -575,7 +583,7 @@ class LString
 
             foreach ($result as &$row) {
                 $temp = explode($delim2, $row);
-                if (is_array($temp) && count($temp) > 1) {
+                if (is_array($temp) && sizeof($temp) > 1) {
                     $return[$temp[0]] = $temp[1];
                 }
             }
@@ -588,7 +596,7 @@ class LString
 
     public static function compareVersions($what, $with)
     {
-        if (is_array($what) && count($what) == 2) {
+        if (is_array($what) && sizeof($what) == 2) {
             return ($what[0] <= $with && $with <= $what[1]) ? true : false;
         } elseif (is_array($what) === false) {
             return ($what == $with || $what == 'all') ? true : false;
@@ -597,6 +605,7 @@ class LString
         }
     }
 
+    //обрезаем текст по последниму слову
     public static function lentext($str, $dl)
     {
         $konec = '';
@@ -610,85 +619,11 @@ class LString
         return $str;
     }
 
-    //обрезаем текст по последниму слову
-
-    /**
-     * Implementation strpos() function for utf-8 encoding string.
-     *
-     * @param string $haystack The entire string
-     * @param string $needle   The searched substring
-     * @param int    $offset   The optional offset parameter specifies the position from which the search should be per
-     *
-     * @return mixed(int/false) Returns the numeric position of the first occurrence of needle in haystack.
-     *                          If needle is not found, utf8_strpos() will return FALSE.
-     *
-     * @license  http://creativecommons.org/licenses/by-nc-sa/3.0/
-     * @author   Nasibullin Rinat <n a s i b u l l i n  at starlink ru>
-     * @charset  ANSI
-     *
-     * @version  1.0.0
-     */
-    public static function utf8_strpos($haystack, $needle, $offset = null)
-    {
-        if ($offset === null or $offset < 0) {
-            $offset = 0;
-        }
-        if (function_exists('mb_strpos')) {
-            return mb_strpos($haystack, $needle, $offset, 'utf-8');
-        }
-        if (function_exists('iconv_strpos')) {
-            return iconv_strpos($haystack, $needle, $offset, 'utf-8');
-        }
-        $byte_pos = $offset;
-        do {
-            if (($byte_pos = strpos($haystack, $needle, $byte_pos)) === false) {
-                return false;
-            }
-        } while (($char_pos = self::utf8_strlen(substr($haystack, 0, $byte_pos++))) < $offset);
-
-        return $char_pos;
-    }
-
     //url кодирование рус+рум
-
     public static function urlTranslite($text)
     {
         $text = self::utf8_lowercase(preg_replace('/[~!@#$%^&*():;\'`,+"\/\[\]\\\|-]/', '', $text));
-        $rules = [
-            'а' => 'a',
-            'б' => 'b',
-            'в' => 'v',
-            'г' => 'g',
-            'д' => 'd',
-            'е' => 'e',
-            'ё' => 'jo',
-            'ж' => 'zh',
-            'з' => 'z',
-            'и' => 'i',
-            'й' => 'j',
-            'к' => 'k',
-            'л' => 'l',
-            'м' => 'm',
-            'н' => 'n',
-            'о' => 'o',
-            'п' => 'p',
-            'р' => 'r',
-            'с' => 's',
-            'т' => 't',
-            'у' => 'u',
-            'ф' => 'f',
-            'х' => 'h',
-            'ц' => 'c',
-            'ч' => 'ch',
-            'ш' => 'sh',
-            'щ' => 'w',
-            'ъ' => '',
-            'ы' => 'y',
-            'ь' => '',
-            'э' => 'je',
-            'ю' => 'ju',
-            'я' => 'ja',
-        ];
+        $rules = ['а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'jo', 'ж' => 'zh', 'з' => 'z', 'и' => 'i', 'й' => 'j', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'c', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'w', 'ъ' => '', 'ы' => 'y', 'ь' => '', 'э' => 'je', 'ю' => 'ju', 'я' => 'ja'];
         foreach ($rules as $cyr => $lat) {
             $text = preg_replace('/'.$cyr.'/', $lat, $text);
         }

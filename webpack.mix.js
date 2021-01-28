@@ -12,4 +12,11 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .copy('resources/backend/images', 'public/backend/images')
+    .copy('resources/backend/js', 'public/backend/js')
+    .copy('resources/assets/plupload', 'public/backend/js/plupload')
+    .copy('vendor/vakata/jstree/dist', 'public/backend/js/vakata/jstree')
+    .copy('resources/backend/vakata/jstree', 'public/backend/js/vakata/jstree')
+    .copy('resources/frontend/img', 'public/img')
+    .less('resources/backend/less/admin-custom.less', 'public/backend/css');

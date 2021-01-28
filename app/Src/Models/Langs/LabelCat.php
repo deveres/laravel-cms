@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class LabelCat extends Model
 {
-    use ModelTree, AdminBuilder;
+    use ModelTree;
+    use AdminBuilder;
     public $incrementing = 'id';
     public $timestamps = false;
 
@@ -90,7 +91,7 @@ class LabelCat extends Model
     {
         parent::boot();
 
-        static::saved(function (self $cat) {
+        static::saved(function (LabelCat $cat) {
             I18nService::export();
 
             return true;

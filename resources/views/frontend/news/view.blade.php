@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <section class="internal_header">
-        <div class="wrapper"><a href="{{route('frontend.news')}}" class="back">{{_t('custom/labels/back_to_list')}}у</a>
+        <div class="wrapper"><a href="{{route('frontend.news')}}" class="back">{{_t('custom/labels/back_to_list')}}</a>
             <p class="heading">{{$news->name}}</p>
 
         </div>

@@ -110,7 +110,7 @@ return [
     */
     'auth' => [
 
-        'controller' => Encore\Admin\Controllers\AuthController::class,
+        'controller' => App\Src\Admin\Controllers\AuthController::class,
 
         'guard' => 'admin',
 
@@ -184,10 +184,12 @@ return [
         'roles_model' => Encore\Admin\Auth\Database\Role::class,
 
         // Permission table and model.
-        'permissions_table' => 'admin_permissions',
+        'permissions_table'          => 'admin_permissions',
+        'permissions_category_table' => 'admin_permissions_categories',
+        'permissions_model'          => App\Src\Models\Permissions\Permission::class,
+        'permissions_model_category' => App\Src\Models\Permissions\PermissionCategory::class,
         //'permissions_model' => Encore\Admin\Auth\Database\Permission::class,
-        'permissions_model'          => Encore\Admin\Auth\Database\Permission::class,
-        'permissions_model_category' => Encore\Admin\Auth\Database\PermissionCategory::class,
+        //'permissions_model_category' => Encore\Admin\Auth\Database\PermissionCategory::class,
 
         // Menu table and model.
         'menu_table' => 'admin_menu',
@@ -341,7 +343,7 @@ return [
     |
     | Whether enable default breadcrumb for every page content.
     */
-    'enable_default_breadcrumb' => true,
+    'enable_default_breadcrumb' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -376,7 +378,7 @@ return [
     | The global Grid action display class.
     |--------------------------------------------------------------------------
     */
-   // 'grid_action_class' => \Encore\Admin\Grid\Displayers\DropdownActions::class,
+    //'grid_action_class' => \Encore\Admin\Grid\Displayers\DropdownActions::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -425,14 +427,14 @@ return [
         'config'=> [
             'enable'=> true,
 
-                'name' => 'config',
-                'table'=> 'admin_config',
-                //'controller'=>'Encore\Admin\Config\ConfigController',
-                'controller' => 'App\Src\Admin\Controllers\Config\ConfigController',
-                'categories' => [
-                    'general'=> 'Опции сайта',
-                    'system' => 'Системные',
-                ],
+            'name' => 'config',
+            'table'=> 'admin_config',
+            //'controller'=>'Encore\Admin\Config\ConfigController',
+            'controller' => 'App\Src\Admin\Controllers\Config\ConfigController',
+            'categories' => [
+                'general'=> 'Опции сайта',
+                'system' => 'Системные',
+            ],
         ],
         'env-manager' => [
             // If the value is set to false, this extension will be disabled
@@ -444,8 +446,13 @@ return [
         ],
 
         'cropper' => [
-              'enable' => true,
+            'enable' => true,
         ],
 
+        'media-manager' => [
+
+            // Select a local disk that you configured in `config/filesystem.php`
+            'disk' => 'web',
+        ],
     ],
 ];

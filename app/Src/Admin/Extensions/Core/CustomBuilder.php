@@ -8,49 +8,28 @@
 
 namespace App\Src\Admin\Extensions\Core;
 
-use Encore\Admin\Admin;
 use Encore\Admin\Form\Builder;
 
 class CustomBuilder extends Builder
 {
-    public function render()
+    public function render(): string
     {
+        $formRightObj = $this->form->getRightPanel();
         $this->removeReservedFields();
 
-        $formRightObj = $this->form->getRightPanel();
-        $tabObj = $this->form->getTab();
+        $tabObj = $this->form->setTab();
 
         if (!$tabObj->isEmpty()) {
-            $script = <<<'SCRIPT'
-
-var hash = document.location.hash;
-if (hash) {
-    $('.nav-tabs a[href="' + hash + '"]').tab('show');
-}
-
-// Change hash for page-reload
-$('.nav-tabs a').on('shown.bs.tab', function (e) {
-    history.pushState(null,null, e.target.hash);
-});
-
-if ($('.has-error').length) {
-    $('.has-error').each(function () {
-        var tabId = '#'+$(this).closest('.tab-pane').attr('id');
-        $('li a[href="'+tabId+'"] i').removeClass('hide');
-    });
-
-    var first = $('.has-error:first').closest('.tab-pane').attr('id');
-    $('li a[href="#'+first+'"]').tab('show');
-}
-
-SCRIPT;
-            Admin::script($script);
+            $this->addTabformScript();
         }
+
+        $this->addCascadeScript();
 
         $data = [
             'form'         => $this,
             'tabObj'       => $tabObj,
             'width'        => $this->width,
+            'layout'       => $this->form->getLayout(),
             'formRightObj' => $formRightObj,
         ];
 

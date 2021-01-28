@@ -31,8 +31,10 @@ class CreateSeoTables extends Migration
             $table->text('seo_description')->nullable();
 
             $table->unique(['row_id', 'locale']);
-            $table->foreign('row_id')->references('id')->on(env('DB_TABLE_PREFIX',
-                    'mod_').'seo')->onDelete('cascade');
+            $table->foreign('row_id')->references('id')->on(env(
+                'DB_TABLE_PREFIX',
+                'mod_'
+            ).'seo')->onDelete('cascade');
             $table->foreign('locale')->references('alias')->on('label_langs')->onUpdate('cascade');
         });
     }

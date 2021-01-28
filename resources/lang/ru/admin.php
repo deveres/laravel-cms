@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'main'                  => 'Главная',
     'online'                => 'Онлайн',
     'login'                 => 'Войти',
     'logout'                => 'Выйти',
@@ -43,7 +42,7 @@ return [
     'description'           => 'Описание',
     'back'                  => 'Назад',
     'back_to_list'          => 'Вернуться к списку',
-    'submit'                => 'Сохранить',
+    'submit'                => 'Отправить',
     'menu'                  => 'Меню',
     'input'                 => 'Ввод',
     'succeeded'             => 'Завершена',
@@ -63,14 +62,14 @@ return [
     'administrator'         => 'Администратор',
     'roles'                 => 'Роли',
     'permissions'           => 'Доступ',
-    'permissions_category'  => 'Категории',
+    'permissions_category'  => 'Категория доступа',
     'slug'                  => 'Слаг',
     'created_at'            => 'Дата создания',
     'updated_at'            => 'Дата обновления',
     'alert'                 => 'Ошибка',
     'parent_id'             => 'Родитель',
     'icon'                  => 'Иконка',
-    'icon_color'            => 'Цвет иконки',
+    'icon_color'                  => 'Цвет иконки',
     'uri'                   => 'URI',
     'operation_log'         => 'Журнал событий',
     'parent_select_error'   => 'Ошибка при выборе родителя',
@@ -106,4 +105,5 @@ return [
     'menu_titles'            => [],
     'prev'                   => 'Предыдущая',
     'next'                   => 'Следующая',
+    'quick_create'           => 'Быстрое добавление',
 ];

@@ -1,5 +1,8 @@
 /node_modules
 /public/hot
+/public/backend
+/public/css
+/public/img
 /public/storage
 /public/uploads
 /storage/*.key
@@ -9,15 +12,17 @@
 Homestead.json
 Homestead.yaml
 npm-debug.log
+
 yarn-error.log
 .env
 .env.testing
+.phpunit.result.cache
 .php_cs.cache
 postgresql
 docker-entrypoint-initdb.d
 _ide_helper.php
 package-lock.json
 composer.lock
-*.gitlab-ci
+#*.gitlab-ci
 phpunit.xml
 .gitattributes

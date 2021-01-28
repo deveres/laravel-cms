@@ -54,7 +54,7 @@ class Submenu extends AbstractWidget
             }
         }
 
-        if (isset($submenu[$key_selected]) && $key_selected >= 0) {
+        if ($key_selected >= 0) {
             $submenu[$key_selected]['selected_item'] = 'selected';
         }
 

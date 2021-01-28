@@ -4,27 +4,63 @@ namespace App\Providers;
 
 use Encore\Admin\Config\Config;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+        $this->app->singleton('backend.breadcrumbs', function () {
+            $breadcrumbs = new \Creitive\Breadcrumbs\Breadcrumbs();
+            $breadcrumbs->addCrumb("<i class='fa fa-dashboard'></i>".' Главная', config('admin.route.prefix'));
+            $breadcrumbs->addCssClasses('breadcrumb '); //breadcrumb-arrow
+            $breadcrumbs->setDivider(null);
+
+            return $breadcrumbs;
+        });
+
+        $this->app->bind('images.photo', function ($app, $params) {
+            $reflection = new \ReflectionClass('\App\Libs\LibImages');
+            $filter = $reflection->newInstanceArgs($params);
+
+            return $filter;
+        });
+
+        $this->registerConfig();
+        $this->_loadHelpers();
+    }
+
+    /**
      * Bootstrap any application services.
+     *
+     * @return void
      */
     public function boot()
     {
         Blade::withoutDoubleEncoding();
         Paginator::useBootstrapThree();
 
-        Config::load();
+        //
+        $table = config('admin.extensions.config.table', 'admin_config');
+        if (Schema::hasTable($table)) {
+            Config::load();
+        }
 
         \Config::set('app.locale', get_default_lang_alias());
         \Config::set('translatable.fallback_locale', get_default_lang_alias());
         \Config::set('languages.mainLanguage', get_default_lang_alias());
-        \Config::set('languages.languages', array_pluck(get_active_langs(), 'alias'));
+        \Config::set('languages.languages', Arr::pluck(get_active_langs(), 'alias'));
 
         if (\Request::secure()) {
             \Config::set('admin.secure', true);
@@ -59,31 +95,6 @@ class AppServiceProvider extends ServiceProvider
                 return true;
             }
         });
-    }
-
-    /**
-     * Register any application services.
-     */
-    public function register()
-    {
-        $this->app->singleton('backend.breadcrumbs', function () {
-            $breadcrumbs = new \Creitive\Breadcrumbs\Breadcrumbs();
-            $breadcrumbs->addCrumb("<i class='fa fa-dashboard'></i> ".trans('admin.main'), config('admin.route.prefix'));
-            $breadcrumbs->addCssClasses('breadcrumb '); //breadcrumb-arrow
-            $breadcrumbs->setDivider(null);
-
-            return $breadcrumbs;
-        });
-
-        $this->app->bind('images.photo', function ($app, $params) {
-            $reflection = new \ReflectionClass('\App\Libs\LibImages');
-            $filter = $reflection->newInstanceArgs($params);
-
-            return $filter;
-        });
-
-        $this->registerConfig();
-        $this->_loadHelpers();
     }
 
     public function registerConfig()

@@ -1,0 +1,15 @@
+risky: false
+version: 7
+preset: recommended
+finder:
+  path:
+    - "app"
+    - "config"
+    - "resources/views"
+    - "routes"
+    - "tests"
+    - "database"
+  name: "*.php"
+  not-name:
+    - "*.blade.php"
+    - "_ide_helper.php"

@@ -2,39 +2,37 @@
 <html lang="{{ config('app.locale') }}">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{ Admin::title() }}@if (isset($htmlheader_title) && $htmlheader_title){{$htmlheader_title}}@endif</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ Admin::title() }} @if($header) | {{ $header }}@endif</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
+    @if(!is_null($favicon = Admin::favicon()))
+    <link rel="shortcut icon" href="{{$favicon}}">
+    @endif
 
-    {{--
-    <link href="{{ asset('/backend/js/jquery-ui-1.12.1.custom/jquery-ui.css')}}" rel="stylesheet" type="text/css" />
-    <link type="text/css" rel="stylesheet" href="{{ asset('backend/js/jquery-ui-1.12.1.custom/jquery-ui-themes-1.12.1/themes/smoothness/jquery-ui.min.css')}}" media="screen" />
-    --}}
     <link rel="stylesheet"
-          href="{{ asset('backend/js/jquery-ui-1.10.4.custom/css/smoothness/jquery-ui-1.10.4.custom.min.css')}}"
+          href="{{ admin_asset('/backend/js/jquery-ui-1.10.4.custom/css/smoothness/jquery-ui-1.10.4.custom.min.css')}}"
           type="text/css"/>
-    <link rel="stylesheet" href="{{ asset('vendor/plupload-2.3.6/js/jquery.ui.plupload/css/jquery.ui.plupload.css')}}"
+    <link rel="stylesheet" href="{{ admin_asset('/backend/js/plupload-2.3.6/js/jquery.ui.plupload/css/jquery.ui.plupload.css')}}"
           type="text/css"/>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ admin_asset("/vendor/laravel-admin/font-awesome/css/font-awesome.min.css") }}">
 
-
     {!! Admin::css() !!}
 
-    <link rel="stylesheet" href="{{ admin_asset("/vendor/vakata/jstree/themes/admin/style.css") }}">
-    <link rel="stylesheet" href="{{ asset("backend/css/admin-custom.css") }}">
+    <link rel="stylesheet" href="{{ admin_asset("/backend/js/vakata/jstree/themes/admin/style.css") }}">
+    <link rel="stylesheet" href="{{ admin_asset("/backend/css/admin-custom.css") }}">
 
-    <!-- REQUIRED JS SCRIPTS -->
+
     <script src="{{ Admin::jQuery() }}"></script>
 
+    <script src="{{ admin_asset('/backend/js/jquery-migrate-1.4.1.js')}}"></script>
 
-    <script src="{{ asset('/js/jquery-migrate-1.4.1.js')}}"></script>
-
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    {!! Admin::headerJs() !!}
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -43,6 +41,13 @@
 </head>
 
 <body class="hold-transition {{config('admin.skin')}} {{join(' ', config('admin.layout'))}}">
+
+@if($alert = config('admin.top_alert'))
+    <div style="text-align: center;padding: 5px;font-size: 12px;background-color: #ffffd5;color: #ff0000;">
+        {!! $alert !!}
+    </div>
+@endif
+
 <div class="wrapper">
 
     @include('admin::partials.header')
@@ -50,38 +55,38 @@
     @include('admin::partials.sidebar')
 
     <div class="content-wrapper" id="pjax-container">
+        {!! Admin::style() !!}
+        <div id="app">
         @yield('content')
+        </div>
         {!! Admin::script() !!}
+        {!! Admin::html() !!}
     </div>
 
     @include('admin::partials.footer')
 
 </div>
 
-<!-- ./wrapper -->
+<button id="totop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up"></i></button>
 
 <script>
-    function LA() {
-    }
-
+    function LA() {}
     LA.token = "{{ csrf_token() }}";
+    LA.user = @json($_user_);
 </script>
 
-<!-- REQUIRED JS SCRIPTS 1 -->
+<!-- REQUIRED JS SCRIPTS -->
 {!! Admin::js() !!}
 
-{{--
-<script src="{{ asset('/backend/js/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
---}}
 <script type="text/javascript"
         src="{{ asset('backend/js/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min.js')}}"></script>
-<script src="{{ asset('/vendor/vakata/jstree/jstree.min.js')}}"></script>
+<script src="{{ admin_asset('/backend/js/vakata/jstree/jstree.min.js')}}"></script>
 
-<script type="text/javascript" src="{{ asset('vendor/plupload-2.3.6/js/plupload.full.min.js')}}"></script>
+<script type="text/javascript" src="{{ admin_asset('/backend/js/plupload-2.3.6/js/plupload.full.min.js')}}"></script>
 <script type="text/javascript"
-        src="{{ asset('vendor/plupload-2.3.6/js/jquery.ui.plupload/jquery.ui.plupload.js')}}"></script>
-<script type="text/javascript" src="{{ asset('vendor/plupload-2.3.6/js/i18n/'.config('app.locale').'.js')}}"></script>
-<script src="{{ asset('/vendor/plupload/assets/js/uploadQueue.js')}}"></script>
+        src="{{ admin_asset('/backend/js/plupload-2.3.6/js/jquery.ui.plupload/jquery.ui.plupload.js')}}"></script>
+<script type="text/javascript" src="{{ admin_asset('/backend/js/plupload-2.3.6/js/i18n/'.config('app.locale').'.js')}}"></script>
+<script src="{{ admin_asset('/backend/js/uploadQueue.js')}}"></script>
 
 </body>
 </html>

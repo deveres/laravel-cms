@@ -2,11 +2,15 @@
 
 namespace App\Src\Models\Seo;
 
+use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
+use Astrotomic\Translatable\Translatable;
+use Encore\Admin\Traits\DefaultDatetimeFormat;
 use Illuminate\Database\Eloquent\Model;
 
-class ModSeo extends Model
+class ModSeo extends Model implements TranslatableContract
 {
-    use \Dimsav\Translatable\Translatable;
+    use Translatable;
+    use DefaultDatetimeFormat;
 
     public $translationModel = 'App\Src\Models\Seo\ModSeoI18n';
 

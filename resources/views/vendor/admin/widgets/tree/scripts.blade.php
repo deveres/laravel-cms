@@ -3,7 +3,7 @@
 
 
 $(document).on("click",'.tree_link',function(e) {
-    e.preventDefault();
+
     var attr = $(this).attr('data-token');
     if (typeof attr !== typeof undefined && attr !== false) {
         e.preventDefault();
@@ -66,7 +66,17 @@ $(document).on("click",'.tree_link',function(e) {
                 }
             }
 
-        }).on("ready.jstree", function (event, data) {
+        }).on("click.jstree", ".jstree-anchor", $.proxy(function (e) {
+                /*e.preventDefault();*/
+                /* if(e.currentTarget !== document.activeElement) { $(e.currentTarget).focus(); }
+                this.activate_node(e.currentTarget, e);
+                */
+                if ($(e.currentTarget).attr("href") != undefined) {
+                    location.href = $(e.currentTarget).attr("href");
+                }
+            }, this
+            )
+        ).on("ready.jstree", function (event, data) {
 
             initNode('node-{!! $attributes['selected'] !!}');
         });

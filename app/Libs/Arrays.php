@@ -148,7 +148,7 @@ class Arrays
     public static function elements($arr, $offset = 0, $limit = 0)
     {
         if (!$limit) {
-            $limit = count($arr) - $offset;
+            $limit = sizeof($arr) - $offset;
         }
 
         $counter = 0;
@@ -167,7 +167,7 @@ class Arrays
     {
         foreach ($arr as $key => $value) {
             if (is_array($value)) {
-                if (count($value) == 0) {
+                if (sizeof($value) == 0) {
                     unset($arr[$key]);
                 }
             } else {
@@ -283,7 +283,7 @@ class Arrays
 
     public static function first($arr)
     {
-        if (!is_array($arr) || count($arr) == 0) {
+        if (!is_array($arr) || sizeof($arr) == 0) {
             return [];
         }
         foreach ($arr as $value) {
@@ -324,7 +324,7 @@ class Arrays
 
     public static function fpush($arr, $value, $key = false)
     {
-        if (!is_array($arr) || count($arr) == 0) {
+        if (!is_array($arr) || sizeof($arr) == 0) {
             return [];
         }
 
@@ -374,7 +374,7 @@ class Arrays
 
     public static function setBitMask($arr = [], $keys = false)
     {
-        if (!is_array($arr) || count($arr) == 0) {
+        if (!is_array($arr) || sizeof($arr) == 0) {
             return 0;
         }
 
@@ -459,7 +459,7 @@ class Arrays
 
     public static function masort(&$data, $sortby)
     {
-        if (!count($data)) {
+        if (!sizeof($data)) {
             return [];
         }
 

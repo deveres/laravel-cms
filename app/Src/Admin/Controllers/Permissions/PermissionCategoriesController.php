@@ -2,6 +2,7 @@
 
 namespace App\Src\Admin\Controllers\Permissions;
 
+use App\Http\Controllers\BackendController;
 use App\Src\Models\Permissions\PermissionCategory;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -9,7 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class PermissionCategoriesController extends \Encore\Admin\Controllers\PermissionController
+class PermissionCategoriesController extends BackendController
 {
     use HasResourceActions;
 
@@ -114,10 +115,11 @@ class PermissionCategoriesController extends \Encore\Admin\Controllers\Permissio
     public function form()
     {
         $form = new Form(new PermissionCategory());
+        $form->tab('Общее', function (Form $form) {
+            $form->display('id', 'ID');
 
-        $form->display('id', 'ID');
-
-        $form->text('name', trans('admin.name'))->rules('required');
+            $form->text('name', trans('admin.name'))->rules('required');
+        });
 
         return $form;
     }

@@ -31,11 +31,12 @@ if (!function_exists('print_pre')) {
         echo '</pre>';
     }
 }
-/*
+/**
  * @desc Вывод массива в виде дерева
  *
- * @param array $array
- * @param string $str - строка для вывода после массива, например для проверки
+ * @param array  $array
+ * @param string $str   - строка для вывода после массива, например для проверки
+ *
  * @return void
  */
 if (!function_exists('pre')) {
@@ -50,11 +51,12 @@ if (!function_exists('pre')) {
     }
 }
 
-/*
+/**
  * @desc Вывод массива в виде дерева и прекращение работы скрипта
  *
- * @param array $array
- * @param string $str - строка для вывода после массива, например для проверки
+ * @param array  $array
+ * @param string $str   - строка для вывода после массива, например для проверки
+ *
  * @return void
  */
 if (!function_exists('pred')) {
@@ -65,11 +67,11 @@ if (!function_exists('pred')) {
         }
         echo '<pre>';
         print_r($array);
-        die('</pre>'.$str);
+        exit('</pre>'.$str);
     }
 }
 
-/*
+/**
  * @desc Вывод данных с помощью функции var_dump
  */
 if (!function_exists('vre')) {
@@ -84,7 +86,7 @@ if (!function_exists('vre')) {
     }
 }
 
-/*
+/**
  * @desc Вывод данных с помощью функции var_dump и прекращение раоты скрипта
  */
 if (!function_exists('vred')) {
@@ -95,12 +97,13 @@ if (!function_exists('vred')) {
         }
         echo '<pre>';
         var_dump(func_get_args());
-        die('</pre>');
+        exit('</pre>');
     }
 }
 
-/*
- * Функция получения реального IP адреса
+/**
+ * Функция получения реального IP адреса.
+ *
  * @return string
  */
 if (!function_exists('getRealIp')) {
@@ -122,7 +125,7 @@ if (!function_exists('hex2bin')) {
     function hex2bin($str)
     {
         if (!is_string($str)) {
-            return;
+            return null;
         }
         $r = '';
         for ($a = 0; $a < strlen($str); $a += 2) {

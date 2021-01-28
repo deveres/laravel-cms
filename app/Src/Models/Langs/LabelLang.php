@@ -37,14 +37,14 @@ class LabelLang extends Model implements Sortable
     {
         parent::boot();
 
-        static::saved(function (self $lang) {
+        static::saved(function (LabelLang $lang) {
             I18nService::syncLabelLang($lang);
             I18nService::export();
 
             return true;
         });
 
-        static::deleted(function (self $lang) {
+        static::deleted(function (LabelLang $lang) {
             I18nService::deleteLangsTableField($lang->id);
             I18nService::syncLabelLang($lang);
             I18nService::export();
@@ -108,6 +108,8 @@ class LabelLang extends Model implements Sortable
 
     public static function getDefault()
     {
-        return self::query()->orderBy('default', 'DESC')->first()->toArray();
+        $label = self::query()->orderBy('default', 'DESC')->first();
+
+        return $label ? $label->toArray() : [];
     }
 }
