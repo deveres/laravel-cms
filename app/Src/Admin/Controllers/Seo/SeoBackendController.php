@@ -111,16 +111,16 @@ class SeoBackendController extends BackendController
                 $item->lock_alias,
                 'Алиас'
             )->setLabelClass(['required'])->rules(
-                    function ($form) {
+                function ($form) {
 
                     // If it is not an edit state, add field unique verification
-                    if (!$id = $form->model()->id) {
-                        return 'required|unique:'.$form->model()->getTable().',alias|min:4';
-                    } else {
-                        return 'required|unique:'.$form->model()->getTable().',alias,'.$id.',id|min:4';
+                        if (!$id = $form->model()->id) {
+                            return 'required|unique:'.$form->model()->getTable().',alias|min:4';
+                        } else {
+                            return 'required|unique:'.$form->model()->getTable().',alias,'.$id.',id|min:4';
+                        }
                     }
-                }
-                );
+            );
 
             $form->text('link', 'URI')->setLabelClass(['required'])->rules(
                 function ($form) {
