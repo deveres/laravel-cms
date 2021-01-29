@@ -77,7 +77,7 @@ class SeoBackendController extends BackendController
      */
     public function edit($id, Content $content)
     {
-        $this->setTitle($this->resources[$this->_resource]['name'] . ' - Редактирование');
+        $this->setTitle($this->resources[$this->_resource]['name'].' - Редактирование');
         $this->breadcrumbs->addCrumb('Редактирование', '');
 
         return $content
@@ -115,9 +115,9 @@ class SeoBackendController extends BackendController
 
                     // If it is not an edit state, add field unique verification
                     if (!$id = $form->model()->id) {
-                        return 'required|unique:' . $form->model()->getTable() . ',alias|min:4';
+                        return 'required|unique:'.$form->model()->getTable().',alias|min:4';
                     } else {
-                        return 'required|unique:' . $form->model()->getTable() . ',alias,' . $id . ',id|min:4';
+                        return 'required|unique:'.$form->model()->getTable().',alias,'.$id.',id|min:4';
                     }
                 }
             );
@@ -127,9 +127,9 @@ class SeoBackendController extends BackendController
 
                     // If it is not an edit state, add field unique verification
                     if (!$id = $form->model()->id) {
-                        return 'required|unique:' . $form->model()->getTable() . ',link|min:3';
+                        return 'required|unique:'.$form->model()->getTable().',link|min:3';
                     } else {
-                        return 'required|unique:' . $form->model()->getTable() . ',link,' . $id . ',id|min:3';
+                        return 'required|unique:'.$form->model()->getTable().',link,'.$id.',id|min:3';
                     }
                 }
             );
@@ -145,36 +145,36 @@ class SeoBackendController extends BackendController
         $langs = get_active_langs();
         foreach ($langs as $one) {
             $form->tab($one['name'], function (Form $form) use ($one, $id) {
-                $form->html('<div class="form-group"><div class="col-md-12"><h4 class="form-header">Переводы на ' . $one['name'] . ' язык</h4></div></div>');
+                $form->html('<div class="form-group"><div class="col-md-12"><h4 class="form-header">Переводы на '.$one['name'].' язык</h4></div></div>');
 
                 $trans_item = $form->model()->findOrNew($id);
 
                 $translation = $trans_item->getTranslation($one['alias'], true);
-                $form->hidden('translate[' . $one['alias'] . '][locale]', 'Алиас языка')->default($one['alias']);
+                $form->hidden('translate['.$one['alias'].'][locale]', 'Алиас языка')->default($one['alias']);
 
                 $form->textarea(
-                    'translate[' . $one['alias'] . '][introtext]',
+                    'translate['.$one['alias'].'][introtext]',
                     'Короткое описание'
                 )->rows(4)->default($translation ? $translation->introtext : '');
                 $form->ckeditor(
-                    'translate[' . $one['alias'] . '][text]',
+                    'translate['.$one['alias'].'][text]',
                     'Описание'
                 )->default($translation ? $translation->text : '');
                 $form->divider();
                 $form->text(
-                    'translate[' . $one['alias'] . '][seo_h1]',
+                    'translate['.$one['alias'].'][seo_h1]',
                     'SEO H1'
                 )->default($translation ? $translation->seo_h1 : '');
                 $form->text(
-                    'translate[' . $one['alias'] . '][seo_title]',
+                    'translate['.$one['alias'].'][seo_title]',
                     'Meta Title'
                 )->default($translation ? $translation->seo_title : '');
                 $form->textarea(
-                    'translate[' . $one['alias'] . '][seo_keywords]',
+                    'translate['.$one['alias'].'][seo_keywords]',
                     'Meta Keywords'
                 )->rows(4)->default($translation ? $translation->seo_keywords : '');
                 $form->textarea(
-                    'translate[' . $one['alias'] . '][seo_description]',
+                    'translate['.$one['alias'].'][seo_description]',
                     'Meta Description'
                 )->rows(4)->default($translation ? $translation->seo_description : '');
             });
@@ -186,11 +186,11 @@ class SeoBackendController extends BackendController
             $form->display('updated_at');
 
             $statuses1 = [
-                'on' => ['value' => 1, 'text' => 'Включено', 'color' => 'success'],
+                'on'  => ['value' => 1, 'text' => 'Включено', 'color' => 'success'],
                 'off' => ['value' => 0, 'text' => 'Отключено', 'color' => 'danger'],
             ];
             $form->switch('state', 'Статус')->states($statuses1);
-            // $form1->select('state', 'Статус')->options([1 => 'Включено', 0 => 'Отключено'])->config( 'allowClear',false);
+        // $form1->select('state', 'Статус')->options([1 => 'Включено', 0 => 'Отключено'])->config( 'allowClear',false);
         }, true, 10 + (7 * count($langs)));
 
         // callback after save
@@ -216,7 +216,7 @@ class SeoBackendController extends BackendController
      */
     public function create(Content $content)
     {
-        $this->setTitle($this->resources[$this->_resource]['name'] . ' - Создать');
+        $this->setTitle($this->resources[$this->_resource]['name'].' - Создать');
         $this->breadcrumbs->addCrumb('Создать', '');
 
         return $content

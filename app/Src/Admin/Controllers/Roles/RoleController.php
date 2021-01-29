@@ -2,14 +2,10 @@
 
 namespace App\Src\Admin\Controllers\Roles;
 
-
 use Encore\Admin\Grid;
-
 
 class RoleController extends \Encore\Admin\Controllers\RoleController
 {
-
-
     /**
      * Make a grid builder.
      *
@@ -44,6 +40,4 @@ class RoleController extends \Encore\Admin\Controllers\RoleController
 
         return $grid;
     }
-
-
 }
