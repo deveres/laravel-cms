@@ -4,8 +4,10 @@
 /public/backend
 /public/css
 /public/img
+/public/js/app.js
 /public/storage
 /public/uploads
+/public/vendor
 /storage/*.key
 /vendor
 /.idea
