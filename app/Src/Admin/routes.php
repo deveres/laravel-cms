@@ -5,7 +5,7 @@ use Illuminate\Routing\Router;
 Admin::routes();
 
 $attributes = [
-    'prefix' => config('admin.route.prefix'),
+    'prefix'     => config('admin.route.prefix'),
     'middleware' => config('admin.route.middleware'),
 ];
 
@@ -25,10 +25,10 @@ app('router')->group($attributes, function ($router) {
 });
 
 Route::group([
-    'prefix' => config('admin.route.prefix'),
-    'namespace' => config('admin.route.namespace'),
+    'prefix'     => config('admin.route.prefix'),
+    'namespace'  => config('admin.route.namespace'),
     'middleware' => config('admin.route.middleware'),
-    'as' => config('admin.route.prefix') . '.',
+    'as'         => config('admin.route.prefix').'.',
 ], function (Router $router) {
     $router->get('/', 'HomeBackendController@index')->name('home');
 
