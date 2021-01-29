@@ -23,6 +23,7 @@
         "astrotomic/laravel-translatable": "^11.9",
         "barryvdh/laravel-ide-helper": "^2.8",
         "creitive/laravel-breadcrumbs": "^1.0",
+        "deveres/jquery-ui-dist": "^1.12",
         "encore/laravel-admin": "^1.8",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
