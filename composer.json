@@ -23,6 +23,7 @@
         "astrotomic/laravel-translatable": "^11.9",
         "barryvdh/laravel-ide-helper": "^2.8",
         "creitive/laravel-breadcrumbs": "^1.0",
+        "deveres/jquery-ui-dist": "^1.12",
         "encore/laravel-admin": "^1.8",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
@@ -46,6 +47,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
         "laravelcollective/html": "^6.2",
+        "moxiecode/plupload": "^2.3.6",
         "spatie/eloquent-sortable": "^3.8",
         "vakata/jstree": "^3.3"
     },
@@ -62,7 +64,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "github-oauth": {
-            "github.com": "6631ef0d04ca06dfd5dba8c1c9698189b88a09c2"
+            "github.com": "b7f58ce9857f8d22d73b0dccd7e2503ab284966a"
         }
     },
     "extra": {

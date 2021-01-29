@@ -13,9 +13,9 @@
     <link rel="shortcut icon" href="{{$favicon}}">
     @endif
 
-    <link rel="stylesheet"
-          href="{{ admin_asset('/backend/js/jquery-ui-1.10.4.custom/css/smoothness/jquery-ui-1.10.4.custom.min.css')}}"
-          type="text/css"/>
+    <link rel="stylesheet" href="{{ admin_asset('/backend/js/jquery-ui/themes/smoothness/jquery-ui.min.css')}}" type="text/css"/>
+    <link rel="stylesheet" href="{{ admin_asset('/backend/js/jquery-ui/themes/smoothness/theme.css')}}" type="text/css"/>
+
     <link rel="stylesheet" href="{{ admin_asset('/backend/js/plupload-2.3.6/js/jquery.ui.plupload/css/jquery.ui.plupload.css')}}"
           type="text/css"/>
 
@@ -78,13 +78,12 @@
 <!-- REQUIRED JS SCRIPTS -->
 {!! Admin::js() !!}
 
-<script type="text/javascript"
-        src="{{ asset('backend/js/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{ asset('backend/js/jquery-ui/jquery-ui.min.js')}}"></script>
 <script src="{{ admin_asset('/backend/js/vakata/jstree/jstree.min.js')}}"></script>
 
 <script type="text/javascript" src="{{ admin_asset('/backend/js/plupload-2.3.6/js/plupload.full.min.js')}}"></script>
 <script type="text/javascript"
-        src="{{ admin_asset('/backend/js/plupload-2.3.6/js/jquery.ui.plupload/jquery.ui.plupload.js')}}"></script>
+        src="{{ admin_asset('/backend/js/jquery.ui.plupload.js')}}"></script>
 <script type="text/javascript" src="{{ admin_asset('/backend/js/plupload-2.3.6/js/i18n/'.config('app.locale').'.js')}}"></script>
 <script src="{{ admin_asset('/backend/js/uploadQueue.js')}}"></script>
 
