@@ -15,16 +15,20 @@ app('router')->group($attributes, function ($router) {
         $router->resource('auth/permissions-cat', 'PermissionCategoriesController')->names('admin.auth.permissions-cat');
     });
 
+    $router->namespace('App\Src\Admin\Controllers\Roles')->group(function ($router) {
+        $router->resource('auth/roles', 'RoleController')->names('admin.auth.roles');
+    });
+
     $router->namespace('App\Src\Admin\Controllers\Menu')->group(function ($router) {
         $router->resource('auth/menu', 'MenuController', ['except' => ['create']])->names('admin.auth.menu');
     });
 });
 
 Route::group([
-    'prefix'        => config('admin.route.prefix'),
-    'namespace'     => config('admin.route.namespace'),
-    'middleware'    => config('admin.route.middleware'),
-    'as'            => config('admin.route.prefix').'.',
+    'prefix'     => config('admin.route.prefix'),
+    'namespace'  => config('admin.route.namespace'),
+    'middleware' => config('admin.route.middleware'),
+    'as'         => config('admin.route.prefix').'.',
 ], function (Router $router) {
     $router->get('/', 'HomeBackendController@index')->name('home');
 

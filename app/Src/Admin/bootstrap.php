@@ -20,6 +20,7 @@
 
 use App\Src\Admin\Extensions\Form\HtmlFull;
 use App\Src\Admin\Extensions\Form\Translit;
+use App\Src\Admin\Extensions\Grid\RowDisplayers\LabelGridDisplayer;
 use App\Src\Admin\Extensions\Grid\RowDisplayers\RowOrderableGridDisplayer;
 use App\Src\Admin\Extensions\Grid\RowDisplayers\TreeNameGridDisplayer;
 use Encore\Admin\Form;
@@ -29,6 +30,7 @@ Encore\Admin\Form::forget(['map', 'editor']);
 
 Column::extend('rowOrderable', RowOrderableGridDisplayer::class); //перетаскивание строк - в гриде
 Column::extend('treeName', TreeNameGridDisplayer::class);         // дерево в таблице  - в гриде
+Column::extend('customLabel', LabelGridDisplayer::class);         // метки  - в гриде
 
 Form::extend('translit', Translit::class);            // транслит - в формах
 

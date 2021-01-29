@@ -1,4 +1,5 @@
 /node_modules
+/resources/assets/plupload
 /public/hot
 /public/backend
 /public/css

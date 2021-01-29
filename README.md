@@ -41,6 +41,7 @@ mysql> source storage/mysql_dump/dump.sql
 Then install the project:
 ```bash
 composer install
+php artisan vendor:publish --provider="Jenky\LaravelPlupload\PluploadServiceProvider"
 php artisan migrate 
 npm install
 npm run
